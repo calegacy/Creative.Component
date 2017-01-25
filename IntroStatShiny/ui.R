@@ -19,50 +19,33 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                  
                  navbarMenu(h6("One Proportion"),
                             tabPanel("Sampling Distribution",
-                                     fluidRow(
-                                       box(
-                                         width = 4, status= "primary", 
+                                     column(width = 2,
+                                       
                                          numericInput("popProp", "Population Proportion",
-                                                      value = 0.3,min = 0, max = 1, step = 0.01)
-                                       ),
-                                       
-                                       box(
-                                         width = 3, status= "primary", 
-                                         numericInput("sampleSize", "Sample Size", value = 100, min = 1)
-                                       ),
-                                       
-                                       box(
-                                         width = 3, status= "primary",
-                                         numericInput( "numSamp", "Number of Samples", value = 10, min = 1)
-                                       ),
-                                       
-                                       actionButton("goProp", "Draw",class="btn btn-success btn")
+                                                      value = 0.3,min = 0, max = 1, step = 0.01),
+                                         numericInput("sampleSize", "Sample Size", value = 100, min = 1),
+                                         numericInput( "numSamp", "Number of Samples", value = 10, min = 1),
+                                         actionButton("goProp", "Draw",class="btn btn-success btn-lg")
                                        
                                      ),
                                      
-                                     fluidRow(
-                                       box(
-                                         width = 4, 
-                                         title = h4("Sample Summary"),  status= "primary", 
-                                         tableOutput("sampSumDat")
-                                       ),
-                                       box(
-                                         width = 6, 
-                                         title = h4("Sample Distribution"),  status = "primary",
-                                         plotOutput("sampleDist", width = 300, height = 200)
-                                       )
+                                     column(width = 4,
+                                            
+                                         tableOutput("sampSumDat"),
+                                         
+                                        tableOutput("popSumDat")
+                                            
                                      ),
+                                   
                                      
-                                     fluidRow(
-                                       box(width = 4,
-                                           title = h4("Population Summary"),  status= "primary", background = "light-blue",
-                                           tableOutput("popSumDat")
-                                       ),
-                                       box( width = 6,  
-                                            title = h4("Sampling Distribution"), status = "primary",
-                                            plotOutput("samplingDist", width = 300, height = 200)
+                                     column(width = 6, 
+                                            h4(verbatimTextOutput("sdist")),
+                                        
+                                         plotOutput("sampleDist", width = 400, height = 200),
+                                         verbatimTextOutput("singdist"),
+                                         plotOutput("samplingDist", width = 400, height = 200)
                                        )
-                                     )
+                                     #)
                                      
                                      
                             ),

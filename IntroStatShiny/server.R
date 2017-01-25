@@ -56,7 +56,7 @@ function(input, output, session) {
   })
   
   #Sample summary table output
-  output$sampSumDat  = renderTable({
+  output$sampSumDat  = renderTable(caption = "Summary Statistics",caption.placement = getOption("xtable.caption.placement", "top"),{
     samplesum()
   })
   
@@ -100,11 +100,13 @@ function(input, output, session) {
   })
   
   #Population summary table
-  output$popSumDat  = renderTable({
+  output$popSumDat  = renderTable(caption = "Population Summary",caption.placement = getOption("xtable.caption.placement", "top"),{
     popSum()
   })
   
-  
+# Add the text for "Sample/Sampling Distribution"
+  output$sdist <- renderText({ "Sample Distribution" })
+  output$singdist <- renderText({ "Sampling Distribution" })
   #---------------------------------------------- One proportion CIs ------------------------------------------------ #
   
   
