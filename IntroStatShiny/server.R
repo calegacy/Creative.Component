@@ -43,7 +43,7 @@ function(input, output, session) {
   })
   #Sample Distribution output
   output$sampleDist = renderPlot({
-    qplot(dat(),xlab = "Category", ylab= "Count")
+    ggplot(data = data.frame(dat()),aes(dat()))+ geom_histogram( stat = "count")+xlab("Category")
   })
   
   #Sample summary information
@@ -82,7 +82,7 @@ function(input, output, session) {
   
   # Plot of the sampling distribution
   output$samplingDist =renderPlot({
-    qplot(samples(), xlab = "Proportion", ylab= "Count")
+    ggplot(data = data.frame(samples()),aes(samples()))+ geom_histogram(binwidth = 0.01) +xlab("Proportion") +ylab("Count")
   })
   
   
@@ -136,15 +136,15 @@ function(input, output, session) {
   )
     
   })
-  output$sPropSumDat  = renderTable({
+  output$sPropSumDat  = renderTable(caption = "Summary Statistics",caption.placement = getOption("xtable.caption.placement", "top"),{
     samplesumCI()
   })
   
   # Output graph from the single sample CI
   output$samplePropCI = renderPlot({
-    qplot(x = pickci(), y = 0, xlab = "Confidence Interval")+geom_segment(aes(x = lowProp(), xend = upProp(), y = 0, yend = 0))+theme(axis.title.y=element_blank(),
+    ggplot(x = pickci())+ xlab("Confidence Interval")+geom_segment(aes(x = lowProp(), xend = upProp(), y = 0, yend = 0))+theme(axis.title.y=element_blank(),
                                                                                                                                       axis.text.y=element_blank(),
-                                                                                                                                      axis.ticks.y=element_blank())
+                                                                                                                                      axis.ticks.y=element_blank())+geom_point()
   })
   #Calculations to make confidence intervals a sampling distribution of 
   samplesCI = eventReactive(input$goCI,{
@@ -219,9 +219,9 @@ function(input, output, session) {
   
   # Multiple samples lines
   output$sPropPopCI = renderPlot({
-    qplot(x = samplesCI(), y = ysCI(), xlab = "Confidence Intervals")+geom_segment(aes(x = lowPropMult(), xend = upPropMult(), y = ysCI(), yend = ysCI()), colour =colorPCI())+theme(axis.title.y=element_blank(),
+    ggplot(data = data.frame(samplesCI(),ysCI()),aes(x = samplesCI(), y = ysCI()))+ xlab("Confidence Intervals")+geom_segment(aes(x = lowPropMult(), xend = upPropMult(), y = ysCI(), yend = ysCI()), colour =colorPCI())+theme(axis.title.y=element_blank(),
                                                                                                                                                                                      axis.text.y=element_blank(),
-                                                                                                                                                                                     axis.ticks.y=element_blank())
+                                                                                                                                                                                     axis.ticks.y=element_blank())+ geom_point()
   })
   
   
@@ -235,9 +235,14 @@ function(input, output, session) {
   )
     
   })
-  output$sPropPopDat  = renderTable({
+  output$sPropPopDat  = renderTable(caption = "Summary of Samples",caption.placement = getOption("xtable.caption.placement", "top"),{
     popSumCI()
   })
+  
+  
+  # Add the text for "Sample/Sampling Distribution"
+  output$CISumStat <- renderText({ "One Sample" })
+  output$CIManyStat <- renderText({ "Multiple Samples" })
   
   # --------------------------------------------- Confidence Interval Sample Size  -----------------------------------#
   
@@ -470,7 +475,7 @@ function(input, output, session) {
   )
     
   })
-  output$sampSumDatOM  = renderTable({
+  output$sampSumDatOM  = renderTable(caption = "One Sample Summary",caption.placement = getOption("xtable.caption.placement", "top"),{
     samplesumOM()
   })
   
@@ -513,10 +518,11 @@ function(input, output, session) {
   )
     
   })
-  output$popSumDatOM  = renderTable({
+  output$popSumDatOM  = renderTable(caption = "Summary of Samples",caption.placement = getOption("xtable.caption.placement", "top"),{
     popSumOM()
   })
-  
+  output$OneMeanDist <- renderText({ "Sample Distribution" })
+  output$ManyMeansDist <- renderText({ "Sampling Distribution" })
   
   #--------------------------------------------- Inference in Two Proportions ---------------------------------------#
   #Calculations to get a sample distribution for group 1
@@ -538,7 +544,7 @@ function(input, output, session) {
   })
   #Sample Distribution output
   output$sampleDistG1 = renderPlot({
-    qplot(datp1(),xlab = "Category", ylab = "Count")
+    qplot(datp1(),xlab = "Category", ylab = "Count") + labs(title = "Group 1")
   })
   
   ####
@@ -561,7 +567,7 @@ function(input, output, session) {
   })
   #Sample Distribution output
   output$sampleDistG2 = renderPlot({
-    qplot(datp2(), xlab = "Category", ylab = "Count")
+    qplot(datp2(), xlab = "Category", ylab = "Count") + labs(title = "Group 2")
   })
   
   ####
@@ -574,7 +580,7 @@ function(input, output, session) {
   )
     
   })
-  output$sampSumDatP2  = renderTable({
+  output$sampSumDatP2  = renderTable(caption = "Summary of Samples",caption.placement = getOption("xtable.caption.placement", "top"),{
     samplesumP2()
   })
   
@@ -672,7 +678,7 @@ function(input, output, session) {
   )
     
   })
-  output$popSumDat2P = renderTable({
+  output$popSumDat2P = renderTable(caption = "Samping Distribution Summary",caption.placement = getOption("xtable.caption.placement", "top"),{
     popSumTP()
   })
   
@@ -685,6 +691,9 @@ function(input, output, session) {
     
   })
   
+  output$twoPropSampleDist <- renderText({ "Sample Distributions" }) 
+  output$twoPropHyp <- renderText({ "Alternative Hypothesis" })
+  output$twoPropSampDist <- renderText({ "Sampling Distribution" }) 
   
   
   
@@ -700,7 +709,7 @@ function(input, output, session) {
   
   #Sample Distribution output
   output$sampleDistM1 = renderPlot({
-    qplot(pickM1(), xlab = "Value", ylab = "Count")
+    qplot(pickM1(), xlab = "Value", ylab = "Count")+ labs( title = "Group 1")
   })
   ###
   # Calculations to get a sample distribution group 2
@@ -713,7 +722,7 @@ function(input, output, session) {
   
   #Sample Distribution output
   output$sampleDistM2 = renderPlot({
-    qplot(pickM2(), xlab = "Value", ylab = "Count")
+    qplot(pickM2(), xlab = "Value", ylab = "Count") + labs(title = "Group 2")
   })
   
   
@@ -728,7 +737,7 @@ function(input, output, session) {
   )
     
   })
-  output$sampSumDatTM  = renderTable({
+  output$sampSumDatTM  = renderTable(caption = "Summary of Samples",caption.placement = getOption("xtable.caption.placement", "top"),{
     samplesumTM()
   })
   
@@ -755,7 +764,7 @@ function(input, output, session) {
     return(vm)
   })
   output$samplingDistTM =renderPlot({
-    qplot(samplesTM(), xlab = "Value", ylab = "Count")
+    qplot(samplesTM(), xlab = "Value", ylab = "Count") 
   })
   
   
@@ -804,10 +813,13 @@ function(input, output, session) {
   )
     
   })
-  output$popSumDatTM  = renderTable({
+  output$popSumDatTM  = renderTable(caption = "Summary Sampling Distribution",caption.placement = getOption("xtable.caption.placement", "top"),{
     popSumTM()
   })
   
+  output$twoMeansHyp <- renderText({ "Alternative Hypothesis" })
+  output$twoMeansSampDist <- renderText({ "Sampling Distribution" })
+  output$twoMeansSampleDist <- renderText({ "Sampling Distribution" })
   
   # --------------------------------------------- Linear Regression Code ----------------------------------------------#
   # Correlation tab code

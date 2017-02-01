@@ -25,29 +25,23 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                                       value = 0.3,min = 0, max = 1, step = 0.01),
                                          numericInput("sampleSize", "Sample Size", value = 100, min = 1),
                                          numericInput( "numSamp", "Number of Samples", value = 10, min = 1),
-                                         actionButton("goProp", "Draw",class="btn btn-success btn-lg")
+                                         actionButton("goProp", "Draw",class="btn btn-success btn")
                                        
                                      ),
                                      
                                      column(width = 4,
                                             
                                          tableOutput("sampSumDat"),
-                                         
                                         tableOutput("popSumDat")
                                             
                                      ),
-                                   
-                                     
+
                                      column(width = 6, 
-                                            h4(verbatimTextOutput("sdist")),
-                                        
-                                         plotOutput("sampleDist", width = 400, height = 200),
-                                         verbatimTextOutput("singdist"),
-                                         plotOutput("samplingDist", width = 400, height = 200)
-                                       )
-                                     #)
-                                     
-                                     
+                                            verbatimTextOutput("sdist"),
+                                            plotOutput("sampleDist", width = "auto", height = 200),
+                                            verbatimTextOutput("singdist"),
+                                            plotOutput("samplingDist", width = "auto", height = 200)
+                                     )
                             ),
                             
                             
@@ -56,59 +50,33 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                             # One Proportion CI
                             tabPanel( "Confidence Interval",
                                       
-                                      fluidRow(
-                                        box(
-                                          width = 3, status= "primary",
+                                      column(width = 3,
+                                        
                                           numericInput("popPropCI", "Population Proportion",
-                                                       value = 0.3,min = 0, max = 1, step = 0.01)
-                                        ),
-                                        
-                                        box(
-                                          width = 3, status= "primary",
-                                          numericInput("sampleSizeCI", "Sample Size", value = 100, min = 1)
-                                        ),
-                                        
-                                        box(
-                                          width = 3, status= "primary",
-                                          numericInput( "numSampCI", "Number of Samples", value = 10, min = 1)
-                                        ),
-                                        box( width = 2, status = "primary",
-                                             radioButtons("CLProp", "Confidence level", choices = c("90%", "95%", "99%"), selected ="90%", inline = FALSE,
-                                                          width = NULL)
-                                        ),
-                                        
+                                                       value = 0.3,min = 0, max = 1, step = 0.01),
+                                          numericInput("sampleSizeCI", "Sample Size", value = 100, min = 1),
+                                          numericInput( "numSampCI", "Number of Samples", value = 10, min = 1),
+                                          radioButtons("CLProp", "Confidence level", choices = c("90%", "95%", "99%"), selected ="90%", inline = FALSE,
+                                                          width = NULL),
                                         actionButton("goCI", "Draw", class="btn btn-success btn")
-                                        
-                                        
                                       ),
                                       
-                                      fluidRow(
-                                        box(
-                                          width = 5,
-                                          title = h4("Confidence Interval Summary"),  status= "primary", background = "light-blue",
-                                          tableOutput("sPropSumDat")
-                                        ),
-                                        box(
-                                          width = 6,
-                                          title =  h4("Sample Confidence Interval"),  status = "primary",
-                                          plotOutput("samplePropCI", width = 300, height = 200)
-                                        )
-                                      ),
+                                      column(width = 3,
+                                          tableOutput("sPropSumDat"),
+                                          tableOutput("sPropPopDat")
+                                          ),
                                       
-                                      fluidRow(
-                                        box(width = 5,
-                                            title =  h4("Population Summary"),  status= "primary", background = "light-blue",
-                                            tableOutput("sPropPopDat")
-                                        ),
-                                        box( width = 6,
-                                             title =  h4("Sampling Distribution"), status = "primary",
-                                             plotOutput("sPropPopCI", width = 300, height = 200)
+                                     column(width = 5, 
+                                            verbatimTextOutput("CISumStat"),
+                                             plotOutput("samplePropCI", width = "auto", height = 200),
+                                             verbatimTextOutput("CIManyStat"),
+                                             plotOutput("sPropPopCI", width = "auto", height = 200)
                                         )
-                                      )
+                                      
                             ),
                             
                             
-                            
+                            #############
                             
                             # Sample size CI Demo
                             tabPanel( "Sample Size",
@@ -142,7 +110,7 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                        box(width = 6, title = NULL, status = "primary",
                                            tableOutput("Clinfo")),
                                        
-                                       actionButton("goCL", "Draw",class="btn btn-success btn")
+                                       actionButton("goCL", "Draw",class="btn btn-success btn-")
                                        
                                        
                                        
@@ -160,200 +128,99 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                  
                  # Inference for one Mean
                  tabPanel( h6("One Mean"),
-                           fluidRow(
-                             box(
-                               width = 3, status= "primary",
+                          column(width = 2,
+                             
                                numericInput("popMeanOM", "Population Mean",
-                                            value = 10,min = 0, max = 1000, step = 1)
-                             ),
-                             box(
-                               width = 2, status= "primary",
-                               numericInput( "sigma", "St. Dev.", value = 1, min = 0.01)
-                             ),
-                             
-                             box(
-                               width = 2, status= "primary",
-                               numericInput("sampleSizeOM", "Samp Size", value = 10, min = 1)
-                             ),
-                             
-                             box(
-                               width = 3, status= "primary",
-                               numericInput( "numSampOM", "Number of Samples", value = 1, min = 1)
-                             ),
-                             
-                             actionButton("goMean", "Draw",class="btn btn-success btn")
+                                            value = 10,min = 0, max = 1000, step = 1),
+                               numericInput( "sigma", "St. Dev.", value = 1, min = 0.01),
+                               numericInput("sampleSizeOM", "Samp Size", value = 10, min = 1),
+                               numericInput( "numSampOM", "Number of Samples", value = 1, min = 1),
+                               actionButton("goMean", "Draw",class="btn btn-success btn")
                              
                            ),
                            
                            
                            
-                           fluidRow(
-                             box(
-                               width = 4,
-                               title =  h4("Sample Summary"),  status= "primary", background = "light-blue",
-                               tableOutput("sampSumDatOM")
+                           column(width=4,
+                             
+                               tableOutput("sampSumDatOM"),
+                               tableOutput("popSumDatOM")
                              ),
-                             box(
-                               width = 6,
-                               title =  h4("Sample Distribution"),  status = "primary",
-                               plotOutput("sampleDistOM", width = 300, height = 200)
-                             )
-                           ),
-                           
-                           fluidRow(
-                             box(width = 4,
-                                 title =  h4("Population Summary"),  status= "primary", background = "light-blue",
-                                 tableOutput("popSumDatOM")
-                             ),
-                             box( width = 6,
-                                  title =  h4("Sampling Distribution"), status = "primary",
-                                  plotOutput("samplingDistOM", width = 300, height = 200)
-                             )
-                           )
-                           
+                          column(width = 6,
+                                 verbatimTextOutput("OneMeanDist"),
+                               plotOutput("sampleDistOM", width = "auto", height = 200),
+                               verbatimTextOutput("ManyMeansDist"),
+                               plotOutput("samplingDistOM", width = "auto", height = 200)
+                            
+                          )
                            
                  ),
                  
                  # Inference for two Proportions
                  tabPanel( h6("Two Proportions"),
-                           fluidRow(
-                             box(
-                               width = 3, status= "primary", title=  h4("Population Proportion"),
-                               numericInput("popPropG1P", "Group 1",
-                                            value = 0.3,min = 0, max = 1, step = 0.01),
-                               numericInput("popPropG2P", "Group 2",
-                                            value = 0.3,min = 0, max = 1, step = 0.01)
-                             ),
-                             
-                             box(
-                               width = 3, status= "primary", title =  h4("Sample Size"),
-                               numericInput("sampleSizeGP1", "Group 1", value = 100, min = 1),
-                               numericInput("sampleSizeGP2", "Group 2", value = 100, min = 1)
-                             ),
-                             box(
-                               width = 3, status= "primary", title =  h4("Number of Samples"),
-                               numericInput( "numSampGP",label = NULL, value = 10, min = 1)
-                             ),
-                             actionButton("go2Prop", "Draw",class="btn btn-success btn")
-                           ),
-                           fluidRow(
-                             box(
-                               width = 4,
-                               title =  h4("Sample Summary"),  status= "primary", background = "light-blue",
-                               tableOutput("sampSumDatP2")
-                               #  )
-                             ),
-                             #fluidRow(
-                             box(
-                               width = 4,
-                               title =  h4("Sample Distribution 1"),  status = "primary",
-                               plotOutput("sampleDistG1", width = 200, height = 200)
-                             ),
-                             box(
-                               width = 4,
-                               title =  h4("Sample Distribution 2"), status = "primary",
-                               plotOutput("sampleDistG2", width = 200, height = 200)
-                               
-                             )
+                           column(width = 2,
+                               numericInput("popPropG1P", h6("Proportion Group 1"),
+                                            value = 0.3, min = 0, max = 1, step = 0.01),
+                               numericInput("popPropG2P", h6("Proportion Group 2"),
+                                            value = 0.3, min = 0, max = 1, step = 0.01),
+                               numericInput("sampleSizeGP1", h6("Sample Size Group 1"), value = 100, min = 1),
+                               numericInput("sampleSizeGP2", h6("Sample Size Group 2"), value = 100, min = 1),
+                               numericInput( "numSampGP",h6("Number of Samples"), value = 10, min = 1),
+                               actionButton("go2Prop", "Draw",class="btn btn-success btn")
                            ),
                            
-                           fluidRow(
-                             box(width = 6,
-                                 title = h4("Population Summary"),  status= "primary", background = "light-blue",
-                                 tableOutput("popSumDat2P")
+                           column(width = 3,
+                                  verbatimTextOutput("twoPropSampleDist"),
+                                 plotOutput("sampleDistG1", width = 200, height = 200),
+                                 plotOutput("sampleDistG2", width = 200, height = 200),
+                                 tableOutput("sampSumDatP2")
                              ),
-                             #),
-                             #fluidRow(
-                             box( width = 4,
-                                  title =  h4("Alternative Hypothesis"), status = "primary",
-                                  
-                                  radioButtons("altHypR", "", choices = c("<", "=", ">"), selected ="<", inline = TRUE,
-                                               width = '400px')
-                             )#,
-                           ),
-                           fluidRow(
                              
-                             box( width = 11,
-                                  title =  h4("Sampling Distribution"), status = "primary",
-                                  plotOutput("samplingDistTP", width = '100%', height = 200)
+                      
+                             column( width = 7,
+                                     verbatimTextOutput("twoPropHyp"),
+                                  radioButtons("altHypR", "", choices = c("<", "=", ">"), selected ="<", inline = TRUE,
+                                               width = '400px'),
+                                  verbatimTextOutput("twoPropSampDist"),
+                                  plotOutput("samplingDistTP", width = '100%', height = 200),
+                                  tableOutput("popSumDat2P")
                              )
-                           )
+                           
                            
                            
                  ),
                  
                  # Inference for two Means
                  tabPanel( h6("Two Means"),
-                           fluidRow(
-                             box(
-                               width = 2, status= "primary", title =  h4("Population Mean"),
-                               numericInput("popMeanM1", "Group 1",
+                          column(width = 2,
+                               numericInput("popMeanM1", h6("Group 1"),
                                             value = 5,min = 0, max = 1, step = 0.1),
-                               numericInput("popMeanM2", "Group 2",
-                                            value = 5,min = 0, max = 1, step = 0.1)
-                               
-                             ),
-                             
-                             box(
-                               width = 3, status= "primary",title =  h4("Standard Deviation"),
-                               numericInput( "sigmaTM1", "Group 1", value = 1, min = 0.01),
-                               numericInput( "sigmaTM2", "Group 2", value = 1, min = 0.01)
-                             ),
-                             
-                             box(
-                               width = 3, status= "primary", title =  h4("Sample Size"),
-                               numericInput("sampleSizeTM1", "Group 1", value = 10, min = 1),
-                               numericInput("sampleSizeTM2", "Group 2", value = 10, min = 1)
-                             ),
-                             
-                             box(
-                               width = 3, status= "primary", title =  h4("Number of Samples"),
-                               numericInput( "numSampTM", label = NULL, value = 1, min = 1)
-                             ),
-                             actionButton("go2Mean", "Draw",class="btn btn-success btn")
-                           ),
-                           
-                           
-                           fluidRow(
-                             
-                             box(
-                               width = 6,
-                               title =  h4("Sample Distribution 1"),  status = "primary",
-                               plotOutput("sampleDistM1", width = '100%', height = 200)
-                             ),
-                             box(
-                               width = 6,
-                               title = h4( "Sample Distribution 2"),  status = "primary",
-                               plotOutput("sampleDistM2", width = '100%', height = 200)
-                             )
-                           ),
-                           
-                           fluidRow(
-                             
-                             box(
-                               width = 6,
-                               title =  h4("Sample Summary"),  status= "primary", background = "light-blue",
+                               numericInput("popMeanM2", h6("Group 2"),
+                                            value = 5,min = 0, max = 1, step = 0.1),
+                               numericInput( "sigmaTM1", h6("Group 1 St Dev"), value = 1, min = 0.01),
+                               numericInput( "sigmaTM2", h6("Group 2 St Dev"), value = 1, min = 0.01),
+                               numericInput("sampleSizeTM1", h6("Group 1 Size"), value = 10, min = 1),
+                               numericInput("sampleSizeTM2", h6("Group 2 Size"), value = 10, min = 1),
+                               numericInput( "numSampTM",h6( "Number of Samples"), value = 1, min = 1),
+                               actionButton("go2Mean", "Draw",class="btn btn-success btn")
+                      
+                          ),
+                           column(width = 3,
+                                  verbatimTextOutput("twoMeansSampleDist"),
+                               plotOutput("sampleDistM1", width = '100%', height = 200),
+                               plotOutput("sampleDistM2", width = '100%', height = 200),
                                tableOutput("sampSumDatTM")
-                             )
+                             
                            ),
-                           fluidRow(
-                             box(width = 6,
-                                 title =  h4("Population Summary"),  status= "primary", background = "light-blue",
+                           column(width = 6,
+                                  verbatimTextOutput("twoMeansHyp"),
+                                 radioButtons("altHypRMeans", "", choices = c("<", "=", ">"), selected ="<", inline = TRUE,
+                                              width = '400px'),
+                                 verbatimTextOutput("twoMeansSampDist"),
+                                 plotOutput("samplingDistTM", width = '100%', height = 200),
                                  tableOutput("popSumDatTM")
-                             ),
-                             box( width = 4,
-                                  title =  h4("Alternative Hypothesis"), status = "primary",
-                                  
-                                  radioButtons("altHypRMeans", "", choices = c("<", "=", ">"), selected ="<", inline = TRUE,
-                                               width = '400px')
                              )
-                           ),
-                           fluidRow(
-                             box( width = 12,
-                                  title =  h4("Sampling Distribution"), status = "primary",
-                                  plotOutput("samplingDistTM", width = '100%', height = 200)
-                             )
-                           )
+                      
                            
                  ),
                  
@@ -429,59 +296,36 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                  
                  #ANOVA
                  tabPanel(h6("ANOVA"),
-                          fluidRow(
-                            box(width = 10, status = "primary", title = NULL,
-                                sliderInput("sampSizeANOVA", "Sample Size", value = 50, min = 10, max =100, step = 5)),
-                            
-                            actionButton("goAnova", "Draw",class="btn btn-success btn")
-                            
-                            
-                            
-                          ),
-                          fluidRow(
-                            box(
-                              width = 4, status = "primary",title = NULL,
-                              
-                              sliderInput("anovaMean1", "Mean 1", value = 30, min = 10, max =50, step = 1)),
-                            box(
-                              width = 4, status = "primary",title = NULL,
-                              sliderInput("anovaMean2", "Mean 2", value = 30, min = 10, max =50, step = 1)),
-                            box(
-                              width = 4, status = "primary",title = NULL,
-                              sliderInput("anovaMean3", "Mean 3", value = 30, min = 10, max =50, step = 1)
-                              
-                            )
-                          ),
-                          fluidRow(
-                            box(width = 4, status = "primary", title = NULL,
-                                sliderInput("anovaSD1", "St Dev 1", value = 1, min = 1, max =50, step = 1)),
-                            box(
-                              width = 4, status = "primary",title = NULL,
-                              sliderInput("anovaSD2", "St Dev 2", value = 1, min = 1, max =50, step = 1)),
-                            box(
-                              width = 4, status = "primary",title = NULL,
-                              sliderInput("anovaSD3", "St Dev 3", value = 1, min = 1, max =50, step = 1))
-                            
-                            
-                          ),
                           
+                     
                           fluidRow(
-                            box(
-                              width = 12, status = "primary",title =  h4("Dot Plot"),
-                              plotOutput("anovaPlot",width = 500, height = 300)
+                       
+                       column(width = 4,
                               
-                            ),
-                            fluidRow(
-                              box(
-                                width = 4, status = "primary",title =  h4("Summary Data"),
-                                tableOutput("anovaDatSum")
-                              ),
-                              box(
-                                width = 6, status = "primary",title = h4("ANOVA Table"),
-                                tableOutput("anovaTable")
-                              )
-                              
-                            )
-                          )
+                              sliderInput("anovaMean1", h6("Mean 1"), value = 30, min = 10, max =50, step = 1), 
+                              sliderInput("anovaSD1", h6("St Dev 1"), value = 1, min = 1, max =50, step = 1),
+                              sliderInput("sampSizeANOVA", h6("Sample Size"), value = 50, min = 10, max =100, step = 5)     
+                         ),
+                       column(width = 4,
+                              sliderInput("anovaMean2", h6("Mean 2"), value = 30, min = 10, max =50, step = 1), 
+                              sliderInput("anovaSD2", h6("St Dev 2"), value = 1, min = 1, max =50, step = 1),
+                              actionButton("goAnova", "Draw",class="btn btn-success btn")
+                       ),
+                        column(width = 4, 
+                                sliderInput("anovaMean3", h6("Mean 3"), value = 30, min = 10, max =50, step = 1),
+                               sliderInput("anovaSD3", h6("St Dev 3"), value = 1, min = 1, max =50, step = 1)
+                        )
+                          ),
+                       fluidRow(
+                         column(width = 8,
+                           plotOutput("anovaPlot", width = "auto", height = 500)
+                         ),
+                         column( width = 3,
+                               tableOutput("anovaDatSum"),
+                               tableOutput("anovaTable")
+                         )
+                         )
+                      
+                            
                  ))
 
