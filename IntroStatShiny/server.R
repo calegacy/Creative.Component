@@ -902,12 +902,13 @@ function(input, output, session) {
             hL1Line()
           })
         }
-        if(input$fitLineNoPt == TRUE){
+        if(input$fitLineNoPt == TRUE ){
+          
           hL1NoPt = lm(dataY2[-21]~dataX2[-21])
           
           print(ggplot(data = datXY2, aes(x = dataX2, dataY2)) + geom_point() +
                   geom_point(aes(x = i, y = j), colour= "firebrick2", size = 2) +
-                  geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", linetype ="F1", size = 0.75) +
+                  #geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", linetype ="F1", size = 0.75) +
                   geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1)
           )
           hL1LineNoPt = reactive({data.frame(
@@ -920,12 +921,16 @@ function(input, output, session) {
           output$lineEqNoPt  = renderTable({
             hL1LineNoPt()
           })
+          if(input$fitLine == TRUE){
+            print(ggplot(data = datXY2, aes(x = dataX2, dataY2)) + geom_point() +
+                    geom_point(aes(x = i, y = j), colour= "firebrick2", size = 2) +
+                    geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", linetype ="F1", size = 0.75) +
+                    geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1)
+            )
+          }
         }
-        output$lineSum <- renderText({ "Line Summary" })
-        output$lineSumNoPt <- renderText({ "Line Summary Without Point" })
-      
-     
-    }
+   
+     }
     
     
     # "Sample" tab: To plot a specified sample of data
