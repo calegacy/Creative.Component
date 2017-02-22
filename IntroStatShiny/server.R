@@ -929,7 +929,8 @@ function(input, output, session) {
             )
           }
         }
-   
+      output$lineSum <- renderText({ "Line Summary" })
+      output$lineSumNoPt <- renderText({ "Line Summary Without Point" })
      }
     
     
