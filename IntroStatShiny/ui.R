@@ -178,8 +178,9 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                              
                       
                              column( width = 7,
+                                     withMathJax(),
                                      verbatimTextOutput("twoPropHyp"),
-                                  radioButtons("altHypR", "", choices = c("<", "=", ">"), selected ="<", inline = TRUE,
+                                  radioButtons("altHypR", "", choices = c( "<","!=", ">"), inline = TRUE,
                                                width = '400px'),
                                   verbatimTextOutput("twoPropSampDist"),
                                   plotOutput("samplingDistTP", width = '100%', height = 200),
@@ -214,7 +215,7 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                            ),
                            column(width = 6,
                                   verbatimTextOutput("twoMeansHyp"),
-                                 radioButtons("altHypRMeans", "", choices = c("<", "=", ">"), selected ="<", inline = TRUE,
+                                 radioButtons("altHypRMeans", "", choices = c("<", "!=", ">"), selected ="<", inline = TRUE,
                                               width = '400px'),
                                  verbatimTextOutput("twoMeansSampDist"),
                                  plotOutput("samplingDistTM", width = '100%', height = 200),
@@ -250,21 +251,21 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                        width = 4, status= "primary",
                                        box(width = "100%",height = "100%",status = "primary",
                                            tabsetPanel(id = "tabs",
-                                                       tabPanel("Dataset", value = "seldattab",
-                                                                selectInput("dataset", "Choose Data Set:", choices = c("Cars", "Orange")),
+                                                       #Choose a dataset Linear regression tab
+                                                       tabPanel("Outliers", value = "seldattab",
+                                                                selectInput("dataset", "Choose Data Set:", choices = c("High Leverage","Pt 2 High Leverage", "Outlier")),
                                                                 checkboxInput("fitLine", label = "Fit Line", value = FALSE),
-                                                                tableOutput("lineEq")
+                                                                checkboxInput("fitLineNoPt", label = "Fit Line Without Point", value = FALSE),
+                                                                verbatimTextOutput("lineSum"),
+                                                                tableOutput("lineEq"),
+                                                                verbatimTextOutput("lineSumNoPt"),
+                                                                tableOutput("lineEqNoPt")
                                                                 
                                                        ),
-                                                       
+                                                       #Random sample tab
                                                        tabPanel("Sample", value = "samptab",
-                                                                
-                                                                
                                                                 column(
                                                                   width =12, status = "primary",
-                                                                  
-                                                                  
-                                                                  
                                                                   sliderInput("intercept", "Intercept", value = 1, min = -25, max =25
                                                                               
                                                                   ),
@@ -275,11 +276,21 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                                                 ),
                                                                 tableOutput("lineEqSamp")
                                                                 
+                                                       ),
+                                                       #NEW REGRESSION TAB
+                                                       tabPanel("Equation", value = "eqBd",
+                                                                column(width = 12,
+                                                                       actionButton("plotPoints", "Plot",class="btn btn-success btn"),
+                                                                       checkboxInput("fitPoints", "Fit Line",value = FALSE),
+                                                                       tableOutput("eqPointsTable"),
+                                                                       checkboxInput("interceptPoints", "Intercept",value = FALSE),
+                                                                       verbatimTextOutput("intercept"),
+                                                                       checkboxInput("slopePoints", "Slope",value = FALSE),
+                                                                       verbatimTextOutput("slope")
+                                                                )
                                                        )
                                            )
-                                           
                                        )
-                                       
                                      ),
                                      column(
                                        width = 7, status = "primary",
@@ -292,14 +303,17 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                      )
                                      
                                      
-                            )),
+                                     
+                            )
+                 ),
                  
                  #ANOVA
                  tabPanel(h6("ANOVA"),
                           
-                     
+                          
                           fluidRow(
-                       
+                         
+                            
                        column(width = 4,
                               
                               sliderInput("anovaMean1", h6("Mean 1"), value = 30, min = 10, max =50, step = 1), 

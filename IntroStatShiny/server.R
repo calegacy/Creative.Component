@@ -821,15 +821,22 @@ function(input, output, session) {
   output$twoMeansSampDist <- renderText({ "Sampling Distribution" })
   output$twoMeansSampleDist <- renderText({ "Sampling Distribution" })
   
+  output$notEqual =  renderUI({
+    withMathJax(helpText( '$$\\neq$$'))
+  })
+  
   # --------------------------------------------- Linear Regression Code ----------------------------------------------#
+  #Correlation Tab
   # Correlation tab code
   
-  # 
+  # Make the dataset for the correlation 
   xycorr =reactive({
     datxy = as.data.frame(mvrnorm(100, mu = c(0,0), Sigma = matrix(c(1,input$correlation,input$correlation,1),, ncol = 2),empirical = TRUE))
     
     return(datxy)
   })
+  
+  #Output the correlation plot for the correlation data
   output$corrPlot = renderPlot({
     qplot(xycorr()$V1,xycorr()$V2, xlab = "x", ylab = "y")
   })
@@ -844,47 +851,80 @@ function(input, output, session) {
   output$linreg = renderPlot({
     #"Dataset" tab: To plot an existing preloaded dataset
     if(input$tabs == "seldattab"){
-      
-      if(input$dataset == "Cars"){
-        print(qplot( cars$speed, cars$dist, ylab="Distance", xlab="Speed"))
-        if(input$fitLine == TRUE){
-          carout = lm(cars$dist~cars$speed)
-          print(qplot( cars$speed, cars$dist, ylab="Distance", xlab="Speed")+geom_abline(intercept =  carout$coefficients[1],slope = carout$coefficients[2], col = "mediumseagreen"))
-          carsline = reactive({data.frame(
-            
-            intercept = carout$coefficients[1],
-            slope = carout$coefficients[2]
-            
-            
-          )
-            
-          })
-          output$lineEq  = renderTable({
-            carsline()
-          })
-        }
-      }
-      else{ 
+      dataX2 = c(seq(1,20, 1))
+      dataY2 =  c(0.05, 0.40, 0.94, 1.69, 1.83, 3.06, 3.86, 4.14, 5.63, 7.69, 9.65, 10.16, 
+                  11.72, 12.69, 13.05, 14.38, 16.06, 17.75, 18.52, 19.55)
+      if(input$dataset == "High Leverage"){
+       i = j = 30
+        dataX2 = c(dataX2,i)
+        dataY2 =  c(dataY2, j)
+        datXY2 = data.frame(dataX2,dataY2)
         
-        print(qplot(Orange$age, Orange$circ, ylab="Circumfrence", xlab="Year"))
+        print(ggplot(data = datXY2, aes(x = dataX2, dataY2)) + geom_point() +
+                geom_point(aes(x = i, y = j), color= "firebrick2", size = 2)) 
+      }
+      if(input$dataset == "Pt 2 High Leverage"){
+        i = 20
+        j = 50
+        dataX2 = c(dataX2,i)
+        dataY2 =  c(dataY2, j)
+        datXY2 = data.frame(dataX2,dataY2)
+        
+        print(ggplot(data = datXY2, aes(x = dataX2, dataY2)) + geom_point() +
+                geom_point(aes(x = i, y = j), color= "firebrick2", size = 2)) 
+      }
+      if(input$dataset == "Outlier"){
+        i = 20
+        j = 0
+        dataX2 = c(dataX2,i)
+        dataY2 =  c(dataY2, j)
+        datXY2 = data.frame(dataX2,dataY2)
+        
+        print(ggplot(data = datXY2, aes(x = dataX2, dataY2)) + geom_point() +
+                geom_point(aes(x = i, y = j), color= "firebrick2", size = 2)) 
+      }
+        
+        
         if(input$fitLine == TRUE){
-          oranout= lm(Orange$circ~Orange$age)
-          print(qplot(Orange$age, Orange$circ, ylab="Circumfrence", xlab="Year")+geom_abline(intercept =  oranout$coefficients[1],slope = oranout$coefficients[2], col = "mediumseagreen"))
-          treesline = reactive({data.frame(
+          hL1 = lm(dataY2~dataX2)
+         print(ggplot(data = datXY2, aes(x = dataX2, dataY2)) + geom_point() +
+            geom_point(aes(x = i, y = j), colour= "firebrick2", size = 2) +
+            geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", size = 0.75))
+         
+            hL1Line = reactive({data.frame(
             
-            intercept = oranout$coefficients[1],
-            slope = oranout$coefficients[2]
-            
-            
+            intercept = hL1$coefficients[1],
+            slope = hL1$coefficients[2],
+            Rsquared = summary(hL1)$r.squared
           )
-            
           })
           output$lineEq  = renderTable({
-            treesline()
+            hL1Line()
           })
-          
         }
-      }
+        if(input$fitLineNoPt == TRUE){
+          hL1NoPt = lm(dataY2[-21]~dataX2[-21])
+          
+          print(ggplot(data = datXY2, aes(x = dataX2, dataY2)) + geom_point() +
+                  geom_point(aes(x = i, y = j), colour= "firebrick2", size = 2) +
+                  geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", linetype ="F1", size = 0.75) +
+                  geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1)
+          )
+          hL1LineNoPt = reactive({data.frame(
+            
+            intercept = hL1NoPt$coefficients[1],
+            slope = hL1NoPt$coefficients[2],
+            Rsquared = summary(hL1NoPt)$r.squared
+          )
+          })
+          output$lineEqNoPt  = renderTable({
+            hL1LineNoPt()
+          })
+        }
+        output$lineSum <- renderText({ "Line Summary" })
+        output$lineSumNoPt <- renderText({ "Line Summary Without Point" })
+      
+     
     }
     
     
@@ -892,6 +932,9 @@ function(input, output, session) {
     if( input$tabs == "samptab"){
       
       # To set slope
+      
+      # Graph a regression with a certain slope and intercept...... make it more specific
+      #Add slope to the correlation tab
       xy = as.data.frame(mvrnorm(100, mu = c(0,0), Sigma = matrix(c(1,input$slope,input$slope,1000),, ncol = 2),empirical = TRUE))
       
       #intercept change
@@ -902,16 +945,15 @@ function(input, output, session) {
       })
       
       print(qplot(xy$V1,xy$V2-intdelt(),xlab = "Predictor", ylab = "Response"))
+      
+      #Fit the line to the points and plot the line on the existing plot
       if(input$fitLine2 == TRUE){
         outp = lm(xy$V2-intdelt()~xy$V1)
         print(qplot(xy$V1,xy$V2-intdelt(),xlab = "Predictor", ylab = "Response") + geom_abline(intercept = outp$coefficients[1], slope =outp$coefficients[2], col = "mediumseagreen" ))
+        #Make a table with the equation information
         sampline = reactive({data.frame(
-          
           intercept = outp$coefficients[1],
-          slope = outp$coefficients[2]
-          
-          
-        )
+          slope = outp$coefficients[2] )
           
         })
         output$lineEqSamp  = renderTable({
@@ -920,10 +962,92 @@ function(input, output, session) {
       }
     }
     
+    if( input$tabs == "eqBd"){
+      ##### New Regression Code
+      
+      
+      miscX = eventReactive(input$plotPoints,{
+        pickPointsX =  c(runif(20,0,5))
+        return(pickPointsX)
+      })
+      miscY = eventReactive(input$plotPoints,{
+        pickPointsY =  c(runif(20,-1,20))
+        return(pickPointsY)
+      })
+      
+      #Make data frame of counts in order to make a bar graph
+      pointsDat= eventReactive(input$plotPoints,{
+        pDat= data.frame(miscX(), miscY())
+        return(pDat)
+      })
+      
+      #Plot the data points on a graph
+      print(ggplot(data = pointsDat(),aes(x = miscX(), y = miscY()))+ geom_point()+xlab("Predictor")+ylab("Response"))
+      
+      # Add the line of best fit and display the equation in table form
+      if(input$fitPoints == TRUE){
+        pointsLine = lm(miscY()~miscX())
+        print(ggplot(data = pointsDat(),aes(x = miscX(), y = miscY()))+ geom_point()+xlab("Predictor")+ylab("Response")+geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2]))
+        #Make a table with the equation information
+        eqPoints= reactive({data.frame(
+          intercept = pointsLine$coefficients[1],
+          slope = pointsLine$coefficients[2] )
+          
+        })
+        output$eqPointsTable = renderTable({
+          eqPoints()
+        })
+      }
+      
+      # Add an "X" for the intercept and display the intercept interpretation
+      if(input$interceptPoints == TRUE){
+        pointsLine = lm(miscY()~miscX())
+        print(ggplot(data = pointsDat(),aes(x = miscX(), y = miscY()))+ geom_point()+xlab("Predictor")+ylab("Response")+
+                geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2])+
+                geom_point(aes(x = 0, y = pointsLine$coefficients[1], color = "intercept"), shape = 8))
+       # Display the intercept interpretation
+      intText = reactive({
+        int = as.character(round(pointsLine$coefficients[1], 2))
+        text = paste("If the predictor variable is zero, the predicted response value is ", int, ".")
+        return(text)
+      })
+        output$intercept <- renderText({ intText() })
+      }
+ 
+      if(input$slopePoints == TRUE){
+        pointsLine = lm(miscY()~miscX())
+        print(ggplot(data = pointsDat(),aes(x = miscX(), y = miscY()))+ geom_point()+xlab("Predictor")+ylab("Response")+
+                geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2])+
+                geom_point(aes(x = 0, y = pointsLine$coefficients[1], color = "intercept"), shape = 8)+
+                geom_segment(aes(x = 1, xend = 2, y = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), yend = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), color = "one unit"))+
+                geom_segment(aes(x = 2, xend = 2, y = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), yend =(pointsLine$coefficients[1]+ 2*pointsLine$coefficients[2]) , color = "slope amount")))
+               
+        # Display the intercept interpretation
+        slopeText = reactive({
+          #Find the sign of the slope in order to determine whether to use "increase" or "decrease"
+          if(sign(pointsLine$coefficients[2]) == -1){
+            signSlope = "decrease"
+          }
+          if(sign(pointsLine$coefficients[2]) == 1){
+            signSlope = "increase"
+          }
+          # Get the absolute value of the slope amount
+          sl = as.character(abs(round(pointsLine$coefficients[2], 2)))
+          
+          slText = paste("If the predictor variable inceases by one unit, we expect the predicted response variable to", signSlope,"by",sl, "units")
+          return(slText)
+        })
+        output$slope <- renderText({slopeText()})
+      }
+       
+     
+      
     
-    
+    }#To close this if statement for this tab
     
   })
+
+  
   
   # ----------------------------------------- ANOVA -------------------- #
   
