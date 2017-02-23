@@ -81,6 +81,8 @@ ggplot(data = datXY3, aes(x = dataX3, dataY3)) + geom_point() +
 
 
 
+
+
 dat3.LM = lm(dataY3~dataX3)
 summary(dat3.LM)
 
@@ -93,4 +95,8 @@ ggplot(data = datXY3, aes(x = dataX3, dataY3)) + geom_point() +
   geom_abline(slope = dat3.LM$coefficients[2],intercept = dat3.LM$coefficients[1], colour = "royalblue", size = 1) +
   geom_abline(slope = dat3.LM.noHighLev$coefficients[2],intercept = dat3.LM.noHighLev$coefficients[1], linetype = "dashed", colour="darkseagreen1")
 
-
+####### trying to shorten proportion code
+ones = c(1,0,0,1,1,1,1)
+ones
+qplot(ones)
+qplot(as.character(ones))

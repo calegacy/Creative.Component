@@ -17,42 +17,37 @@ library(RColorBrewer)
 library(ggplot2)
 library(grid)
 library(gridExtra)
-library(plotly)
+
 
 function(input, output, session) {
   
-  # -------------------------------------------- Code for Inference for One Proportion ----------------------------#  
+  # -------------------------------------------- Inference for One Proportion Sampling Dist. ----------------------------#  
   
-  #Calculations to get a sample distribution
-  # Get a sample proportion
+  # Create a single sample distribution 
+  # Get a sample from a binomial distribution
   pickVect = eventReactive(input$goProp,{
     pickf = rbinom(input$sampleSize,1, input$popProp)
-    
     return(pickf)
   })
+  
+  # Count the number of "successes" and put it over the sample size to make p_hat
   pickProp = eventReactive(input$goProp,{
-    
     pickprop = length(which(pickVect() == 1))/input$sampleSize
     return(pickprop)
   })
   
-  #Make data frame of counts in order to make a bar graph
-  dat = eventReactive(input$goProp,{
-    datf = c(rep("yes",length(which(pickVect() == 1))), rep("no", length(which(pickVect() == 0))))
-    return(datf)
-  })
-  #Sample Distribution output
+  
+  #Sample Distribution bar graph
   output$sampleDist = renderPlot({
-    ggplot(data = data.frame(dat()),aes(dat()))+ geom_histogram( stat = "count")+xlab("Category")
+    qplot(as.character(pickVect()), xlab = "Category", ylab = "Count")
   })
   
-  #Sample summary information
+  #Sample summary information to be put into a table
   samplesum = eventReactive(input$goProp,{data.frame(
     Category = c( "Yes", "No"),
     Count =c(  length(which(pickVect() == 1)), length(which(pickVect() == 0))),
     Prop = c(length(which(pickVect() == 1))/input$sampleSize, length(which(pickVect() == 0))/input$sampleSize)
   )
-    
   })
   
   #Sample summary table output
@@ -62,61 +57,61 @@ function(input, output, session) {
   
   #Calculations to make a sampling distribution
   samples = eventReactive(input$goProp,{
+    # If one sample is needed use only the one p_hat from above
     if(input$numSamp == 1){
       return(pickProp())
     }
+    # If many samples are needed, generate a vector of p_hats by the above method
     if(input$numSamp > 1){
       v = c(pickProp())
       for(i in 2:input$numSamp){
-        
+        # Generate a sample
         npick = reactive({
           newpick = rbinom(input$sampleSize, 1,input$popProp)
           newprop = length(which(newpick == 1))/input$sampleSize
           return(newprop)
+          
         })
+        # Store the generated sample in a vector
         v = c(v,npick())
         
       }}
+    # Return to 
     return(v)
   })
   
-  # Plot of the sampling distribution
+  # Histogram of the sampling distribution
   output$samplingDist =renderPlot({
     ggplot(data = data.frame(samples()),aes(samples()))+ geom_histogram(binwidth = 0.01) +xlab("Proportion") +ylab("Count")
   })
   
-  
-  # Population summary info
-  
+  # Population summary info to be displayed in a table
   popSum = eventReactive(input$goProp,{data.frame(
-    
     Mean = mean(samples()),
     StDev = sd(samples())
-    
-    
-    
   )
-    
   })
   
-  #Population summary table
+  #Population summary table output
   output$popSumDat  = renderTable(caption = "Population Summary",caption.placement = getOption("xtable.caption.placement", "top"),{
     popSum()
   })
   
-# Add the text for "Sample/Sampling Distribution"
+  # Add the text for "Sample/Sampling Distribution" to the Shiny display
   output$sdist <- renderText({ "Sample Distribution" })
   output$singdist <- renderText({ "Sampling Distribution" })
   #---------------------------------------------- One proportion CIs ------------------------------------------------ #
   
+  # Confidence interval tab code
   
+  # Generate a sample proportion to build a confidence interval
   pickci = eventReactive(input$goCI,{
     pickfci = rbinom(input$sampleSizeCI, 1, input$popPropCI)
     pickCIprop = length(which(pickfci == 1))/input$sampleSizeCI
     return(pickCIprop)
   })
   
-  #One plot of a confidence interval
+  # Plot of one sample confidence interval upper and lower bounds
   upProp = reactive({
     upci = pickci() + (sqrt(pickci()*(1-pickci())/input$sampleSizeCI))
     return(upci)
@@ -128,29 +123,32 @@ function(input, output, session) {
   })
   
   
-  #Sample summary information
+  #Sample summary information table information
   samplesumCI = reactive({data.frame(
-    Proportion = c( pickci()),
+    Proportion = c(pickci()),
     Lower = c(lowProp()),
     Upper = c( upProp())
   )
-    
   })
+  
+  # Table output of sample summary confidence interval
   output$sPropSumDat  = renderTable(caption = "Summary Statistics",caption.placement = getOption("xtable.caption.placement", "top"),{
     samplesumCI()
   })
   
   # Output graph from the single sample CI
   output$samplePropCI = renderPlot({
-    ggplot(x = pickci())+ xlab("Confidence Interval")+geom_segment(aes(x = lowProp(), xend = upProp(), y = 0, yend = 0))+theme(axis.title.y=element_blank(),
-                                                                                                                                      axis.text.y=element_blank(),
-                                                                                                                                      axis.ticks.y=element_blank())+geom_point()
+    ggplot(x = pickci())+ xlab("Confidence Interval")+geom_segment(aes(x = lowProp(), xend = upProp(), y = 0, yend = 0))
+    +theme(axis.title.y=element_blank(),axis.text.y=element_blank(),axis.ticks.y=element_blank())+geom_point()
   })
-  #Calculations to make confidence intervals a sampling distribution of 
+  
+  #Calculations to make confidence intervals for many samples
   samplesCI = eventReactive(input$goCI,{
+    # If number of samples is one, keep the original sample value
     if(input$numSampCI == 1){
       return(pickci())
     }
+    # If you need more than one sample
     if(input$numSampCI > 1){
       vci = c(pickci())
       for(i in 2:input$numSampCI){
@@ -159,14 +157,17 @@ function(input, output, session) {
           newpickci = rbinom(input$sampleSizeCI,1, input$popPropCI)
           newpickciProp =  length(which(newpickci == 1))/input$sampleSizeCI
           return(newpickciProp)
+          
         })
+        # Store new proportion in a vector
         vci = c(vci,npickci())
         
       }}
+    # Return the vector of proportions to calculate intervals for
     return(vci)
   })
   
-  #Make the y axis for all the segments to sit
+  # Make a y vector of values to plot the different confidence levels at so they stack vertically
   ysCI = reactive({
     yy = seq(from = 1, by = 0.5, length.out = length(samplesCI()))
     return(yy)
@@ -198,120 +199,54 @@ function(input, output, session) {
     return(loci2)
   })
   
-  # Make line segments colored based on whether they capture the true pop prop
+  # Make line segments colored based on whether they capture the true population proportion
   colorPCI = eventReactive(input$goCI,{
+    # Make an empty color vector
     colvect = NULL
+    # Sort through each sample CI to see if it contains the "true" population proportion
     for(i in 1:length(samplesCI())){
+      
       if(lowPropMult()[i] <= input$popPropCI && input$popPropCI  <= upPropMult()[i]   ){
+        # If the population proportion is in the interval it will be colored blue
         colnew = "steelblue1"
         colvect = c(colvect,colnew)
         
       }
       else{
+        # If they population proportion is not contained in the interval it will be orange
         colnew = "tan1"
         colvect = c(colvect,colnew)
         
       }
-      
     }
+    # Return the vector of colors to be added to the plot
     return(colvect)
   })
   
-  # Multiple samples lines
+  # Multiple sample CIs on a single graph colored by whether or not they capture the population proportion
   output$sPropPopCI = renderPlot({
-    ggplot(data = data.frame(samplesCI(),ysCI()),aes(x = samplesCI(), y = ysCI()))+ xlab("Confidence Intervals")+geom_segment(aes(x = lowPropMult(), xend = upPropMult(), y = ysCI(), yend = ysCI()), colour =colorPCI())+theme(axis.title.y=element_blank(),
-                                                                                                                                                                                     axis.text.y=element_blank(),
-                                                                                                                                                                                     axis.ticks.y=element_blank())+ geom_point()
+    ggplot(data = data.frame(samplesCI(),ysCI()),aes(x = samplesCI(), y = ysCI()))+
+      xlab("Confidence Intervals")+geom_segment(aes(x = lowPropMult(), xend = upPropMult(), y = ysCI(), yend = ysCI()), colour =colorPCI())+
+      theme(axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())+ geom_point()
   })
   
-  
-  
-  # Population summary info
-  
+  # Summary infomration about what proportion of sample confidence intervals captured the true population parameter
   popSumCI = eventReactive(input$goCI,{data.frame(
-    
     "ProportionCaptured" = length(which(colorPCI() == "steelblue1"))/length(samplesCI())
-    
   )
-    
   })
+  
+  # Output a table of the information about the confidence intervals
   output$sPropPopDat  = renderTable(caption = "Summary of Samples",caption.placement = getOption("xtable.caption.placement", "top"),{
     popSumCI()
   })
   
   
-  # Add the text for "Sample/Sampling Distribution"
+  # Add the text for one vs. multiple sample graphs
   output$CISumStat <- renderText({ "One Sample" })
   output$CIManyStat <- renderText({ "Multiple Samples" })
   
   # --------------------------------------------- Confidence Interval Sample Size  -----------------------------------#
-  
-  # 
-  # CIInf = reactive({data.frame(
-  #   NumberSamples = 20,
-  #   PopProp = 0.4,
-  #   Confidence = "95%"
-  #   
-  # )
-  #   
-  # })
-  # 
-  # output$CIinfo = renderTable({
-  #   CIInf()
-  # })
-  # 
-  # # Get a plot of the 20 samples
-  # 
-  # tenSamps = eventReactive(input$goSS,{
-  #   tsamp = NULL
-  #   for(i in 1:20){
-  #   ts = rbinom(input$sampdemo, 1, 0.4)
-  #   countProp = length(which(ts ==1 ))/input$sampdemo
-  #   tsamp = c(tsamp,countProp)
-  #   }
-  #   return(tsamp)
-  # })
-  # 
-  # ysCIDemo = reactive({
-  #   yy = seq(from = 1, by = 0.5, length.out = length(tenSamps()))
-  #   return(yy)
-  # })
-  # 
-  # upSampDemo = reactive({
-  #   usd = tenSamps() + 1.96*(sqrt(tenSamps()*(1-tenSamps())/input$sampdemo))
-  #   return(usd)
-  # })
-  # 
-  # lowSampDemo = reactive({
-  #   lsd =  tenSamps() - 1.96*(sqrt(tenSamps()*(1-tenSamps())/input$sampdemo))
-  #   return(lsd)
-  # })
-  # 
-  # colorSampDemo = reactive({
-  #   coldemo = NULL
-  #   for(i in 1:20){
-  #     if(lowSampDemo()[i] <= 0.4 && 0.4  <= upSampDemo()[i]   ){
-  #       colne = "steelblue1"
-  #       coldemo = c(coldemo,colne)
-  #       
-  #     }
-  #     else{
-  #       colne = "tan1"
-  #       coldemo = c(coldemo,colne)
-  #       
-  #     }
-  #     
-  #   }
-  #   return(coldemo)
-  # })
-  # 
-  # 
-  # output$sampDemoPlot = renderPlot({
-  #   qplot(x = tenSamps(), y = ysCIDemo(), xlab = "Confidence Intervals")+xlim(-0.1,1.1)+geom_segment(aes(x = lowSampDemo(), xend = upSampDemo(), y = ysCIDemo(), yend = ysCIDemo()), colour = colorSampDemo())+theme(axis.title.y=element_blank(),
-  #                                                                                                                                                      axis.text.y=element_blank(),
-  #                                                                                                                                                      axis.ticks.y=element_blank())
-  # })
-  
   
   
   
