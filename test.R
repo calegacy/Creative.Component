@@ -100,3 +100,10 @@ ones = c(1,0,0,1,1,1,1)
 ones
 qplot(ones)
 qplot(as.character(ones))
+
+
+######
+x = c(1:10)
+y = c(3,4,5,3,2,4,4,4,4,4)
+b = line(x,y)
+b

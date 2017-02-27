@@ -262,25 +262,14 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                                                 tableOutput("lineEqNoPt")
                                                                 
                                                        ),
-                                                       #Random sample tab
-                                                       tabPanel("Sample", value = "samptab",
-                                                                column(
-                                                                  width =12, status = "primary",
-                                                                  sliderInput("intercept", "Intercept", value = 1, min = -25, max =25
-                                                                              
-                                                                  ),
-                                                                  sliderInput("slope", "Slope", value = 1, max =25, min = -25
-                                                                              
-                                                                  ),
-                                                                  checkboxInput("fitLine2", label = "Fit Line", value = FALSE)
-                                                                ),
-                                                                tableOutput("lineEqSamp")
-                                                                
-                                                       ),
+                                            
+                                                    
                                                        #NEW REGRESSION TAB
                                                        tabPanel("Equation", value = "eqBd",
                                                                 column(width = 12,
                                                                        actionButton("plotPoints", "Plot",class="btn btn-success btn"),
+                                                                       sliderInput("intercept", "Intercept", value = 1, min = -25, max =25),
+                                                                       sliderInput("slope", "Slope", value = 1, max =25, min = -25),
                                                                        checkboxInput("fitPoints", "Fit Line",value = FALSE),
                                                                        tableOutput("eqPointsTable"),
                                                                        checkboxInput("interceptPoints", "Intercept",value = FALSE),

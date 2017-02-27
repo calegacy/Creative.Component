@@ -896,83 +896,48 @@ function(input, output, session) {
     }
     
     
-    # "Sample" tab: To plot a specified sample of data
-    if( input$tabs == "samptab"){
-      
-      # To set slope
-      
-      # Graph a regression with a certain slope and intercept...... make it more specific
-      #Add slope to the correlation tab
+   
+     
+   
+      ##### New Regression Code
+    
+    if( input$tabs == "eqBd"){
+      # Create a data frame with the desired slope
       xy = as.data.frame(mvrnorm(100, mu = c(0,0), Sigma = matrix(c(1,input$slope,input$slope,1000),, ncol = 2),empirical = TRUE))
       
-      #intercept change
-      linexy = line(xy$V1,xy$V2)
+      # Change the intercept to match the one desired ( possibly change this line equation*****)
+      linexy = lm(xy$V2~xy$V1)
+      # Adjust the interecept to match the desired intercept amount
       intdelt = reactive({
         rintdelt= linexy$coefficients[1] - input$intercept
         return(rintdelt)
       })
-      
-      print(qplot(xy$V1,xy$V2-intdelt(),xlab = "Predictor", ylab = "Response"))
-      
-      #Fit the line to the points and plot the line on the existing plot
-      if(input$fitLine2 == TRUE){
-        outp = lm(xy$V2-intdelt()~xy$V1)
-        print(qplot(xy$V1,xy$V2-intdelt(),xlab = "Predictor", ylab = "Response") + geom_abline(intercept = outp$coefficients[1], slope =outp$coefficients[2], col = "mediumseagreen" ))
-        #Make a table with the equation information
-        sampline = reactive({data.frame(
-          intercept = outp$coefficients[1],
-          slope = outp$coefficients[2] )
-          
-        })
-        output$lineEqSamp  = renderTable({
-          sampline()
-        })
-      }
-    }
-    
-    if( input$tabs == "eqBd"){
-      ##### New Regression Code
-      
-      
-      miscX = eventReactive(input$plotPoints,{
-        pickPointsX =  c(runif(20,0,5))
-        return(pickPointsX)
-      })
-      miscY = eventReactive(input$plotPoints,{
-        pickPointsY =  c(runif(20,-1,20))
-        return(pickPointsY)
-      })
-      
-      #Make data frame of counts in order to make a bar graph
-      pointsDat= eventReactive(input$plotPoints,{
-        pDat= data.frame(miscX(), miscY())
-        return(pDat)
-      })
-      
-      #Plot the data points on a graph
-      print(ggplot(data = pointsDat(),aes(x = miscX(), y = miscY()))+ geom_point()+xlab("Predictor")+ylab("Response"))
+ 
+      # Plot the points on the graph
+      print(ggplot(data = xy,aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response"))
       
       # Add the line of best fit and display the equation in table form
       if(input$fitPoints == TRUE){
-        pointsLine = lm(miscY()~miscX())
-        print(ggplot(data = pointsDat(),aes(x = miscX(), y = miscY()))+ geom_point()+xlab("Predictor")+ylab("Response")+geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2]))
+        pointsLine = lm(xy$V2-intdelt()~xy$V1)
+        print(ggplot(data = xy,aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response")+geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2]))
         #Make a table with the equation information
         eqPoints= reactive({data.frame(
           intercept = pointsLine$coefficients[1],
           slope = pointsLine$coefficients[2] )
-          
+
         })
         output$eqPointsTable = renderTable({
           eqPoints()
         })
       }
-      
-      # Add an "X" for the intercept and display the intercept interpretation
+
+      # Add an "X" for the intercept and display the intercept interpretation if the intercept box is selected
       if(input$interceptPoints == TRUE){
-        pointsLine = lm(miscY()~miscX())
-        print(ggplot(data = pointsDat(),aes(x = miscX(), y = miscY()))+ geom_point()+xlab("Predictor")+ylab("Response")+
+        pointsLine = lm(xy$V2-intdelt()~xy$V1)
+        print(ggplot(data = xy,aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response")+
                 geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2])+
                 geom_point(aes(x = 0, y = pointsLine$coefficients[1], color = "intercept"), shape = 8))
+        
        # Display the intercept interpretation
       intText = reactive({
         int = as.character(round(pointsLine$coefficients[1], 2))
@@ -981,18 +946,18 @@ function(input, output, session) {
       })
         output$intercept <- renderText({ intText() })
       }
- 
+      # If the slope box is selected add colored lines to the plot to help explain the slope
       if(input$slopePoints == TRUE){
-        pointsLine = lm(miscY()~miscX())
-        print(ggplot(data = pointsDat(),aes(x = miscX(), y = miscY()))+ geom_point()+xlab("Predictor")+ylab("Response")+
+        pointsLine = lm(xy$V2-intdelt()~xy$V1)
+        print(ggplot(data = xy,aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response")+
                 geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2])+
                 geom_point(aes(x = 0, y = pointsLine$coefficients[1], color = "intercept"), shape = 8)+
                 geom_segment(aes(x = 1, xend = 2, y = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), yend = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), color = "one unit"))+
                 geom_segment(aes(x = 2, xend = 2, y = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), yend =(pointsLine$coefficients[1]+ 2*pointsLine$coefficients[2]) , color = "slope amount")))
-               
-        # Display the intercept interpretation
+
+        # Display the text of the slope interpretation
         slopeText = reactive({
-          #Find the sign of the slope in order to determine whether to use "increase" or "decrease"
+          # Find the sign of the slope in order to determine whether to use "increase" or "decrease"
           if(sign(pointsLine$coefficients[2]) == -1){
             signSlope = "decrease"
           }
@@ -1001,14 +966,14 @@ function(input, output, session) {
           }
           # Get the absolute value of the slope amount
           sl = as.character(abs(round(pointsLine$coefficients[2], 2)))
-          
+
           slText = paste("If the predictor variable inceases by one unit, we expect the predicted response variable to", signSlope,"by",sl, "units")
           return(slText)
         })
         output$slope <- renderText({slopeText()})
       }
-       
-     
+
+
       
     
     }#To close this if statement for this tab
