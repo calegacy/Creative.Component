@@ -896,7 +896,7 @@ function(input, output, session) {
       })
       # Adjust the interecept to match the desired intercept amount
       intdelt = reactive({
-        rintdelt= linexy$coefficients[1] - input$intercept
+        rintdelt= linexy()$coefficients[1] - input$intercept
         return(rintdelt)
       })
 
@@ -947,9 +947,9 @@ function(input, output, session) {
         
         # If the slope box is selected add colored lines to the plot to help explain the slope
         if(input$slopePoints == TRUE){
-          pointsLine = lm(xy$V2-intdelt()~xy$V1)
+          pointsLine = lm(xy()$V2-intdelt()~xy()$V1)
           
-            print(ggplot(data = xy,aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response")+
+            print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response")+
               geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2])+
               geom_point(aes(x = 0, y = pointsLine$coefficients[1], color = "intercept"), shape = 8)+
               geom_segment(aes(x = 1, xend = 2, y = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), yend = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), color = "one unit"))+

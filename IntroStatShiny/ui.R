@@ -261,7 +261,7 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                                                 
                                                        ),
                                      column(
-                                       width = 7, status = "primary",
+                                       width = 5, status = "primary",
                                        box(
                                          width = "100%", height = "100%",
                                          title = "Linear Regression",  status = "primary",
@@ -274,7 +274,7 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                                     
                                                        #NEW REGRESSION TAB
                                                        tabPanel("Equation", value = "eqBd",
-                                                                column(width = 12,
+                                                                column(width = 5,
                                                                        actionButton("plotPoints", "Plot",class="btn btn-success btn"),
                                                                        sliderInput("intercept", "Intercept", value = 1, min = -25, max =25),
                                                                        sliderInput("slope", "Slope", value = 1, max =25, min = -25),
