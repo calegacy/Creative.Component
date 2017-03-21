@@ -71,13 +71,13 @@ ggplot(data = datXY2, aes(x = dataX2, dataY2)) + geom_point() +
 
 # High leverage
 
-dataX3 = c(seq(1,20, 1),20)
+dataX3 = c(seq(1,20, 1),7)
 dataY3 =  c(0.05, 0.40, 0.94, 1.69, 1.83, 3.06, 3.86, 4.14, 5.63, 7.69, 9.65, 10.16, 
-            11.72, 12.69, 13.05, 14.38, 16.06, 17.75, 18.52, 19.55, 50)
+            11.72, 12.69, 13.05, 14.38, 16.06, 17.75, 18.52, 19.55, 8)
 datXY3 = data.frame(dataX3,dataY3)
 
 ggplot(data = datXY3, aes(x = dataX3, dataY3)) + geom_point() +
-  geom_point(aes(x = 10, y = 50), color= "dodgerblue") 
+  geom_point(aes(x = 7, y = 8), color= "dodgerblue") 
 
 
 

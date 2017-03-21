@@ -788,200 +788,198 @@ function(input, output, session) {
     qplot(xycorr()$V1,xycorr()$V2, xlab = "x", ylab = "y")
   })
 
-  
-  # Output the plot that stays on the main page for all tabs in this section
-  output$linreg = renderPlot({
-    # Linear regression lines of best fit tab
-    
-    # For linear regression tab, there are several datasets to choose from
-    if(input$tabs == "seldattab"){
-      
-      # Each of the data sets have the majority of the same data, they will vary by one point
-      dataX2 = c(seq(1,20, 1))
-      dataY2 =  c(0.05, 0.40, 0.94, 1.69, 1.83, 3.06, 3.86, 4.14, 5.63, 7.69, 9.65, 10.16, 
-                  11.72, 12.69, 13.05, 14.38, 16.06, 17.75, 18.52, 19.55)
-      
-      # Data for high leverage had the above data plus a high leverage point where the regression line is not affected
-      if(input$dataset == "High Leverage"){
-        i = j = 30
-        dataX2 = c(dataX2,i)
-        dataY2 =  c(dataY2, j)
-        datXY2 = data.frame(dataX2,dataY2)
-        
-        # Print the plot for the high leverage data
-        print(ggplot(data = datXY2, aes(x = dataX2, dataY2)) + geom_point() +
-                geom_point(aes(x = i, y = j), color= "firebrick2", size = 2)) 
-      }
-      
-      # Data for high leverage had the above data plus a high leverage point where the regression line is affected
-      if(input$dataset == "Pt 2 High Leverage"){
-        i = 20
-        j = 50
-        dataX2 = c(dataX2,i)
-        dataY2 =  c(dataY2, j)
-        datXY2 = data.frame(dataX2,dataY2)
-        
-        # Print the plot of this data with the high leverage
-        print(ggplot(data = datXY2, aes(x = dataX2, dataY2)) + geom_point() +
-                geom_point(aes(x = i, y = j), color= "firebrick2", size = 2)) 
-      }
-      # Data with an additional point that is an outlier
-      if(input$dataset == "Outlier"){
-        i = 20
-        j = 0
-        dataX2 = c(dataX2,i)
-        dataY2 =  c(dataY2, j)
-        datXY2 = data.frame(dataX2,dataY2)
-        
-        #Print the plot of the data with the outlier
-        print(ggplot(data = datXY2, aes(x = dataX2, dataY2)) + geom_point() +
-                geom_point(aes(x = i, y = j), color= "firebrick2", size = 2)) 
-      }
-      
-      # If the "Fit Line" box is checked ...
-      if(input$fitLine == TRUE){
-        # Make a linear model if the dataset
-        hL1 = lm(dataY2~dataX2)
-        # Print the plot with the fitted line 
-        print(ggplot(data = datXY2, aes(x = dataX2, dataY2)) + geom_point() +
-                geom_point(aes(x = i, y = j), colour= "firebrick2", size = 2) +
-                geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", size = 0.75))
-        # Collect the information about the line to be displayed in a table
-        hL1Line = reactive({data.frame(
-          intercept = hL1$coefficients[1],
-          slope = hL1$coefficients[2],
-          Rsquared = summary(hL1)$r.squared
-        )
-        })
-        # Output the table of information about the line  
-        output$lineEq  = renderTable({
-          hL1Line()
-        })
-      }
-      
-      # If the "Fit Line With No Point" box is checked..
-      if(input$fitLineNoPt == TRUE ){
-        # Calculate the line of best fit without the point of interest
-        hL1NoPt = lm(dataY2[-21]~dataX2[-21])
-        # Print the plot with the line of fit for the data without the point of interest 
-        print(ggplot(data = datXY2, aes(x = dataX2, dataY2)) + geom_point() +
-                geom_point(aes(x = i, y = j), colour= "firebrick2", size = 2) +
-                #geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", linetype ="F1", size = 0.75) +
-                geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1)
-        )
-        # Create a table of information about the line fit to the data without the point of interest
-        hL1LineNoPt = reactive({data.frame(
-          intercept = hL1NoPt$coefficients[1],
-          slope = hL1NoPt$coefficients[2],
-          Rsquared = summary(hL1NoPt)$r.squared
-        )
-        })
-        # Output this table to the user
-        output$lineEqNoPt  = renderTable({
-          hL1LineNoPt()
-        })
-        # If the "Fit Line" is also selected, then the plot will display both lines of best fit
-        if(input$fitLine == TRUE){
-          print(ggplot(data = datXY2, aes(x = dataX2, dataY2)) + geom_point() +
-                  geom_point(aes(x = i, y = j), colour= "firebrick2", size = 2) +
-                  geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", linetype ="F1", size = 0.75) +
-                  geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1)
-          )
-        }
-      }
-      
-      # Add text to label the tables for the line with the point of interest and without it
-      output$lineSum <- renderText({ "Line Summary" })
-      output$lineSumNoPt <- renderText({ "Line Summary Without Point" })
+  # Outliers tab
+  # Select the proper dataset to analyze based on the user input
+  getData = reactive({
+    if(input$dataset == "Dataset 1"){
+      dataX = c(seq(1,20, 1), 30)
+      dataY =  c(0.05, 0.40, 0.94, 1.69, 1.83, 3.06, 3.86, 4.14, 5.63, 7.69, 9.65, 10.16,
+                 11.72, 12.69, 13.05, 14.38, 16.06, 17.75, 18.52, 19.55, 30)
     }
+    if(input$dataset == "Dataset 2"){
+      dataX = c(seq(1,20, 1), 20)
+      dataY =  c(0.05, 0.40, 0.94, 1.69, 1.83, 3.06, 3.86, 4.14, 5.63, 7.69, 9.65, 10.16,
+                 11.72, 12.69, 13.05, 14.38, 16.06, 17.75, 18.52, 19.55, 50)
+    }
+    if(input$dataset == "Dataset 3"){
+      dataX = c(seq(1,20, 1), 20)
+      dataY =  c(0.05, 0.40, 0.94, 1.69, 1.83, 3.06, 3.86, 4.14, 5.63, 7.69, 9.65, 10.16,
+                 11.72, 12.69, 13.05, 14.38, 16.06, 17.75, 18.52, 19.55, 0)
+    }
+    if(input$dataset == "Dataset 4"){
+      dataX = c(seq(1,20, 1), 7)
+      dataY =  c(0.05, 0.40, 0.94, 1.69, 1.83, 3.06, 3.86, 4.14, 5.63, 7.69, 9.65, 10.16,
+                 11.72, 12.69, 13.05, 14.38, 16.06, 17.75, 18.52, 19.55, 10)
+    }
+    dataXY = data.frame(dataX,dataY)
+    return(dataXY)
     
-    
-   
-     
-   
-      ##### New Regression Code
-    
-    if( input$tabs == "eqBd"){
-      # Create a data frame with the desired slope
-      xy = as.data.frame(mvrnorm(100, mu = c(0,0), Sigma = matrix(c(1,input$slope,input$slope,1000),, ncol = 2),empirical = TRUE))
+  })
+  
+  # Print the plot for the high leverage data
+  output$outlierPlot = renderPlot({
+    # Print the plot with all the data
+    print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
+            geom_point(aes(x = dataX[21], y = dataY[21]), color= "firebrick2", size = 2))
+    # Print the plot with the line fit to the data
+    if(input$fitLine == TRUE){
+      # Make a linear model if the dataset
+      hL1 = lm(getData()$dataY~getData()$dataX)
+      # Print the plot with the fitted line
       
-      # Change the intercept to match the one desired ( possibly change this line equation*****)
-      linexy = lm(xy$V2~xy$V1)
+      print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
+              geom_point(aes(x = dataX[21], y = dataY[21]), colour= "firebrick2", size = 2) +
+              geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", size = 0.75))
+      
+      # Collect the information about the line to be displayed in a table
+      hL1Line = reactive({data.frame(
+        intercept = hL1$coefficients[1],
+        slope = hL1$coefficients[2],
+        Rsquared = summary(hL1)$r.squared
+      )
+      }) 
+      # Output the table of information about the line
+      output$lineEq  = renderTable({
+        hL1Line()
+      })
+    }
+    # If the Fit with no red point box is selected
+    if(input$fitLineNoPt == TRUE ){
+      # Calculate the line of best fit without the point of interest
+      hL1NoPt = lm(getData()$dataY[-21]~getData()$dataX[-21])
+      # Print the plot with the line of fit for the data without the point of interest
+      
+      print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
+              geom_point(aes(x = dataX[21], y = dataY[21]), colour= "firebrick2", size = 2) +
+              geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1))
+      
+      # Create a table of information about the line fit to the data without the point of interest
+      hL1LineNoPt = reactive({data.frame(
+        intercept = hL1NoPt$coefficients[1],
+        slope = hL1NoPt$coefficients[2],
+        Rsquared = summary(hL1NoPt)$r.squared
+      )
+      })
+      # Output this table to the user
+      output$lineEqNoPt  = renderTable({
+        hL1LineNoPt()
+      })
+      # If the "Fit Line" is also selected, then the plot will display both lines of best fit
+      if(input$fitLine == TRUE){
+        
+        print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
+                geom_point(aes(x = dataX[21], y = dataY[21]), colour= "firebrick2", size = 2) +
+                geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", linetype ="F1", size = 0.75) +
+                geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1))
+        
+      }
+    }
+  })
+  
+  # Add text to label the tables for the line with the point of interest and without it
+  output$lineSum <- renderText({ "Line Summary" })
+  output$lineSumNoPt <- renderText({ "Line Summary Without Point" })
+  
+    
+  # Regression Line 
+    
+  
+      # Create a data frame with the desired slope
+      xy = reactive({
+        datXY = as.data.frame(mvrnorm(100, mu = c(0,0), Sigma = matrix(c(1,input$slope,input$slope,1000),, ncol = 2),empirical = TRUE))
+      return(datXY)
+      })
+      # Change the intercept to match the one desired
+      linexy =reactive({
+       return(lm(xy()$V2~xy()$V1))
+        
+      })
       # Adjust the interecept to match the desired intercept amount
       intdelt = reactive({
         rintdelt= linexy$coefficients[1] - input$intercept
         return(rintdelt)
       })
- 
+
       # Plot the points on the graph
-      print(ggplot(data = xy,aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response"))
-      
-      # Add the line of best fit and display the equation in table form
-      if(input$fitPoints == TRUE){
-        pointsLine = lm(xy$V2-intdelt()~xy$V1)
-        print(ggplot(data = xy,aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response")+geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2]))
-        #Make a table with the equation information
-        eqPoints= reactive({data.frame(
-          intercept = pointsLine$coefficients[1],
-          slope = pointsLine$coefficients[2] )
-
-        })
-        output$eqPointsTable = renderTable({
-          eqPoints()
-        })
-      }
-
-      # Add an "X" for the intercept and display the intercept interpretation if the intercept box is selected
-      if(input$interceptPoints == TRUE){
-        pointsLine = lm(xy$V2-intdelt()~xy$V1)
-        print(ggplot(data = xy,aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response")+
-                geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2])+
-                geom_point(aes(x = 0, y = pointsLine$coefficients[1], color = "intercept"), shape = 8))
+      output$linreg = renderPlot({
+      print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response"))
         
-       # Display the intercept interpretation
-      intText = reactive({
-        int = as.character(round(pointsLine$coefficients[1], 2))
-        text = paste("If the predictor variable is zero, the predicted response value is ", int, ".")
-        return(text)
+        
+        # Add the line of best fit and display the equation in table form
+        if(input$fitPoints == TRUE){
+          pointsLine = lm(xy()$V2-intdelt()~xy()$V1)
+       
+           print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response")+
+              geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2]))
+         
+          # Make a table with the equation information
+          eqPoints= reactive({data.frame(
+            intercept = pointsLine$coefficients[1],
+            slope = pointsLine$coefficients[2] )
+            
+          })
+          output$eqPointsTable = renderTable({
+            eqPoints()
+          })
+        }
+        
+        
+        
+        
+        # Add an "X" for the intercept and display the intercept interpretation if the intercept box is selected
+        if(input$interceptPoints == TRUE){
+          pointsLine = lm(xy()$V2-intdelt()~xy()$V1)
+          
+            print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response")+
+              geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2])+
+              geom_point(aes(x = 0, y = pointsLine$coefficients[1], color = "intercept"), shape = 8))
+          
+          
+          # Display the intercept interpretation
+          intText = reactive({
+            int = as.character(round(pointsLine$coefficients[1], 2))
+            text = paste("If the predictor variable is zero, the predicted response value is ", int, ".")
+            return(text)
+          })
+          output$intercept <- renderText({ intText() })
+        }
+        
+        
+        # If the slope box is selected add colored lines to the plot to help explain the slope
+        if(input$slopePoints == TRUE){
+          pointsLine = lm(xy$V2-intdelt()~xy$V1)
+          
+            print(ggplot(data = xy,aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response")+
+              geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2])+
+              geom_point(aes(x = 0, y = pointsLine$coefficients[1], color = "intercept"), shape = 8)+
+              geom_segment(aes(x = 1, xend = 2, y = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), yend = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), color = "one unit"))+
+              geom_segment(aes(x = 2, xend = 2, y = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), yend =(pointsLine$coefficients[1]+ 2*pointsLine$coefficients[2]) , color = "slope amount")))
+          
+          # Display the text of the slope interpretation
+          slopeText = reactive({
+            # Find the sign of the slope in order to determine whether to use "increase" or "decrease"
+            if(sign(pointsLine$coefficients[2]) == -1){
+              signSlope = "decrease"
+            }
+            if(sign(pointsLine$coefficients[2]) == 1){
+              signSlope = "increase"
+            }
+            # Get the absolute value of the slope amount
+            sl = as.character(abs(round(pointsLine$coefficients[2], 2)))
+            
+            slText = paste("If the predictor variable inceases by one unit, we expect the predicted response variable to", signSlope,"by",sl, "units")
+            return(slText)
+          })
+          output$slope <- renderText({slopeText()})
+        }
       })
-        output$intercept <- renderText({ intText() })
-      }
-      # If the slope box is selected add colored lines to the plot to help explain the slope
-      if(input$slopePoints == TRUE){
-        pointsLine = lm(xy$V2-intdelt()~xy$V1)
-        print(ggplot(data = xy,aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response")+
-                geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2])+
-                geom_point(aes(x = 0, y = pointsLine$coefficients[1], color = "intercept"), shape = 8)+
-                geom_segment(aes(x = 1, xend = 2, y = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), yend = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), color = "one unit"))+
-                geom_segment(aes(x = 2, xend = 2, y = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), yend =(pointsLine$coefficients[1]+ 2*pointsLine$coefficients[2]) , color = "slope amount")))
 
-        # Display the text of the slope interpretation
-        slopeText = reactive({
-          # Find the sign of the slope in order to determine whether to use "increase" or "decrease"
-          if(sign(pointsLine$coefficients[2]) == -1){
-            signSlope = "decrease"
-          }
-          if(sign(pointsLine$coefficients[2]) == 1){
-            signSlope = "increase"
-          }
-          # Get the absolute value of the slope amount
-          sl = as.character(abs(round(pointsLine$coefficients[2], 2)))
-
-          slText = paste("If the predictor variable inceases by one unit, we expect the predicted response variable to", signSlope,"by",sl, "units")
-          return(slText)
-        })
-        output$slope <- renderText({slopeText()})
-      }
-
-
-      
-    
-    }#To close this if statement for this tab
-    
-  })
+   
 
   
-  
+
+
+
   # ----------------------------------------- ANOVA -------------------- #
   
   # Generate data for 3 different groups based on the input means, standard deviations, and sample sizes

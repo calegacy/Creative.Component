@@ -245,15 +245,13 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                             ),
                             
                             # Regression
-                            tabPanel("Linear Regression",
+                            tabPanel("Outliers",
                                      
                                      column(
                                        width = 4, status= "primary",
-                                       box(width = "100%",height = "100%",status = "primary",
-                                           tabsetPanel(id = "tabs",
-                                                       #Choose a dataset Linear regression tab
-                                                       tabPanel("Outliers", value = "seldattab",
-                                                                selectInput("dataset", "Choose Data Set:", choices = c("High Leverage","Pt 2 High Leverage", "Outlier")),
+                                      
+                                              
+                                                                selectInput("dataset", "Choose Data Set:", choices = c("Dataset 1","Dataset 2", "Dataset 3", "Dataset 4")),
                                                                 checkboxInput("fitLine", label = "Fit Line", value = FALSE),
                                                                 checkboxInput("fitLineNoPt", label = "Fit Line Without Point", value = FALSE),
                                                                 verbatimTextOutput("lineSum"),
@@ -261,6 +259,16 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                                                 verbatimTextOutput("lineSumNoPt"),
                                                                 tableOutput("lineEqNoPt")
                                                                 
+                                                       ),
+                                     column(
+                                       width = 7, status = "primary",
+                                       box(
+                                         width = "100%", height = "100%",
+                                         title = "Linear Regression",  status = "primary",
+                                         plotOutput("outlierPlot" )
+                                       )
+                                       
+                                     )
                                                        ),
                                             
                                                     
@@ -276,25 +284,26 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                                                        verbatimTextOutput("intercept"),
                                                                        checkboxInput("slopePoints", "Slope",value = FALSE),
                                                                        verbatimTextOutput("slope")
+                                                                ),
+                                                                column(
+                                                                  width = 7, status = "primary",
+                                                                  box(
+                                                                    width = "100%", height = "100%",
+                                                                    title = "Linear Regression",  status = "primary",
+                                                                    plotOutput("linreg" )
+                                                                  )
+                                                                  
                                                                 )
                                                        )
-                                           )
-                                       )
-                                     ),
-                                     column(
-                                       width = 7, status = "primary",
-                                       box(
-                                         width = "100%", height = "100%",
-                                         title = "Linear Regression",  status = "primary",
-                                         plotOutput("linreg" )
-                                       )
+                                           
                                        
-                                     )
+                                     
+                                  
                                      
                                      
                                      
-                            )
-                 ),
+                            ),
+                 
                  
                  #ANOVA
                  tabPanel(h6("ANOVA"),
