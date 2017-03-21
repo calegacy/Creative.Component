@@ -1,0 +1,253 @@
+\documentclass[11pt]{amsart}
+\usepackage{geometry} 
+\geometry{letterpaper}                  
+
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{Questions for shiny app}
+\author{Chelsey Legacy}
+
+\begin{document}
+\maketitle
+\section{Sampling Distribution for a Proportion}
+1.  Take 1 sample of size 100 with a population proportion of 0.3. Draw a graph of the sample distribution, and write the proportion of those chosen that fell into the ``yes" category. 
+
+
+Note that the sampling distribution has one single bar at the value for the ``yes" proportion.
+
+2.  Now take 100 samples of size 100 with a population proportion 0.3.  What do you notice about the shape of the sampling distribution now?
+
+3. Now take 1000 samples of size 100 with a population proportion of 0.3.  How would you describe this sampling distribution? What are the mean and standard deviation of this distribution?
+\section{Confidence Interval}
+
+1. Draw 1 sample with a population proportion of 0.3, sample size of 100, and confidence level 90$\%$. Give the confidence interval and interpretation.
+
+2. Draw 10 samples and note what proportion of these intervals captured the true proportion.
+
+
+See sample size and confidence level demos to see the effects these aspects have on the sample CI.
+
+
+\section{Sample Size}
+
+1. Draw 20 samples of size 15 at $95\%$ confidence.
+
+Write your confidence interval.  What is the width of this interval?
+ 
+ 2. Draw 20 samples of size 40 at $95\%$ confidence.
+
+
+ 
+Write your confidence interval.  What is the width of this interval?
+ 
+ 
+ 3. Draw 20 samples of size 65 at $95\%$ confidence.
+
+
+Write your confidence interval.  What is the width of this interval?
+
+
+4. What do you notice about the width of the intervals as the sample size increases? Explain.
+
+5. Now increase the sample size from 15 to 75 slowly. What do you notice about the length of the intervals as the sample size increased? Why?
+
+
+
+
+
+
+
+\section{Confidence Level}
+1. Draw 20 samples of size 100 at $80\%$ confidence.
+
+
+ 
+ How many intervals did not capture the true population proportion?
+ 
+ 2. Draw 20 samples of size 100 at $90\%$ confidence.
+
+
+ 
+ How many intervals captured the true population proportion?
+ 
+ 3. Draw 20 samples of size 100 at $95\%$ confidence.
+
+
+ How many intervals captured the true population proportion?
+
+
+4. What do you notice about the number of intervals that captured the true population proportion as the confidence level increases? Explain.
+
+5. Now increase the confidence level from $80\%$ to $99\%$ slowly. What do you notice about the length of the intervals as the confidence level increased? Why?
+
+
+
+
+\section{Inference for one mean}
+
+1.  Take 1 sample of size 25 with a population mean of 20 and a standard deviation of 3. Draw a graph of the sample distribution, and write the mean of your sample.
+
+
+Note that the sampling distribution has one single bar at the value of the mean for your sample.
+
+2.  Take 100 samples of size 25 with a population mean of 20 and a standard deviation of 3.  What do you notice about the sampling distribution now?
+
+3. Take 1000 samples of size 25 with a population mean of 20 and a standard deviation of 3.  How would you describe this sampling distribution? What is the mean for this sampling distribution?
+
+
+\section{Inference for two Proportions}
+
+Set the proportion for group 1 to 0.3 and the proportion for group 2 to 0.4.  Draw 100 samples.
+
+1. Set the sample size for each group to be 10.  What is the proportion for group 1? What is the proportion for group 2?
+
+2. Conduct a hypothesis test to see if there is a significant difference in these two group proportions, with a significance level of 0.05.
+
+
+3. Set the sample size for each group to be 100.  What is the proportion for group 1? What is the proportion for group 2?
+
+4. Conduct a hypothesis test to see if there is a significant difference in these two group proportions, with a significance level of 0.05.
+
+5. What does this tell us about the relationship between sample size and rejecting the null hypothesis?
+
+
+\section{Inference for two Means}
+1. Draw 1 sample with sample size 50 for each group. Set group 1 mean to be 20 and group 2 mean to be 21.  Let the standard deviations for both be 1.  What is your sample mean for each group and what is the difference between those means?
+
+2. Now draw 100 samples with the same specifications as above. Conduct a test to see if the mean of group 1 is significantly lower than the mean for group 2 with a significance level of 0.05. What is the p-value? What is your conclusion based on this p-value?
+
+3. Draw 1 sample with sample size 50 for each group. Set group 1 mean to be 20 and group 2 mean to be 21.  Let the standard deviations for both be 5.  What is your sample mean for each group and what is the difference between those means?
+
+4. Now draw 100 samples with the same specifications as above. Conduct a test to see if the mean of group 1 is significantly lower than the mean for group 2 with a significance level of 0.05. What is the p-value? What is your conclusion based on this p-value?
+
+
+
+
+\section{Correlation}
+1. Set the correlation to -0.9. Describe the form, strength, and direction of the points.
+
+2. Set the correlation to -0.5. Describe the form, strength, and direction of the points.
+
+3. Set the correlation to 0.5. Describe the form, strength, and direction of the points.
+
+4. Set the correlation to 0.9. Describe the form, strength, and direction of the points.
+
+5. What do you notice about the form and strength as you increased the correlation from -0.9 to 0.9?
+
+\section{Outliers}
+
+1. Select "Dataset 1", and observe the point in red. Click "Fit Line" to get a least squares line to the data. Write the equation of the line below.
+
+2. Next, remove the red point and refit the least squares line by checking the "Fit Line Without Point" box.  Write the equation for that line below. 
+
+3. Do you think that fitting the data without the red point improved the fit of the line to the data? Why?
+
+4. Select "Dataset 2", and observe the point in red. Click "Fit Line" to get a least squares line to the data. Write the equation of the line below.
+
+5. Next, remove the red point and refit the least squares line by checking the "Fit Line Without Point" box.  Write the equation for that line below. 
+
+6. Do you think that fitting the data without the red point improved the fit of the line to the data? Why?
+
+7. Choose "Dataset 3" from the dropdown. Fit the least squares regression line both with and without the red outlier. Do you think the point has high leverage? Do you think the point has a large residual? Explain.
+
+High leverage:
+
+Large residual:
+
+8. Choose "Dataset 4" from the dropdown. Fit the least squares regression line both with and without the red outlier. Do you think the point has high leverage? Do you think the point has a large residual? Explain.
+
+High leverage:
+
+Large residual:
+
+
+\section{Regression}
+1.  Set the intercept to -10 and the slope to 5. Click "Fit Line" and write the equation for the least squares regression line.
+
+2. Write the y-intercept interpretation. Then, check the "Intercept" box and see if your interpretation is correct. Note, the red dot on the plot inidcation the location of the y-intercept.
+
+3. Write the slope interpretation. Then, check the "Slope" box and see if your interpretation is correct.
+
+4.   Set the intercept to 20 and the slope to -15. Click "Fit Line" and write the equation for the least squares regression line.
+
+5. Write the y-intercept interpretation. Then, check the "Intercept" box and see if your interpretation is correct.
+
+6. Write the slope interpretation. Then, check the "Slope" box and see if your interpretation is correct. What is the difference between this interpretation and the one in number 3? Explain this difference.
+
+
+
+\section{ANOVA}
+Analysis of variance, or ANOVA, is used to compare means among groups.  An ANOVA table can provide a test to see if there is a significant difference among means for multiple groups. If the p-value for the test is significant based on a set alpha level, we know that at least one group mean is significantly different than the other group means.
+
+1. Set all means to 30 and all standard deviations to 1.  State the p-value and conclusion for a test of difference in means.
+
+2.  Set the means to 20, 30, and 30 respectively.  Set all standard deviations to 5.  Draw a sample and state the p-value and conclusion.  
+
+3. Set the mean for groups 1 and 2 to 30, and mean of group 3 to 32.  Set all standard deviations to 5.  Take a sample with sample size 100 and note what the p-value is for the ANOVA test.  Write a conclusion based on your p-value.
+
+4. Next, keep the settings the same as above, but draw a sample of size 10.  Note the p-value, and write a conclusion based on this p-value.  
+
+5.  What generalization has been made regarding sample size and test outcome can be made after observing what happened in the last question.
+
+\newpage
+
+
+
+\section{Pre-Questions for Students in 101}
+
+1. Explain what it means to have $90\%$ confidence in a confidence interval.
+
+
+2. As we increase the confidence level of a confidence interval what happens to the width of the interval?
+
+
+
+\section{Post-Questions for Students in 101}
+
+1. Explain what it means to have $90\%$ confidence in a confidence interval.
+
+
+2. As we increase the confidence level of a confidence interval what happens to the width of the interval?
+
+
+3. Comments on the Shiny app for confidence level:
+
+
+4. What is the purpose of an ANOVA test?
+
+
+5. Comments on the Shiny app for ANOVA tests:
+
+
+
+
+\section{Pre-Questions for Students in 400 Level Stats}
+
+1. What is the y-intercept of a line in words?
+
+2. What is the slope of a line in words?
+
+
+\section{Post-Questions for Students in 400 Level Stats}
+
+1.  What is the y-intercept interpretation for a line with an intercept of 2?
+
+2. What is the interpretation of the slope for a line with a slope of -3?
+
+3. Comments of the Shiny app section for linear regression.
+
+
+4. Explain the difference between a sample distribution and a sampling distribution.
+
+
+5. Comments on the Shiny app for a sampling distribution for means.
+
+
+
+
+
+
+\end{document}  
