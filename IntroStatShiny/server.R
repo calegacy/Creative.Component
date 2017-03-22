@@ -397,7 +397,7 @@ function(input, output, session) {
   
   # Sample Distribution output
   output$sampleDistOM = renderPlot({
-    qplot(pickOM(), xlab = "x")
+    qplot(pickOM(), xlab = "x", ylab = "Count")
   })
   
   #Sample summary information to be displayed in a table
@@ -441,7 +441,8 @@ function(input, output, session) {
   
   # Output a histogram of the sampling distribution of the sample means
   output$samplingDistOM =renderPlot({
-    ggplot(data = data.frame(samplesOM()),aes(x = samplesOM())) + geom_histogram()
+    ggplot(data = data.frame(samplesOM()),aes(x = samplesOM())) + geom_histogram()+xlab("Sample Means") +ylab("Count")
+    
   })
   
   # Population summary information to be put in a table
