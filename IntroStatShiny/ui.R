@@ -102,10 +102,16 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                             # Confidence Level CI Demo
                             tabPanel("Confidence Level",
                                      fluidRow(
-                                       box(width = 4, title = NULL, status = "primary",
-                                           sliderInput("cldemo", "Confidence Level %", value = 80, min = 80, max = 99, step = 5)
+                                       box(width = 3, title = NULL, status = "primary",
+                                           sliderInput("cIDemoCL", "Confidence Level %", value = 80, min = 80, max = 99, step = 5)
                                        ),
-                                       box(width = 6, title = NULL, status = "primary",
+                                       box(width = 3, title = NULL, status = "primary",
+                                           sliderInput("cIDemoSampSize", "Sample Size", value = 25, min = 25, max = 500, step = 5)
+                                       ),
+                                       box(width = 3, title = NULL, status = "primary",
+                                       numericInput("cIDemoProp", "Population Proportion",
+                                                    value = 0.3,min = 0, max = 1, step = 0.01)),
+                                       box(width = 3, title = NULL, status = "primary",
                                            tableOutput("Clinfo")),
                                        
                                        actionButton("goCL", "Draw",class="btn btn-success btn-")

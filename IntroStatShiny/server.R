@@ -281,9 +281,9 @@ function(input, output, session) {
   twSamps = eventReactive(input$goCL,{
     tsampCL = NULL
     for(i in 1:20){
-      tsCL = rbinom(100, 1, 0.4)
+      tsCL = rbinom(input$cIDemoSampSize, 1, input$cIDemoProp)
       # Get the proportion of "successes" for the generated sample
-      countPropCL = length(which(tsCL == 1 ))/ 100
+      countPropCL = length(which(tsCL == 1 ))/ input$cIDemoSampSize
       tsampCL = c(tsampCL,countPropCL)
     }
     return(tsampCL)
@@ -297,19 +297,19 @@ function(input, output, session) {
   
   # Set the z-value to be the value input by the user
   zlev = reactive({
-    if(input$cldemo  == 80){
+    if(input$cIDemoCL  == 80){
       zlev = 1.282
     }
-    if(input$cldemo == 85){
+    if(input$cIDemoCL == 85){
       zlev = 1.44
     }
-    if(input$cldemo == 90){
+    if(input$cIDemoCL == 90){
       zlev = 1.645
     }
-    if(input$cldemo == 95){
+    if(input$cIDemoCL == 95){
       zlev = 1.96
     }
-    if(input$cldemo == 99){
+    if(input$cIDemoCL == 99){
       zlev = 2.576
     }
     return(zlev)
@@ -317,13 +317,13 @@ function(input, output, session) {
   
   # Calculate the upper bounds for the confidence intervals
   upCLDemo = reactive({
-    usd = twSamps() + zlev()*(sqrt(twSamps()*(1-twSamps())/100))
+    usd = twSamps() + zlev()*(sqrt(twSamps()*(1-twSamps())/input$cIDemoSampSize))
     return(usd)
   })
   
   # Calculate the lower bounds for the confidence intervals
   lowCLDemo = reactive({
-    lsd =  twSamps() - zlev()*(sqrt(twSamps()*(1-twSamps())/100))
+    lsd =  twSamps() - zlev()*(sqrt(twSamps()*(1-twSamps())/input$cIDemoSampSize))
     return(lsd)
   })
   
@@ -332,7 +332,7 @@ function(input, output, session) {
     coldemo = NULL
     for(i in 1:20){
       # Color the intervals blue if they contain 0.4 (the set value for the population parameter)
-      if(lowCLDemo()[i] <= 0.4 && 0.4  <= upCLDemo()[i]   ){
+      if(lowCLDemo()[i] <= input$cIDemoProp && input$cIDemoProp  <= upCLDemo()[i]   ){
         
         colne = "steelblue1"
         coldemo = c(coldemo,colne)
@@ -359,9 +359,7 @@ function(input, output, session) {
   
   # Information about the confidence intervals to be displayed at the top of the page
   ClInf = reactive({data.frame(
-    SampleSize = 100,
-    NumberSamples = 20,
-    PopProp = 0.4
+    "Proportion Captured" = length(which(colorCLDemo() == "steelblue1"))/20
   )
   })
   
