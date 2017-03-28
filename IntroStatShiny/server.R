@@ -35,14 +35,14 @@ function(input, output, session) {
   
   #Sample summary information to be put into a table
   samplesum = eventReactive(input$goProp,{data.frame(
-    Category = c( "Yes", "No"),
-    Count =c(  length(which(pickVect() == 1)), length(which(pickVect() == 0))),
-    Prop = c(length(which(pickVect() == 1))/input$sampleSize, length(which(pickVect() == 0))/input$sampleSize)
+    Category = c( "Yes = 1", "No = 0"),
+    Count =c( length(which(pickVect() == 1)), length(which(pickVect() == 0))),
+    Prop = c(format(round(length(which(pickVect() == 1))/input$sampleSize,digits = 4),4), format(round(length(which(pickVect() == 0))/input$sampleSize,4),4))
   )
   })
   
   #Sample summary table output
-  output$sampSumDat  = renderTable(caption = "Summary Statistics",caption.placement = getOption("xtable.caption.placement", "top"),{
+  output$sampSumDat  = renderTable(caption = "Sample Summary Statistics",caption.placement = getOption("xtable.caption.placement", "top"),{
     samplesum()
   })
   
@@ -73,7 +73,7 @@ function(input, output, session) {
   
   # Histogram of the sampling distribution
   output$samplingDist =renderPlot({
-    ggplot(data = data.frame(samples()),aes(samples()))+ geom_histogram(binwidth = 0.01) +xlab("Proportion") +ylab("Count")
+    ggplot(data = data.frame(samples()),aes(samples()))+ geom_histogram(binwidth = 0.01) +xlab("Sample Proportion") +ylab("Number of Samples")
   })
   
   # Population summary info to be displayed in a table
@@ -84,7 +84,7 @@ function(input, output, session) {
   })
   
   #Population summary table output
-  output$popSumDat  = renderTable(caption = "Population Summary",caption.placement = getOption("xtable.caption.placement", "top"),{
+  output$popSumDat  = renderTable(caption = "Sampling Distribution Summary Statistics",caption.placement = getOption("xtable.caption.placement", "top"),{
     popSum()
   })
   
@@ -122,7 +122,7 @@ function(input, output, session) {
   })
   
   # Table output of sample summary confidence interval
-  output$sPropSumDat  = renderTable(caption = "Summary Statistics",caption.placement = getOption("xtable.caption.placement", "top"),{
+  output$sPropSumDat  = renderTable(caption = "Sample Confidence Interval",caption.placement = getOption("xtable.caption.placement", "top"),{
     samplesumCI()
   })
   
@@ -227,7 +227,7 @@ function(input, output, session) {
   })
   
   # Output a table of the information about the confidence intervals
-  output$sPropPopDat  = renderTable(caption = "Summary of Samples",caption.placement = getOption("xtable.caption.placement", "top"),{
+  output$sPropPopDat  = renderTable(caption = "Summary for Confidence Intervals",caption.placement = getOption("xtable.caption.placement", "top"),{
     popSumCI()
   })
   

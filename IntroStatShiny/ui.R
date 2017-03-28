@@ -29,14 +29,14 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                        
                                      ),
                                      
-                                     column(width = 4,
+                                     column(width = 5,
                                             
                                          tableOutput("sampSumDat"),
                                         tableOutput("popSumDat")
                                             
                                      ),
 
-                                     column(width = 6, 
+                                     column(width = 5, 
                                             verbatimTextOutput("sdist"),
                                             plotOutput("sampleDist", width = "auto", height = 200),
                                             verbatimTextOutput("singdist"),
@@ -44,9 +44,7 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                      )
                             ),
                             
-                            
-                            
-                            
+                      
                             # One Proportion CI
                             tabPanel( "Confidence Interval",
                                       
