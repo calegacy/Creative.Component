@@ -45,70 +45,18 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                             ),
                             
                       
-                            # One Proportion CI
-                            tabPanel( "Confidence Interval",
-                                      
-                                      column(width = 3,
-                                        
-                                          numericInput("popPropCI", "Population Proportion",
-                                                       value = 0.3,min = 0, max = 1, step = 0.01),
-                                          numericInput("sampleSizeCI", "Sample Size", value = 100, min = 1),
-                                          numericInput( "numSampCI", "Number of Samples", value = 10, min = 1),
-                                          radioButtons("CLProp", "Confidence level", choices = c("90%", "95%", "99%"), selected ="90%", inline = FALSE,
-                                                          width = NULL),
-                                        actionButton("goCI", "Draw", class="btn btn-success btn")
-                                      ),
-                                      
-                                      column(width = 3,
-                                          tableOutput("sPropSumDat"),
-                                          tableOutput("sPropPopDat")
-                                          ),
-                                      
-                                     column(width = 5, 
-                                            verbatimTextOutput("CISumStat"),
-                                             plotOutput("samplePropCI", width = "auto", height = 200),
-                                             verbatimTextOutput("CIManyStat"),
-                                             plotOutput("sPropPopCI", width = "auto", height = 200)
-                                        )
-                                      
-                            ),
-                            
-                            
-                            #############
-                            
-                            # Sample size CI Demo
-                            tabPanel( "Sample Size",
-                                      fluidRow(
-                                        box(width =4, title = NULL, status = "primary",
-                                            sliderInput("sampdemo", "Sample Size", value = 10, min = 20, max = 1000, step = 5)
-                                        ),
-                                        box(width = 6, title = NULL, status = "primary",
-                                            tableOutput("CIinfo")
-                                            
-                                        ),
-                                        
-                                        actionButton("goSS", "Draw",class="btn btn-success btn")
-                                        
-                                      ),
-                                      fluidRow(
-                                        box(width = 12, title = NULL, status = "primary",
-                                            plotOutput("sampDemoPlot")
-                                        )
-                                        
-                                      )
-                                      
-                            ),
+
                             
                             # Confidence Level CI Demo
                             tabPanel("Confidence Level",
                                      fluidRow(
-                                       box(width = 3, title = NULL, status = "primary",
+                                       box(width = 4, title = NULL, status = "primary",
                                            sliderInput("cIDemoCL", "Confidence Level %", value = 80, min = 80, max = 99, step = 5)
                                        ),
-                                       box(width = 3, title = NULL, status = "primary",
+                                       box(width = 4, title = NULL, status = "primary",
                                            sliderInput("cIDemoSampSize", "Sample Size", value = 25, min = 25, max = 500, step = 5)
                                        ),
-                                       box(width = 3, title = NULL, status = "primary",
+                                       box(width = 2, title = NULL, status = "primary",
                                        numericInput("cIDemoProp", "Population Proportion",
                                                     value = 0.3,min = 0, max = 1, step = 0.01)),
                                        box(width = 3, title = NULL, status = "primary",
