@@ -94,10 +94,10 @@ function(input, output, session) {
   #--------------------------------------------- One proportion CIs ---------------------------------------------------- #
 
   # Generate 20 sample p_hats to create confidence intervals around
-  twSamps = eventReactive(input$goCL,{
+  twSamps = eventReactive(input$cIDemoSampSize,{
     tsampCL = NULL
     for(i in 1:20){
-      tsCL = rbinom(input$cIDemoSampSize, 1, input$cIDemoProp)
+      tsCL = rbinom(input$cIDemoSampSize, 1, 0.5)
       # Get the proportion of "successes" for the generated sample
       countPropCL = length(which(tsCL == 1 ))/ input$cIDemoSampSize
       tsampCL = c(tsampCL,countPropCL)
@@ -148,7 +148,7 @@ function(input, output, session) {
     coldemo = NULL
     for(i in 1:20){
       # Color the intervals blue if they contain 0.4 (the set value for the population parameter)
-      if(lowCLDemo()[i] <= input$cIDemoProp && input$cIDemoProp  <= upCLDemo()[i]   ){
+      if(lowCLDemo()[i] <= 0.5 && 0.5  <= upCLDemo()[i]   ){
         
         colne = "steelblue1"
         coldemo = c(coldemo,colne)
@@ -166,16 +166,18 @@ function(input, output, session) {
     return(coldemo)
   })
   
-  # Graph the confidence intervals stacked on one plot to display how many captured the tur population proportion 
+  # Graph the confidence intervals stacked on one plot to display how many captured the population proportion 
   output$sampCLPlot = renderPlot({
     qplot(x = twSamps(), y = ysCLDemo(), xlab = "Confidence Intervals")+xlim(0,1)+
       geom_segment(aes(x = lowCLDemo(), xend = upCLDemo(), y = ysCLDemo(), yend = ysCLDemo()), colour = colorCLDemo())+
-      theme(axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())
+      theme(axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())+geom_vline(xintercept = 0.5, color = "slategray4")
   })
   
   # Information about the confidence intervals to be displayed at the top of the page
   ClInf = reactive({data.frame(
-    "Proportion Captured" = length(which(colorCLDemo() == "steelblue1"))/20
+    "Proportion of CI Captured" = length(which(colorCLDemo() == "steelblue1"))/20
+    
+  
   )
   })
   
@@ -209,7 +211,7 @@ function(input, output, session) {
   #Sample summary information to be displayed in a table
   samplesumOM = reactive({data.frame(
     Mean = mean(pickOM()),
-    StandardDeviation = input$sigma/sqrt(input$sampleSizeOM)
+    "Standard Deviation" = input$sigma/sqrt(input$sampleSizeOM)
   )
   })
   
@@ -247,7 +249,7 @@ function(input, output, session) {
   
   # Output a histogram of the sampling distribution of the sample means
   output$samplingDistOM =renderPlot({
-    ggplot(data = data.frame(samplesOM()),aes(x = samplesOM())) + geom_histogram()+xlab("Sample Means") +ylab("Count")
+    ggplot(data = data.frame(samplesOM()),aes(x = samplesOM())) + geom_histogram()+xlab("Sample Means") +ylab("Number of Samples")
     
   })
   
@@ -255,7 +257,7 @@ function(input, output, session) {
   popSumOM = reactive({data.frame(
     
     Mean = mean(samplesOM()),
-    StDev = sd(samplesOM())
+    "Standard Deviation" = sd(samplesOM())
   )
   })
   
@@ -271,12 +273,12 @@ function(input, output, session) {
   #--------------------------------------------- Inference in Two Proportions ---------------------------------------#
   
   # Calculations to get a sample distribution for group 1
-  pickP1Vect = reactive({
+  pickP1Vect = eventReactive(input$go2Prop,{
     pickfp1 = rbinom(input$sampleSizeGP1,1, input$popPropG1P)
     return(pickfp1)
   })
   # Get count of "successes" in the sample for group 1
-  npickP1Prop = reactive({
+  npickP1Prop = eventReactive(input$go2Prop,{
     npickp1f = length(which(pickP1Vect() == 1))/input$sampleSizeGP1
     return(npickp1f)
   })
@@ -289,12 +291,12 @@ function(input, output, session) {
   ####  Group 2 Calculations ####
   
   # Generate a binomial sample for group 2
-  pickP2Vect = reactive({
+  pickP2Vect = eventReactive(input$go2Prop,{
     pickfp2 = rbinom(input$sampleSizeGP2,1, input$popPropG2P)
     return(pickfp2)
   })
   
-  npickP2Prop = reactive({
+  npickP2Prop = eventReactive(input$go2Prop,{
     npickp2f = length(which(pickP2Vect() ==1))/input$sampleSizeGP2
     return(npickp2f)
   })
@@ -351,7 +353,7 @@ function(input, output, session) {
   
   # Output the plot for the sampling distribution for the difference in proportions
   output$samplingDistTP =renderPlot({
-    qplot(samplesP2(), xlab = "Difference in Proportions", ylab = "Count", binwidth = 0.01)
+    qplot(samplesP2(), xlab = "Difference in Proportions", ylab = "Number of Samples", binwidth = 0.01)
   })
   
   # Start calculations to conduct a difference in proportions test
@@ -677,7 +679,11 @@ function(input, output, session) {
         print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
                 geom_point(aes(x = dataX[21], y = dataY[21]), colour= "firebrick2", size = 2) +
                 geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", linetype ="F1", size = 0.75) +
-                geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1))
+                geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1)+
+                scale_colour_manual(name="Legend",values=c("fitted" = "navyblue", "noPoint" = "springgreen2"))+
+                scale_linetype_manual(name = "Legend", values = c("fitted" = "F1", "noPoint"= "dashed"))+
+                theme(legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"))+
+                guides(fill=guide_legend(title="Legend")))
         
       }
     }
@@ -826,7 +832,8 @@ function(input, output, session) {
   
   # Dotplot of the threee groups of data colored and faceted by group
   output$anovaPlot = renderPlot( {
-    qplot(data = dframe(), x =g123Data(), geom = "dotplot", fill = groupList(), xlab = "x")+facet_grid(facets = groupList()~.)
+    qplot(data = dframe(), x =g123Data(), geom = "dotplot", fill = groupList(), xlab = "x")+facet_grid(facets = groupList()~.)+
+      guides(fill=guide_legend(title="Group"))
   })
   
   # Make a linear model based on the data in order to do an ANOVA analysis

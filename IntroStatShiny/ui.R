@@ -56,13 +56,11 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                        box(width = 4, title = NULL, status = "primary",
                                            sliderInput("cIDemoSampSize", "Sample Size", value = 25, min = 25, max = 500, step = 5)
                                        ),
-                                       box(width = 2, title = NULL, status = "primary",
-                                       numericInput("cIDemoProp", "Proportion",
-                                                    value = 0.3,min = 0, max = 1, step = 0.01)),
+                                      
                                        box(width = 3, title = NULL, status = "primary",
-                                           tableOutput("Clinfo")),
+                                           tableOutput("Clinfo"))
                                        
-                                       actionButton("goCL", "Draw",class="btn btn-success btn-")
+                                   
                                        
                                        
                                        
@@ -84,8 +82,8 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                              
                                numericInput("popMeanOM", "Population Mean",
                                             value = 10,min = 0, max = 1000, step = 1),
-                               numericInput( "sigma", "St. Dev.", value = 1, min = 0.01),
-                               numericInput("sampleSizeOM", "Samp Size", value = 10, min = 1),
+                               numericInput( "sigma", "Standard Deviation", value = 1, min = 0.01),
+                               numericInput("sampleSizeOM", "Sample Size", value = 10, min = 1),
                                numericInput( "numSampOM", "Number of Samples", value = 1, min = 1),
                                actionButton("goMean", "Draw",class="btn btn-success btn")
                              
