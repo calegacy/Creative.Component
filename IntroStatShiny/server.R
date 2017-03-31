@@ -200,7 +200,7 @@ function(input, output, session) {
   #Sample summary information to be displayed in a table
   samplesumOM = reactive({data.frame(
     Mean = mean(pickOM()),
-    "Standard Deviation" = input$sigma/sqrt(input$sampleSizeOM)
+    "Standard Deviation" = sd(pickOM())
   )
   })
   
@@ -348,7 +348,8 @@ function(input, output, session) {
  
   # Population summary info and p-values to be displayed in a table
   popSumTP = reactive({data.frame(
-    Mean = mean(samplesP2())
+    Mean = mean(samplesP2()),
+    "Standard Deviation" = sd(samplesP2())
    
   
   )
@@ -438,7 +439,8 @@ function(input, output, session) {
   
  # Sampling distribution and test statistics information to be displayed in a table 
   popSumTM = reactive({data.frame(
-    Mean = mean(samplesTM())
+    Mean = mean(samplesTM()),
+    "Standard Deviation" = sd(samplesTM())
     
   )
   })
