@@ -24,7 +24,7 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                          numericInput("popProp", "Population Proportion",
                                                       value = 0.3,min = 0, max = 1, step = 0.01),
                                          numericInput("sampleSize", "Sample Size", value = 100, min = 1),
-                                         numericInput( "numSamp", "Number of Samples", value = 10, min = 1),
+                                         numericInput( "numSamp", "Number of Samples", value = 100, min = 1),
                                          actionButton("goProp", "Draw",class="btn btn-success btn")
                                        
                                      ),
@@ -55,10 +55,7 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                        ),
                                        box(width = 4, title = NULL, status = "primary",
                                            sliderInput("cIDemoSampSize", "Sample Size", value = 25, min = 25, max = 500, step = 5)
-                                       ),
-                                      
-                                       box(width = 3, title = NULL, status = "primary",
-                                           tableOutput("Clinfo"))
+                                       )
                                        
                                    
                                        
@@ -66,7 +63,7 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                        
                                      ),
                                      fluidRow(
-                                       box(width = 12, title = NULL, status = "primary",
+                                       box(width = 10, title = NULL, status = "primary",
                                            plotOutput("sampCLPlot")
                                        )
                                        
@@ -84,7 +81,7 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                             value = 10,min = 0, max = 1000, step = 1),
                                numericInput( "sigma", "Standard Deviation", value = 1, min = 0.01),
                                numericInput("sampleSizeOM", "Sample Size", value = 10, min = 1),
-                               numericInput( "numSampOM", "Number of Samples", value = 1, min = 1),
+                               numericInput( "numSampOM", "Number of Samples", value = 100, min = 1),
                                actionButton("goMean", "Draw",class="btn btn-success btn")
                              
                            ),
@@ -115,26 +112,26 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                             value = 0.3, min = 0, max = 1, step = 0.01),
                                numericInput("sampleSizeGP1", h6("Sample Size Group 1"), value = 100, min = 1),
                                numericInput("sampleSizeGP2", h6("Sample Size Group 2"), value = 100, min = 1),
-                               numericInput( "numSampGP",h6("Number of Samples"), value = 10, min = 1),
+                               numericInput( "numSampGP",h6("Number of Samples"), value = 100, min = 1),
                                actionButton("go2Prop", "Draw",class="btn btn-success btn")
                            ),
                            
                            column(width = 3,
-                                  verbatimTextOutput("twoPropSampleDist"),
-                                 plotOutput("sampleDistG1", width = 200, height = 200),
-                                 plotOutput("sampleDistG2", width = 200, height = 200),
-                                 tableOutput("sampSumDatP2")
+                                  
+                                 tableOutput("sampSumDatP2"),
+                                 tableOutput("popSumDat2P")
                              ),
                              
                       
                              column( width = 7,
-                                     withMathJax(),
-                                     verbatimTextOutput("twoPropHyp"),
-                                  radioButtons("altHypR", "", choices = c( "<","!=", ">"), inline = TRUE,
-                                               width = '400px'),
+                                     verbatimTextOutput("twoPropSampleDist"),
+                                     fluidRow(
+                           plotOutput("sampleDistG1", width = '100%', height = 150),
+                           plotOutput("sampleDistG2", width = '100%', height = 150)
+                                     ),
                                   verbatimTextOutput("twoPropSampDist"),
-                                  plotOutput("samplingDistTP", width = '100%', height = 200),
-                                  tableOutput("popSumDat2P")
+                                  plotOutput("samplingDistTP", width = '100%', height = 200)
+                                 
                              )
                            
                            
@@ -152,24 +149,22 @@ ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
                                numericInput( "sigmaTM2", h6("Group 2 St Dev"), value = 1, min = 0.01),
                                numericInput("sampleSizeTM1", h6("Group 1 Size"), value = 10, min = 1),
                                numericInput("sampleSizeTM2", h6("Group 2 Size"), value = 10, min = 1),
-                               numericInput( "numSampTM",h6( "Number of Samples"), value = 1, min = 1),
+                               numericInput( "numSampTM",h6( "Number of Samples"), value = 100, min = 1),
                                actionButton("go2Mean", "Draw",class="btn btn-success btn")
                       
                           ),
                            column(width = 3,
-                                  verbatimTextOutput("twoMeansSampleDist"),
-                               plotOutput("sampleDistM1", width = '100%', height = 200),
-                               plotOutput("sampleDistM2", width = '100%', height = 200),
-                               tableOutput("sampSumDatTM")
+                               tableOutput("sampSumDatTM"),
+                               tableOutput("popSumDatTM")
                              
                            ),
-                           column(width = 6,
-                                  verbatimTextOutput("twoMeansHyp"),
-                                 radioButtons("altHypRMeans", "", choices = c("<", "!=", ">"), selected ="<", inline = TRUE,
-                                              width = '400px'),
+                           column(width = 7,
+                                  verbatimTextOutput("twoMeansSampleDist"),
+                                  plotOutput("sampleDistM1", width = '100%', height = 150),
+                                  plotOutput("sampleDistM2", width = '100%', height = 150),
                                  verbatimTextOutput("twoMeansSampDist"),
-                                 plotOutput("samplingDistTM", width = '100%', height = 200),
-                                 tableOutput("popSumDatTM")
+                                 plotOutput("samplingDistTM", width = '100%', height = 200)
+                                 
                              )
                       
                            

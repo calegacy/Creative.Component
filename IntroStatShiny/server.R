@@ -79,7 +79,7 @@ function(input, output, session) {
   # Population summary info to be displayed in a table
   popSum = eventReactive(input$goProp,{data.frame(
     Mean = mean(samples()),
-    StDev = sd(samples())
+    "Standard Deviation" = sd(samples())
   )
   })
   
@@ -173,18 +173,7 @@ function(input, output, session) {
       theme(axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())+geom_vline(xintercept = 0.5, color = "slategray4")
   })
   
-  # Information about the confidence intervals to be displayed at the top of the page
-  ClInf = reactive({data.frame(
-    "Proportion of CI Captured" = length(which(colorCLDemo() == "steelblue1"))/20
-    
-  
-  )
-  })
-  
-  # Output information table
-  output$Clinfo = renderTable({
-    ClInf()
-  })
+ 
   
   # --------------------------------------------- Inference for One Mean ------------------------------------#
   
@@ -216,7 +205,7 @@ function(input, output, session) {
   })
   
   # Output for the sample summary information
-  output$sampSumDatOM  = renderTable(caption = "One Sample Summary",caption.placement = getOption("xtable.caption.placement", "top"),{
+  output$sampSumDatOM  = renderTable(caption = "Sample Summary Statistics",caption.placement = getOption("xtable.caption.placement", "top"),{
     samplesumOM()
   })
   
@@ -262,7 +251,7 @@ function(input, output, session) {
   })
   
   # Output the table of the population summary information
-  output$popSumDatOM  = renderTable(caption = "Summary of Samples",caption.placement = getOption("xtable.caption.placement", "top"),{
+  output$popSumDatOM  = renderTable(caption = "Summary of Sampling Distribution",caption.placement = getOption("xtable.caption.placement", "top"),{
     popSumOM()
   })
   
@@ -356,83 +345,12 @@ function(input, output, session) {
     qplot(samplesP2(), xlab = "Difference in Proportions", ylab = "Number of Samples", binwidth = 0.01)
   })
   
-  # Start calculations to conduct a difference in proportions test
-  two.prop.st = reactive({
-    tps = sqrt((npickP1Prop()*(1-npickP1Prop())/input$sampleSizeGP1)+(npickP2Prop()*(1-npickP2Prop())/input$sampleSizeGP2))
-    return(tps)
-  })
-  
-  # Calculate a simulated p-value
-  pvalueR = reactive({
-    # If the user selects a lower tail test, find the proportion of sample differences
-    # that are less than the original sample difference
-    if(input$altHypR == "<"){
-      pvr = length(which(samplesP2() < (npickP1Prop()-npickP2Prop())))/ input$numSampGP
-    }
-    # If the user selects a two-tailed test, find both the proportion of differences
-    # that are above and below the sample proportion
-    if(input$altHypR == "!="){
-      if((npickP1Prop()-npickP2Prop()) < 0){
-        pvr =2*(length(which(samplesP2() < (npickP1Prop()-npickP2Prop()))))/ input$numSampGP
-      }
-      if((npickP1Prop()-npickP2Prop()) > 0){
-        pvr =2*(length(which(samplesP2() > (npickP1Prop()-npickP2Prop()))))/ input$numSampGP
-      }
-    }
-    # If an upper tail test is selected, find the proportion of sample differences
-    # that were above the sample difference
-    if(input$altHypR == ">"){
-      pvr  = length(which(samplesP2() > (npickP1Prop()-npickP2Prop())))/ input$numSampGP
-    }
-    
-    # Return the correct p-value based on the test selected by the user
-    return(pvr)
-  })
-  
-  
-  # Calculate the z-score and p-value for a formal differnce in proportions test
-  
-  # Calculate p-pooled in order to get a calculation for z
-  pPooled = reactive({
-    ppool = (input$sampleSizeGP1*npickP1Prop() + input$sampleSizeGP2*npickP2Prop()) /(input$sampleSizeGP1 + input$sampleSizeGP2)
-    return(ppool)
-  })
-  
-  # Calculate a z-value 
-  zval = reactive({
-    z =  (npickP1Prop()-npickP2Prop()) / sqrt((pPooled()*(1-pPooled())/input$sampleSizeGP1)+(pPooled()*(1-pPooled())/input$sampleSizeGP2))
-    return(z)
-  })
-  
-  # Get a p-value corresponding to the z-value calculated above
-  pvalueZ = reactive({
-    # P-value for a lower tail test
-    if(input$altHypR == "<"){
-      pv = pnorm(zval(),0,1)
-    }
-    # P-value for a two tailed test
-    if(input$altHypR == "!="){
-      if(zval() >= 0){
-        pv = 2*(1 - pnorm(zval(),0,1))
-      }
-      if(zval() < 0){
-        pv = 2*(pnorm(zval(),0,1))
-      }
-    }
-    # P-value for an upper tailed test
-    if(input$altHypR == ">"){
-      pv = 1 - pnorm(zval(),0,1)
-    }
-    return(pv)
-  })
-  
+ 
   # Population summary info and p-values to be displayed in a table
   popSumTP = reactive({data.frame(
-    Mean = mean(samplesP2()),
-    StDev =sd(samplesP2()),
-    PValue = pvalueR(),
-    ZValue = zval(),
-    PValueZ = pvalueZ()
+    Mean = mean(samplesP2())
+   
+  
   )
   })
   
@@ -443,7 +361,7 @@ function(input, output, session) {
   
   # Output the text labels for the Distributions and test options
   output$twoPropSampleDist <- renderText({ "Sample Distributions" }) 
-  output$twoPropHyp <- renderText({ "Alternative Hypothesis" })
+
   output$twoPropSampDist <- renderText({ "Sampling Distribution" }) 
   
   # --------------------------------------------- Two Means Code -----------------------------------------------------#
@@ -475,7 +393,7 @@ function(input, output, session) {
   samplesumTM = reactive({data.frame(
     Mean1 = mean(pickM1()),
     Mean2 = mean(pickM2()),
-    DiffMeans = mean(pickM1())- mean(pickM2())
+    Difference= mean(pickM1())-mean(pickM2())
   )
   })
   
@@ -485,7 +403,7 @@ function(input, output, session) {
   })
   
   # Generate many samples to make a sampling distribution of differences in means
-  samplesTM = reactive({
+  samplesTM = eventReactive(input$go2Mean,{
     # For only one sample keep the difference from above
     if(input$numSampTM == 1){
       return(mean(pickM1())-mean(pickM2()))
@@ -516,61 +434,12 @@ function(input, output, session) {
   })
   
   
-  # Calculate a simulated p-value for the difference in means test
-  pvalueR2M = reactive({
-    # Proportion of differences in means generated lower than the samples difference in means
-    if(input$altHypRMeans == "<"){
-      pvr2 = length(which(samplesTM() < (mean(pickM1())-mean(pickM2()))))/ input$numSampTM
-    }
-    # Two-tailed to find more extreme values than your sample difference in means
-    if(input$altHypRMeans == "!="){
-      if((pickM1()-pickM2()) <= 0){
-      pvr2 =2*((length(which(samplesTM() < (mean(pickM1())-mean(pickM2())))))/ input$numSampTM)
-      }
-      if((pickM1()-pickM2()) > 0){
-        pvr2 =2*((length(which(samplesTM() > (mean(pickM1())-mean(pickM2())))))/ input$numSampTM)
-      }
-    } 
-    # Proportion of differences in means generated that are higher than the sample difference in means
-    if(input$altHypRMeans == ">"){
-      pvr2  = length(which(samplesTM() > (mean(pickM1())-mean(pickM2()))))/ input$numSampTM
-    }
-    return(pvr2)
-  })
-  
-  # Calculations for the z-score for difference in means
-  zscore2M = reactive({
-    zs2m = mean(pickM1())-mean(pickM2()) / sqrt(input$sigmaTM1^2/input$sampleSizeTM1 +input$sigmaTM2^2/input$sampleSizeTM2  )
-    return(zs2m)
-  })
-  
-  # Get a p-value based on the z-score 
-  pvalueZTM = reactive({
-    if(input$altHypRMeans == "<"){
-      pv2 = pnorm(zscore2M(),0,1)
-    }
-    if(input$altHypRMeans == "!="){
-      if(zcore2M() <= 0){
-        pv2 = 2*(pnorm(zscore2M(),0,1))
-      }
-      if(zcore2M() > 0){
-        pv2 = 2*(1 - pnorm(zscore2M(),0,1))
-      }
-    }
-    if(input$altHypRMeans == ">"){
-      pv2 = 1 - pnorm(zscore2M(),0,1)
-    }
-    return(pv2)
-  })
  
   
  # Sampling distribution and test statistics information to be displayed in a table 
   popSumTM = reactive({data.frame(
-    Mean = samplesTM(),
-    StDev = sd(samplesTM()),
-    PValue = pvalueR2M(),
-    Zscore = zscore2M(),
-    ZPvalue = pvalueZTM()
+    Mean = mean(samplesTM())
+    
   )
   })
   
@@ -715,14 +584,14 @@ function(input, output, session) {
 
       # Plot the points on the graph
       output$linreg = renderPlot({
-      print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response"))
+      print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Explanatory")+ylab("Response"))
         
         
         # Add the line of best fit and display the equation in table form
         if(input$fitPoints == TRUE){
           pointsLine = lm(xy()$V2-intdelt()~xy()$V1)
        
-           print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response")+
+           print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Explanatory")+ylab("Response")+
               geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2]))
          
           # Make a table with the equation information
@@ -743,7 +612,7 @@ function(input, output, session) {
         if(input$interceptPoints == TRUE){
           pointsLine = lm(xy()$V2-intdelt()~xy()$V1)
           
-            print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response")+
+            print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Explantatory")+ylab("Response")+
               geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2])+
               geom_point(aes(x = 0, y = pointsLine$coefficients[1], color = "intercept"), shape = 8))
           
@@ -751,7 +620,7 @@ function(input, output, session) {
           # Display the intercept interpretation
           intText = reactive({
             int = as.character(round(pointsLine$coefficients[1], 2))
-            text = paste("If the predictor variable is zero, the predicted response value is ", int, ".")
+            text = paste("If the explantory variable is zero, the predicted response value is ", int, ".")
             return(text)
           })
           output$intercept <- renderText({ intText() })
@@ -762,7 +631,7 @@ function(input, output, session) {
         if(input$slopePoints == TRUE){
           pointsLine = lm(xy()$V2-intdelt()~xy()$V1)
           
-            print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Predictor")+ylab("Response")+
+            print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Explanatory")+ylab("Response")+
               geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2])+
               geom_point(aes(x = 0, y = pointsLine$coefficients[1], color = "intercept"), shape = 8)+
               geom_segment(aes(x = 1, xend = 2, y = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), yend = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), color = "one unit"))+
@@ -780,7 +649,7 @@ function(input, output, session) {
             # Get the absolute value of the slope amount
             sl = as.character(abs(round(pointsLine$coefficients[2], 2)))
             
-            slText = paste("If the predictor variable inceases by one unit, we expect the predicted response variable to", signSlope,"by",sl, "units")
+            slText = paste("If the explantaory variable inceases by one unit, we expect the predicted response variable to", signSlope,"by",sl, "units")
             return(slText)
           })
           output$slope <- renderText({slopeText()})
