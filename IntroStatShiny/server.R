@@ -441,7 +441,6 @@ function(input, output, session) {
   popSumTM = reactive({data.frame(
     Mean = mean(samplesTM()),
     "Standard Deviation" = sd(samplesTM())
-    
   )
   })
   
