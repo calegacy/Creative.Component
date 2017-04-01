@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  1 APR 2017 15:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  1 APR 2017 18:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -396,32 +396,26 @@ Package tocloft Info: The document has chapter divisions on input line 44.
 \cfttabindent=\skip79
 \cfttabnumwidth=\skip80
 )
-(./CCPaper1.23.aux
-
-LaTeX Warning: Label `fig:ANOVALOW' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:ANOVALOW' multiply defined.
-
-)
+(./CCPaper1.23.aux)
 \openout1 = `CCPaper1.23.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 42.
- (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 43.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 *geometry* driver: auto-detecting
@@ -487,7 +481,7 @@ Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 )
-Package hyperref Info: Link coloring ON on input line 42.
+Package hyperref Info: Link coloring ON on input line 43.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -497,22 +491,22 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count127
 )
-LaTeX Info: Redefining \ref on input line 42.
-LaTeX Info: Redefining \pageref on input line 42.
-LaTeX Info: Redefining \nameref on input line 42.
+LaTeX Info: Redefining \ref on input line 43.
+LaTeX Info: Redefining \pageref on input line 43.
+LaTeX Info: Redefining \nameref on input line 43.
 
 (./CCPaper1.23.out) (./CCPaper1.23.out)
 \@outlinefile=\write3
 \openout3 = `CCPaper1.23.out'.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 48.
-LaTeX Font Info:    Try loading font information for U+msa on input line 71.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 49.
+LaTeX Font Info:    Try loading font information for U+msa on input line 72.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 71.
+LaTeX Font Info:    Try loading font information for U+msb on input line 72.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -521,10 +515,10 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 88.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 89.
  [2]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 91.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
 
 (./CCPaper1.23.toc)
 \tf@toc=\write4
@@ -532,223 +526,188 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
 
  [3] [4] [5] [6] [7]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 129.
-
-
-LaTeX Warning: Reference `OneProp' on page 8 undefined on input line 130.
-
-[8]
-
-LaTeX Warning: Reference `OnePropCI' on page 9 undefined on input line 135.
-
-<OneProp.png, id=112, 959.585pt x 665.48625pt>
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 130.
+ [8]
+<OneProp.png, id=115, 959.585pt x 665.48625pt>
 File: OneProp.png Graphic file (type png)
  <use OneProp.png>
-Package pdftex.def Info: OneProp.png used on input line 141.
+Package pdftex.def Info: OneProp.png used on input line 142.
 (pdftex.def)             Requested size: 322.50346pt x 223.66278pt.
 
-<OnePropCI.png, id=114, 845.1575pt x 628.3475pt>
+<OnePropCI.png, id=117, 845.1575pt x 628.3475pt>
 File: OnePropCI.png Graphic file (type png)
  <use OnePropCI.png>
-Package pdftex.def Info: OnePropCI.png used on input line 147.
+Package pdftex.def Info: OnePropCI.png used on input line 148.
 (pdftex.def)             Requested size: 322.50346pt x 239.77165pt.
  [9]
 [10 <./OneProp.png> <./OnePropCI.png>]
-
-LaTeX Warning: Reference `OneMean' on page 11 undefined on input line 157.
-
-<OneMean.png, id=128, 955.57pt x 649.42625pt>
+<OneMean.png, id=131, 955.57pt x 649.42625pt>
 File: OneMean.png Graphic file (type png)
  <use OneMean.png>
-Package pdftex.def Info: OneMean.png used on input line 162.
+Package pdftex.def Info: OneMean.png used on input line 163.
 (pdftex.def)             Requested size: 430.00462pt x 292.2391pt.
-
-
-LaTeX Warning: Reference `TwoProp' on page 11 undefined on input line 168.
-
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [11 <./OneMean.png>] <TwoProp.png, id=135, 950.55125pt x 634.37pt>
+ [11 <./OneMean.png>] <TwoProp.png, id=139, 950.55125pt x 634.37pt>
 File: TwoProp.png Graphic file (type png)
  <use TwoProp.png>
-Package pdftex.def Info: TwoProp.png used on input line 174.
+Package pdftex.def Info: TwoProp.png used on input line 177.
 (pdftex.def)             Requested size: 322.50346pt x 215.228pt.
 
-[12]
-
-LaTeX Warning: Reference `Correlation' on page 13 undefined on input line 182.
-
-[13 <./TwoProp.png>]
-
-LaTeX Warning: Reference `LinEq' on page 14 undefined on input line 193.
-
-<Correlation.png, id=147, 949.5475pt x 641.39626pt>
+[12] [13 <./TwoProp.png>] <Correlation.png, id=155, 949.5475pt x 641.39626pt>
 File: Correlation.png Graphic file (type png)
- <use Correlation.png>
-Package pdftex.def Info: Correlation.png used on input line 199.
+
+<use Correlation.png>
+Package pdftex.def Info: Correlation.png used on input line 203.
 (pdftex.def)             Requested size: 258.00539pt x 174.27544pt.
-
-<Outliers.png, id=148, 838.13126pt x 633.36626pt>
+ <Outliers.png, id=156, 838.13126pt x 633.36626pt>
 File: Outliers.png Graphic file (type png)
- <use Outliers.png>
-Package pdftex.def Info: Outliers.png used on input line 205.
-(pdftex.def)             Requested size: 258.00539pt x 194.96916pt.
 
-<LinEq.png, id=149, 944.52875pt x 666.49pt>
+<use Outliers.png>
+Package pdftex.def Info: Outliers.png used on input line 209.
+(pdftex.def)             Requested size: 258.00539pt x 194.96916pt.
+ <LinEq.png, id=157, 944.52875pt x 666.49pt>
 File: LinEq.png Graphic file (type png)
  <use LinEq.png>
-Package pdftex.def Info: LinEq.png used on input line 211.
+Package pdftex.def Info: LinEq.png used on input line 215.
 (pdftex.def)             Requested size: 258.00539pt x 182.05984pt.
 
 
-LaTeX Warning: Float too large for page by 99.22787pt on input line 218.
+LaTeX Warning: Float too large for page by 99.22787pt on input line 222.
 
 
-LaTeX Warning: Reference `ANOVAUP' on page 14 undefined on input line 223.
-
-
-LaTeX Warning: Reference `ANOVALOW' on page 14 undefined on input line 223.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 5924) has occurred while \output is active []
 
  [14]
 [15 <./Correlation.png> <./Outliers.png> <./LinEq.png>]
-<ANOVAUP.png, id=163, 1263.72125pt x 451.6875pt>
+<ANOVAUP.png, id=171, 1263.72125pt x 451.6875pt>
 File: ANOVAUP.png Graphic file (type png)
  <use ANOVAUP.png>
-Package pdftex.def Info: ANOVAUP.png used on input line 229.
+Package pdftex.def Info: ANOVAUP.png used on input line 233.
 (pdftex.def)             Requested size: 322.50346pt x 115.27182pt.
 
-<ANOVALOW.png, id=164, 1263.72125pt x 514.92375pt>
+<ANOVALOW.png, id=172, 1263.72125pt x 514.92375pt>
 File: ANOVALOW.png Graphic file (type png)
  <use ANOVALOW.png>
-Package pdftex.def Info: ANOVALOW.png used on input line 235.
+Package pdftex.def Info: ANOVALOW.png used on input line 239.
 (pdftex.def)             Requested size: 322.50346pt x 131.40988pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [16 <./ANOVAUP.png> <./ANOVALOW.png>] [17] [18]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 273.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 277.
 
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 273.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 277.
  [19
 
 ]
-<Questions.pdf, id=191, 614.295pt x 794.97pt>
+<Questions.pdf, id=199, 614.295pt x 794.97pt>
 File: Questions.pdf Graphic file (type pdf)
  <use Questions.pdf>
-Package pdftex.def Info: Questions.pdf used on input line 287.
+Package pdftex.def Info: Questions.pdf used on input line 291.
 (pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf>
-Package pdftex.def Info: Questions.pdf used on input line 287.
+Package pdftex.def Info: Questions.pdf used on input line 291.
 (pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
- <Questions.pdf, id=194, page=1, 614.295pt x 794.97pt>
+ <Questions.pdf, id=202, page=1, 614.295pt x 794.97pt>
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 1>
-Package pdftex.def Info: Questions.pdf, page1 used on input line 287.
+Package pdftex.def Info: Questions.pdf, page1 used on input line 291.
 (pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
 File: Questions.pdf Graphic file (type pdf)
  <use Questions.pdf, page 1>
-Package pdftex.def Info: Questions.pdf, page1 used on input line 287.
+Package pdftex.def Info: Questions.pdf, page1 used on input line 291.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [20]
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 1>
-Package pdftex.def Info: Questions.pdf, page1 used on input line 287.
+Package pdftex.def Info: Questions.pdf, page1 used on input line 291.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
  <use Questions.pdf, page 1>
-Package pdftex.def Info: Questions.pdf, page1 used on input line 287.
+Package pdftex.def Info: Questions.pdf, page1 used on input line 291.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 1>
-Package pdftex.def Info: Questions.pdf, page1 used on input line 287.
+Package pdftex.def Info: Questions.pdf, page1 used on input line 291.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [21 <./Questions.pdf>]
-<Questions.pdf, id=234, page=2, 614.295pt x 794.97pt>
+<Questions.pdf, id=242, page=2, 614.295pt x 794.97pt>
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 2>
-Package pdftex.def Info: Questions.pdf, page2 used on input line 287.
+Package pdftex.def Info: Questions.pdf, page2 used on input line 291.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
  <use Questions.pdf, page 2>
-Package pdftex.def Info: Questions.pdf, page2 used on input line 287.
+Package pdftex.def Info: Questions.pdf, page2 used on input line 291.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 2>
-Package pdftex.def Info: Questions.pdf, page2 used on input line 287.
+Package pdftex.def Info: Questions.pdf, page2 used on input line 291.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [22 <./Questions.pdf>]
-<Questions.pdf, id=239, page=3, 614.295pt x 794.97pt>
+<Questions.pdf, id=247, page=3, 614.295pt x 794.97pt>
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 3>
-Package pdftex.def Info: Questions.pdf, page3 used on input line 287.
+Package pdftex.def Info: Questions.pdf, page3 used on input line 291.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
  <use Questions.pdf, page 3>
-Package pdftex.def Info: Questions.pdf, page3 used on input line 287.
+Package pdftex.def Info: Questions.pdf, page3 used on input line 291.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 3>
-Package pdftex.def Info: Questions.pdf, page3 used on input line 287.
+Package pdftex.def Info: Questions.pdf, page3 used on input line 291.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [23 <./Questions.pdf>]
-<Questions.pdf, id=244, page=4, 614.295pt x 794.97pt>
+<Questions.pdf, id=252, page=4, 614.295pt x 794.97pt>
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 4>
-Package pdftex.def Info: Questions.pdf, page4 used on input line 287.
+Package pdftex.def Info: Questions.pdf, page4 used on input line 291.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
  <use Questions.pdf, page 4>
-Package pdftex.def Info: Questions.pdf, page4 used on input line 287.
+Package pdftex.def Info: Questions.pdf, page4 used on input line 291.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 4>
-Package pdftex.def Info: Questions.pdf, page4 used on input line 287.
+Package pdftex.def Info: Questions.pdf, page4 used on input line 291.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [24 <./Questions.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 296.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 296.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 300.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 300.
  (./CCPaper1.23.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 296.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 296.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 300.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 300.
 Package rerunfilecheck Info: File `CCPaper1.23.out' has not changed.
 (rerunfilecheck)             Checksum: E8491C78ABA496198C0A9F0A276C9624;970.
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 296.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 300.
  ) 
 Here is how much of TeX's memory you used:
- 11292 strings out of 493014
- 181468 string characters out of 6133351
+ 11286 strings out of 493014
+ 181410 string characters out of 6133351
  294553 words of memory out of 5000000
- 14625 multiletter control sequences out of 15000+600000
+ 14619 multiletter control sequences out of 15000+600000
  26486 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,18n,46p,1823b,496s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 42i,18n,46p,1827b,496s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/te
 xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/te
@@ -761,10 +720,10 @@ ve/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/
 t/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/ty
 pe1/urw/times/utmr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/ti
 mes/utmri8a.pfb>
-Output written on CCPaper1.23.pdf (24 pages, 1129038 bytes).
+Output written on CCPaper1.23.pdf (24 pages, 1128785 bytes).
 PDF statistics:
- 291 PDF objects out of 1000 (max. 8388607)
- 226 compressed objects within 3 object streams
+ 299 PDF objects out of 1000 (max. 8388607)
+ 234 compressed objects within 3 object streams
  49 named destinations out of 1000 (max. 500000)
  193 words of extra memory for PDF output out of 10000 (max. 10000000)
 
