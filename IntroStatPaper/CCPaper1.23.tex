@@ -9,6 +9,8 @@
 \usepackage{epstopdf}
 \usepackage{listings}
 \usepackage{times}
+\usepackage{float}
+\usepackage{cleveref}
 
 \usepackage[final]{pdfpages}
 
@@ -118,12 +120,23 @@ Choosing among these various options largely depends on the content of your cour
 
  In addition, Doi et al discuss how the ease of design of a Shiny app allows it to be "especially helpful when teaching concepts that are not in the standard curriculum or based on recent research" (p 6. 2016).  Newer concepts may not already have applets or software available for classroom demonstrations, thus Shiny can be used to create something to fills that gap.  It could also be used to create tailor made lecture materials for a specific course.  Apps can be created based on the different topics in that course and thus creating a collection of relevant tools for a corresponding course. 
  
- 
+ % ------------------------------Shiny Web App Sections ---------------------------%
 
 \section{Shiny Web Application Design}
 Designing and programming the R Shiny app was a large part of this project. There are many different concepts introduced to students in introductory statistics courses.  A few of these concepts were chosen to be the focus of the Shiny app.  The topics of focus are inference for one and two sample proportions, inference for one and two means, linear regression, and ANOVA.  The Shiny app is composed of several tabs, each dedicated to one of these topics. Using the Shiny reference and examples pages a design was planned out for each of the different sections. Then, the applications were programmed for each section and subsection. 
 
-\begin{figure}
+
+\subsection{One Proportion: Sampling Distribution}
+As seen in Figure~\ref{OneProp} the Shiny app opens up to the sampling distribution for one sample proportion.  The design for this topic was based on several JMP scripts currently used in Statistics 101 at Iowa State University.  This section is designed to help enhance student comprehension of the difference between a sample distribution and sampling distribution for a sample proportion. At the top of the application a variety of variables such as sample size, number of samples, and population proportion can be manipulated.  Once these are set to the desired amounts the user can hit the "Draw" button and the application will perform the simulation. 
+  The sample distribution graph is created using a binomial distribution with the proportion and sample size input by the user. If only one sample is created the Sampling Distribution graph will only display information from this one sample. If we choose to draw more than one sample, the Sample Distribution graph will display the last sample drawn. The Sampling Distribution will show a summary of all the proportions that were generated from the samples.  The tables in the middle of the page provide summary information about the Sample and Sampling Distributions. The Sample Summary Statistics correspond to the Sampling Distribution, while the  Summary Sampling Distribution Statistics correspond to the mean and standard deviation of the Sampling Distribution. 
+  
+
+ 
+
+\subsection{One Proportion: Confidence Intervals}
+The next section under the inference for one proportion is designed to demonstrate the effects of confidence level and sample size on the construction of confidence intervals. Figure~\ref{OnePropCI} shows that for this section the number of samples, confidence level are available to manipulate as sliders.  The confidence level allows the user to slide values from 80 to 99 percent confidence. The sample size allows for values from 25 to 500.  The graph automatically displays 20 sample confidence intervals, created with sample proportions drawn from a binomial with $p= 0.5$, the input sample size, and $80\%$ confidence level. The lines represent the different confidence intervals and are colored according to whether or not they captured the true population parameter, 0.5.  Light blue lines represent the confidence intervals that contained 0.5, while the orange lines represent those that did not contain 0.5. 
+
+\begin{figure}[H]
         \centering
 
         \begin{subfigure}[b]{0.75\textwidth}
@@ -138,27 +151,27 @@ Designing and programming the R Shiny app was a large part of this project. Ther
                 \label{fig:OnePropCI}
         \end{subfigure}
 
-\caption {All the subsections of Inference for One Proportion.}
+\caption {Subsection of Inference for One Proportion.}
 \end{figure}
-\subsection{One Proportion: Sampling Distribution}
-As seen in Figure~\ref{OneProp} the Shiny app opens up to the sampling distribution for one sample proportion.  The design for this topic was based on several JMP scripts currently used in Statistics 101 at Iowa State University.  This section is designed to help enhance student comprehension of the difference between a sample distribution and sampling distribution for a sample proportion. At the top of the application a variety of variables such as sample size, number of samples, and population proportion can be manipulated.  Once these are set to the desired amounts the user can hit the "Draw" button and the application will perform the simulation. 
-  The sample distribution graph is created using a binomial distribution with the proportion and sample size input by the user. If only one sample is created the Sampling Distribution graph will only display information from this one sample. If we choose to draw more than one sample, the Sample Distribution graph will display the last sample drawn. The Sampling Distribution will show a summary of all the proportions that were generated from the samples.  The tables in the middle of the page provide summary information about the Sample and Sampling Distributions. The Sample Summary Statistics correspond to the Sampling Distribution, while the  Summary Sampling Distribution Statistics correspond to the mean and standard deviation of the Sampling Distribution. 
-  
 
- 
-
-\subsection{One Proportion: Confidence Intervals}
-The next section under the inference for one proportion is designed to demonstrate the effects of confidence level and sample size on the construction of confidence intervals. Figure~\ref{OnePropCI} shows that for this section the number of samples, confidence level are available to manipulate as sliders.  The confidence level allows the user to slide values from 80 to 99 percent confidence. The sample size allows for values from 25 to 500.  The graph automatically displays 20 sample confidence intervals, created with sample proportions drawn from a binomial with $p= 0.5$, the input sample size, and $80\%$ confidence level. The lines represent the different confidence intervals and are colored according to whether or not they captured the true population parameter, 0.5.  Light blue lines represent the confidence intervals that contained 0.5, while the orange lines represent those that did not contain 0.5. 
 
 \subsection{One Mean}
 The section One Mean focuses on the concept of sampling distribution for one mean. They layout is similar to that of the inference for one proportion.  The inputs allow the user to enter the mean, standard deviation, sample size, and number of samples.  Once the "Draw" button is clicked, the sampling distribution begins to appear with summary statistics in addition to the last drawn sample distribution and its summary statistics. The samples are drawn from a normal distribution with the mean and standard deviation input by the user.   We can see a screen shot of this section in Figure~\ref{OneMean}.
+
+
+\begin{figure}[H]
+\centering
+        \includegraphics[width=\textwidth]{OneMean.png}
+        \label{fig: OneMean}
+\end{figure}
 
 \subsection{Two Proportions and Two Means}
 
 The sections for two proportions and two means are constructed similarly to the single proportion and single means sections, as seen in Figure~\ref{TwoProp}.  They each aim to display a sampling distribution of sample statistic differences. The two proportions tab allows the user to input the population proportion for two different groups, the sample size for those groups, and the number of samples they wish to draw. It then draws from a binomial with the specified parameters for each group. The results of the sample are shown in the Sample Distribution graphs. The table of Sample Summary information displays the proportion for each group as well as the difference in those proportions. The Sample Distribution graph is created by repeating this process many times and saving the differences in the two proportions each time. The summary information for the Sampling Distribution is displayed in the Sampling Distribution Summary table.
 
 The Two Means tab recreates the same process except with calculating the difference in means for two different groups. The user can input a specific mean and standard deviation for each of the two groups. The samples will then be generated form a normal distribution with those specifications. The setup of this section is similar to that of Two Proportions where we are given both the Sample Distribution and the Sampling Distribution, in addition to tables that provide the summary statistics for those graphs.
-\begin{figure}
+
+\begin{figure}[H]
 \centering
         \includegraphics[width=\textwidth]{TwoProp.png}
         \label{fig:TwoProp}
@@ -167,28 +180,31 @@ The Two Means tab recreates the same process except with calculating the differe
 
 \subsection{Linear Regression: Correlation}
 Another section featured in the Shiny application is based on linear regression topics. The correlation page features a slider that allows the user to select correlation values for a random plot of points. Figure~\ref{Correlation}  gives a a screen shot of this section of the Shiny app. This allows the user to see what different correlations look like ranging from -1 to 1. In order to make this plot, a multivariate normal random data frame is created that has 100 sets of data points designed with a specific sigma matrix.  This sigma matrix changes based on the user input correlation value, but keeps 1 as the variance for both x and y.  Thus, the XY coordinates are generated with a set correlation. These points are then plotted on the graph and update as the slider is moved. 
-\begin{figure}
+
+\begin{figure}[H]
 \centering
         \includegraphics[width=\textwidth]{Correlation.png}
         \label{fig:Correlation}
 \end{figure}
 
-\begin{figure}
+
+
+\subsection{Linear Regression: Outliers}
+ 
+ The outliers tab under Linear regression is designed to display multiple data sets with varying outliers.  The data sets are all identical except for the one outlier point, which will be set in a red color.  Once a data set is selected the user can select to fit a line of least squares to the data, both with and without the outlier.  Once the box is checked to fit a line to the data, the line is placed on the graph, blue for the line fit with the outlier and green slashes for a line fit to the data without the outlier. The output will also display the intercept, slope and coefficient of determination for the lines on the graph.  
+ 
+ \begin{figure}[H]
 \centering
         \includegraphics[width=\textwidth]{Outliers.png}
         \label{fig:Outliers}
         \caption{Outliers in Linear Regression}
 \end{figure}
 
-\subsection{Linear Regression: Outliers}
- 
- The outliers tab under Linear regression is designed to display multiple data sets with varying outliers.  The data sets are all identical except for the one outlier point, which will be set in a red color.  Once a data set is selected the user can select to fit a line of least squares to the data, both with and without the outlier.  Once the box is checked to fit a line to the data, the line is placed on the graph, blue for the line fit with the outlier and green slashes for a line fit to the data without the outlier. The output will also display the intercept, slope and coefficient of determination for the lines on the graph.  
-
 \subsection{Linear Regression: Equation}
 
 The Equation section of the Shiny app breaks down the components of an equation and provides interpretations for intercepts and slopes.  In addition, the user can manipulate the intercept and slope of the points on the graph in order to see how it changes the points and the the line fit to them.  The data for this plot is generated using the same multivariate random normal data generating function in R as in the correlation section. This time, the input slope value is set as the correlation in the sigma matrix. The data is then adjusted to meet the intercept requirements by shifting the points created with the specific slope to pass through the user input intercept value. The data on the plot will update as the intercept and slope sliders are moved.  When the  ``Fit Line'' box is selected the equation for that least squares line will be displayed. It will have the same intercept and slope as the sliders display. The user can then select the "Intercept" box to see a red dot appear at the y-intercept on the plot. They will also be shown an intercept interpretation that is specific the the intercept they see in the plot. Similarly, when the "Slope" box is checked there is an interpretation of the slope that is output for the user.  The graph will display the rise and run of the slope to help illustrate the interpretation for the slope. A horizontal green line represents the one unit increase in the explanatory variable, while a vertical blue line indicates the increase or decrease in the response variable as a result of the increase in the explanatory variable. The user can manipulate the sliders and the check boxes as they see fit, and the plot and output will continually update. Figure~\ref{LinEq} displays the screen for Equation when all boxes are checked. 
 
-\begin{figure}
+\begin{figure}[H]
 \centering
       \includegraphics[width=\textwidth]{LinEq.png}
       \label{fig: LinEq}
@@ -197,9 +213,25 @@ The Equation section of the Shiny app breaks down the components of an equation 
 
 \subsection{ANOVA}
 
-The last tab of the shiny application is the ANOVA tab.  This tab explores the relationship among the means of 3 different groups.  The user can input the means, standard deviations, and sample sizes for each of the three groups. Then R will generate the samples for each group using a normal distribution with the input parameters for each group. Then, the graph will display a dotplot for each of those groups.  Next to the graph, is an ANOVA table for the differences in the means along with the summary information for each of the three groups. 
+The last tab of the shiny application is the ANOVA tab.  This tab explores the relationship among the means of 3 different groups.  The user can input the means, standard deviations, and sample sizes for each of the three groups. This can be seen in Figure~\ref{ANOVAUP}. Then R will generate the samples for each group using a normal distribution with the input parameters for each group. Then, the graph will display a dotplot for each of those groups.  Next to the graph, is an ANOVA table for the differences in the means along with the summary information for each of the three groups. The output for this part of the Shiny app can be seen in Figure~\ref{ANOVALOW}.
 
+\begin{figure}[H]
+        \centering
 
+        \begin{subfigure}[b]{0.75\textwidth}
+                \includegraphics[width=\textwidth]{ANOVAUP.png}
+                \caption{ANOVA Section top }
+                \label{fig:ANOVALOW}
+        \end{subfigure}%
+
+        \begin{subfigure}[b]{0.75\textwidth}
+                \includegraphics[width=\textwidth]{ANOVALOW.png}
+                \caption{ANOVA Section lower} 
+                \label{fig:ANOVALOW}
+        \end{subfigure}
+
+\caption {ANOVA Sections}
+\end{figure}
 
 
 \section{Conclusions and Future Work}
