@@ -64,15 +64,15 @@
            Spring 2017
            
            \vspace{2cm}
+         
+				\begin{center}
+				\begin{tabular}{rl}
+				Committee Members: & Amy G. Froelich, Major Professor\\
+				 & W. Robert Stephenson \\
+				 & Heike Hofmann\\
+				\end{tabular}
+				\end{center}
            
-           Committee Members: Amy G. Froelich, Major Professor \\
-              \vspace{0.25cm}
-           \hspace{2.4cm} W. Robert Stephenson \\
-              \vspace{0.25cm}
-          \hspace{1cm} Heike Hofmann  
-               
-        
-        
     \end{center}
 \end{titlepage}
 
@@ -93,12 +93,11 @@
 
 \newpage
 \section{Introduction}
-Technology has become an integral part of teaching undergraduate statistics courses. A lot of research has gone into the role technology can play in statistics courses and the positive affect  it can have on learning introductory statistics concepts.  R's Shiny applications create an easy to use interactive interface for users, which make them a great platform for introductory statistics students to use.  For these reasons a Shiny web application in addition to supplemental worksheets were created in order to aid student comprehension of the concepts of sampling distributions for one and two means, sampling distributions for one and two proportions, linear regression, and ANOVA analysis.   In this paper we will discuss the literature surrounding technology in statistics courses and outline the creation of an R shiny app and supporting supplemental worksheets to be used in conjunction with the app. 
+Over the past 30 years, technology has become an integral part of teaching undergraduate statistics courses. Statistical software packages like JMP, StatCrunch, R, and Minitab are used to teach students the skills to conduct data analysis. Some of these same programs plus Java web-based applets have been used to teach students concepts in introductory statistics, particularly sampling distributions and inferential topics. Instructors select technology platforms based on a number of concerns particular to their audience and institution. One recent option, R's Shiny applications, provides an easy to use and interactive interface for introductory statistics students. The application can run on any web browser, allowing students and instructors to use the app on mobile devices, tablets, Chromebooks, and computers, with no cost to the students or instructor. As a relatively new option for instructional technology, there are few resources available for the introductory statistics course using the Shiny application in R. In this paper, we will outline the creation of an R shiny app and supporting supplemental worksheets to be used in conjunction with the app for the introductory statistics course. The Shiny app includes resources for teaching concepts in inference for a population proportion, population mean, difference between two population proportions, and the difference between two population means; descriptive linear regression and correlation, and ANOVA.
 
-
+In section 2, we will discuss the literature related to technology in the classroom, specifically as it relates to teaching concepts in introductory statistics. In section 3, the development of the Shiny app is detailed, and we discuss the supplemental worksheets in Section 4. Conclusions and details of future work appear in Section 5.
+ 
 \section{Literature Review}
-
-	   
 	   	
 	Most undergraduate statistics courses make use of some sort of technology in the classroom from calculators to computer software programs.  All the available technology has the ability to simplify complex calculations in addition to making conceptual ideas more concrete.  These are two main features of technology that has helped make it a staple tool for statistics education.  Roy D. Pea provides an argument about why the computer as a cognitive technology is so important to the advancement in learning mathematics, in his article \emph{Cognitive Technologies for Mathematics Education} (1987).  Though his article focuses on the role of technology in math education there is a direct tie to statistics, in that he is discussing calculations and graphing data, both of which are essential elements of statistics courses.  He introduces cognitive technologies as ``any medium that helps transcend the limitations of the mind (e.g. attention to goals, short-term memory span), in thinking, learning, and problem-solving activities" (91). Computer applets and software are precisely the type of cognitive technologies being described that can help student thinking to go beyond just following formulas and returning answers.  
 		
@@ -122,86 +121,93 @@ Choosing among these various options largely depends on the content of your cour
  
 
 \section{Shiny Web Application Design}
-Designing and programming the R Shiny app for this project was a large part of this project. There are many different concepts introduced to students in introductory statistics courses.  A few of these concepts were chosen to be the focus of the shiny app.  The topics the shiny app provides materials and displays for are inference for one and two sample proportions, inference for one and two means, linear regression topics, and ANOVA.  The web application is composed of several tabs each dedicated to one of these topics.Using the Shiny reference and examples pages a design was planned out for each of the different sections. Then, the applications were programmed for each section and subsection. 
+Designing and programming the R Shiny app was a large part of this project. There are many different concepts introduced to students in introductory statistics courses.  A few of these concepts were chosen to be the focus of the Shiny app.  The topics of focus are inference for one and two sample proportions, inference for one and two means, linear regression, and ANOVA.  The Shiny app is composed of several tabs, each dedicated to one of these topics. Using the Shiny reference and examples pages a design was planned out for each of the different sections. Then, the applications were programmed for each section and subsection. 
 
 \begin{figure}
         \centering
-        \quad
-        \begin{subfigure}[b]{0.5\textwidth}
+
+        \begin{subfigure}[b]{0.75\textwidth}
                 \includegraphics[width=\textwidth]{OneProp.png}
                 \caption{Sampling Distribution Screen }
                 \label{fig:OneProp}
         \end{subfigure}%
-	\quad
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{OnePropCL.png}
-                \caption{Confidence Level Screen} 
-                \label{fig:OnePropCL}
-        \end{subfigure}
-	\quad
-        \begin{subfigure}[b]{0.5\textwidth}
+
+        \begin{subfigure}[b]{0.75\textwidth}
                 \includegraphics[width=\textwidth]{OnePropCI.png}
-                \caption{Confidence Interval Screen } 
+                \caption{Confidence Interval Screen} 
                 \label{fig:OnePropCI}
         \end{subfigure}
-	\quad
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{OnePropSampSize.png}
-                \caption{Sample Size Screen}
-                \label{fig:OnePropSampSize}
-        \end{subfigure}%
-	
-\label{AllWeather}
+
 \caption {All the subsections of Inference for One Proportion.}
 \end{figure}
-
-As seen in Figure~\ref{OneProp} the Shiny application opens up to the sampling distribution for one sample proportion.  There are several other topics that pertain to the inference for one proportion that become available once the "Inference for One Proportion" tab is clicked.  The entire collection of topics for the inference for one proportion include, sampling distribution, confidence interval, sample size, and confidence level.   The design for this topic was based on the design of several JMP scripts currently used in Statistics 101 at Iowa State University.  This section is designed to help enhance student comprehension of the difference between a sample distribution and sampling distribution for a sample proportion.  At the top of the application a variety of variables such as sample size, number of samples, and population proportion can be manipulated.  Once these are set to the desired amounts the user can hit the draw button and the application will perform the simulation.  The middle graph and chart represent the sample distribution and sample summary information for the last sample drawn.  The bottom section chart and graph represent the population of all samples drawn.  The samples are drawn from a binomial with mean specified by the user inputs.  The worksheet that corresponds to this section leads student through drawing one sample and seeing how it is displayed in the the sample distribution vs in the sampling distribution. Then the students are led to draw more samples and see that the sampling distribution ends up centered around population proportion.  The Figure~\ref{OneProp} shows a sample display once many samples have been drawn.
+\subsection{One Proportion: Sampling Distribution}
+As seen in Figure~\ref{OneProp} the Shiny app opens up to the sampling distribution for one sample proportion.  The design for this topic was based on several JMP scripts currently used in Statistics 101 at Iowa State University.  This section is designed to help enhance student comprehension of the difference between a sample distribution and sampling distribution for a sample proportion. At the top of the application a variety of variables such as sample size, number of samples, and population proportion can be manipulated.  Once these are set to the desired amounts the user can hit the "Draw" button and the application will perform the simulation. 
+  The sample distribution graph is created using a binomial distribution with the proportion and sample size input by the user. If only one sample is created the Sampling Distribution graph will only display information from this one sample. If we choose to draw more than one sample, the Sample Distribution graph will display the last sample drawn. The Sampling Distribution will show a summary of all the proportions that were generated from the samples.  The tables in the middle of the page provide summary information about the Sample and Sampling Distributions. The Sample Summary Statistics correspond to the Sampling Distribution, while the  Summary Sampling Distribution Statistics correspond to the mean and standard deviation of the Sampling Distribution. 
+  
 
  
 
+\subsection{One Proportion: Confidence Intervals}
+The next section under the inference for one proportion is designed to demonstrate the effects of confidence level and sample size on the construction of confidence intervals. Figure~\ref{OnePropCI} shows that for this section the number of samples, confidence level are available to manipulate as sliders.  The confidence level allows the user to slide values from 80 to 99 percent confidence. The sample size allows for values from 25 to 500.  The graph automatically displays 20 sample confidence intervals, created with sample proportions drawn from a binomial with $p= 0.5$, the input sample size, and $80\%$ confidence level. The lines represent the different confidence intervals and are colored according to whether or not they captured the true population parameter, 0.5.  Light blue lines represent the confidence intervals that contained 0.5, while the orange lines represent those that did not contain 0.5. 
 
-The next section under the inference for one proportion is designed to demonstrate the construction of confidence intervals. A screen shot of this section can be found in Figure~\ref{OnePropCL} The top boxes allow user inputs of the population proportion, sample size, number of samples, and confidence level.  The middle section displays the upper and lower bound for a randomly selected sample proportion based on the user set inputs above. The graph shows the interval for the last selected sample.  The bottom output shows the interval for each sample chosen for each sample size.  A blue interval indicates that the confidence interval captured the true population proportion set by the user.  An orange interval indicates that the interval did not capture the population proportion.  In the population summary you can see what proportion of the intervals created around the samples proportions captured the true population proportion.  In the worksheet the students are asked to investigate how the proportion captured will more closely match the confidence level as the sample size increases.  
+\subsection{One Mean}
+The section One Mean focuses on the concept of sampling distribution for one mean. They layout is similar to that of the inference for one proportion.  The inputs allow the user to enter the mean, standard deviation, sample size, and number of samples.  Once the "Draw" button is clicked, the sampling distribution begins to appear with summary statistics in addition to the last drawn sample distribution and its summary statistics. The samples are drawn from a normal distribution with the mean and standard deviation input by the user.   We can see a screen shot of this section in Figure~\ref{OneMean}.
 
-Another important concept for inference for one proportion is the idea of how sampling size affects the confidence interval, which is why a section was created just for this concept.  It is possible to observe this with the section just on confidence intervals, but for further emphasis this section was created. Figure~\ref{OnePropSampSize} shows that for this section the number of samples, population proportion and confidence level are all fixed quantities.  The only quantity available for manipulation is the sample size.  Similar to the section on confidence intervals the graph displays a confidence interval.  As the user slides the sample size bar to larger sample sizes it is easy to see that the interval  gets  smaller.  The worksheet corresponding to this section has the students investigate this in order to come to the conclusion that as sample size increases that the width of the confidence interval will decrease.
+\subsection{Two Proportions and Two Means}
 
+The sections for two proportions and two means are constructed similarly to the single proportion and single means sections, as seen in Figure~\ref{TwoProp}.  They each aim to display a sampling distribution of sample statistic differences. The two proportions tab allows the user to input the population proportion for two different groups, the sample size for those groups, and the number of samples they wish to draw. It then draws from a binomial with the specified parameters for each group. The results of the sample are shown in the Sample Distribution graphs. The table of Sample Summary information displays the proportion for each group as well as the difference in those proportions. The Sample Distribution graph is created by repeating this process many times and saving the differences in the two proportions each time. The summary information for the Sampling Distribution is displayed in the Sampling Distribution Summary table.
 
-The final subsection for inference for one proportion, shown in Figure~\ref{OnePropCL}, is on the effect of confidence level on confidence intervals.  This section is similar to the one before it, but here the sample size, number of samples, and population proportion are all fixed.  The slider allows the user to manipulate the confidence level and see its effect on the size of the confidence interval.  As the slider increases the confidence level from 80 to 99 percent we can see that the confidence intervals get larger and there are more intervals that capture the true population proportion.  The students are led through this idea in the corresponding worksheet.   
-
-Another section featured in the shiny application is  about linear regression topics.  There are separate pages designed to help aid the learning of correlation and linear regression.  The correlation page features a slider that allows the user to select correlation values for a random plot of points.  This allows the user to see what different correlations look like ranging from -1 to 1.  The linear regression section allows the user to either look at fitting lines to a plot of preloaded sample data, or look at fitting a line to a group of points.  This section allows the user to input the slope and intercept they desire, then the data will be generated based on what was selected.  A line can then be fit to the specifications the user wanted.  This allows the user to see the relationship between the slope, intercept and the data points that they choose.  
-
-The next section featured focuses on the concept of sampling distribution for one mean. They layout is similar to that of the inference for one proportion sampling distribution.  The top inputs allow the user to enter the mean, standard deviation, sample size, and number of samples.  Once the "Draw" button is clicked the sampling distribution begins to appear with summary statistics in addition to the last drawn sample distribution and its summary statistics.   Similar to the one proportion inference, the worksheet for this section walks the student through taking multiple samples to build the sampling distribution which ends up being approximately normal.
-
-Next, there are sections for each, sampling distributions for the difference in sample proportions and the difference in sample means for two groups.  These sections have a similar layout as the previous sections for obtaining sampling distributions.  The user inputs the necessary information for each of the two groups at the top of the screen.  The middle graphs display the sample distributions of each of the two samples.  Then, the bottom graphs display the sampling distribution of the differences between the two groups.  The user is also able to do a test for the difference in the groups.  They can select a one or two tailed test and will be given the corresponding p-vlaue.  
-
-
+The Two Means tab recreates the same process except with calculating the difference in means for two different groups. The user can input a specific mean and standard deviation for each of the two groups. The samples will then be generated form a normal distribution with those specifications. The setup of this section is similar to that of Two Proportions where we are given both the Sample Distribution and the Sampling Distribution, in addition to tables that provide the summary statistics for those graphs.
 \begin{figure}
 \centering
-      \includegraphics[width=\textwidth]{LinReg.png}
+        \includegraphics[width=\textwidth]{TwoProp.png}
+        \label{fig:TwoProp}
 \end{figure}
 
 
-The tab for Linear Regression contains both basic linear regression plots in addition to a section on exploring correlation.  The tab for linear regression shown in Figure~\ref{LinReg} allows the user to select a preloaded data set and add a line of best fit.  The data will be plot on a scatterplot with the line of best fit, and the output of the line formula will be shown.  The corresponding worksheet asks the user to identify and interpret the different parts of the equation for the line.  In the Linear Regression tab the user can also randomly generate data corresponding to a specific set of user input specifications.  The user can input a slope and intercept and the corresponding data will be plotted on the scatterplot.  This section allows the user to explore how changing the intercept affects the lines placement, in addition to how changing the sign of the slope affects the direction of the points and the line of best fit.  
-
+\subsection{Linear Regression: Correlation}
+Another section featured in the Shiny application is based on linear regression topics. The correlation page features a slider that allows the user to select correlation values for a random plot of points. Figure~\ref{Correlation}  gives a a screen shot of this section of the Shiny app. This allows the user to see what different correlations look like ranging from -1 to 1. In order to make this plot, a multivariate normal random data frame is created that has 100 sets of data points designed with a specific sigma matrix.  This sigma matrix changes based on the user input correlation value, but keeps 1 as the variance for both x and y.  Thus, the XY coordinates are generated with a set correlation. These points are then plotted on the graph and update as the slider is moved. 
 \begin{figure}
 \centering
         \includegraphics[width=\textwidth]{Correlation.png}
+        \label{fig:Correlation}
 \end{figure}
 
+\begin{figure}
+\centering
+        \includegraphics[width=\textwidth]{Outliers.png}
+        \label{fig:Outliers}
+        \caption{Outliers in Linear Regression}
+\end{figure}
+
+\subsection{Linear Regression: Outliers}
+ 
+ The outliers tab under Linear regression is designed to display multiple data sets with varying outliers.  The data sets are all identical except for the one outlier point, which will be set in a red color.  Once a data set is selected the user can select to fit a line of least squares to the data, both with and without the outlier.  Once the box is checked to fit a line to the data, the line is placed on the graph, blue for the line fit with the outlier and green slashes for a line fit to the data without the outlier. The output will also display the intercept, slope and coefficient of determination for the lines on the graph.  
+
+\subsection{Linear Regression: Equation}
+
+The Equation section of the Shiny app breaks down the components of an equation and provides interpretations for intercepts and slopes.  In addition, the user can manipulate the intercept and slope of the points on the graph in order to see how it changes the points and the the line fit to them.  The data for this plot is generated using the same multivariate random normal data generating function in R as in the correlation section. This time, the input slope value is set as the correlation in the sigma matrix. The data is then adjusted to meet the intercept requirements by shifting the points created with the specific slope to pass through the user input intercept value. The data on the plot will update as the intercept and slope sliders are moved.  When the  ``Fit Line'' box is selected the equation for that least squares line will be displayed. It will have the same intercept and slope as the sliders display. The user can then select the "Intercept" box to see a red dot appear at the y-intercept on the plot. They will also be shown an intercept interpretation that is specific the the intercept they see in the plot. Similarly, when the "Slope" box is checked there is an interpretation of the slope that is output for the user.  The graph will display the rise and run of the slope to help illustrate the interpretation for the slope. A horizontal green line represents the one unit increase in the explanatory variable, while a vertical blue line indicates the increase or decrease in the response variable as a result of the increase in the explanatory variable. The user can manipulate the sliders and the check boxes as they see fit, and the plot and output will continually update. Figure~\ref{LinEq} displays the screen for Equation when all boxes are checked. 
+
+\begin{figure}
+\centering
+      \includegraphics[width=\textwidth]{LinEq.png}
+      \label{fig: LinEq}
+      \caption{Equation Tab}
+\end{figure}
+
+\subsection{ANOVA}
+
+The last tab of the shiny application is the ANOVA tab.  This tab explores the relationship among the means of 3 different groups.  The user can input the means, standard deviations, and sample sizes for each of the three groups. Then R will generate the samples for each group using a normal distribution with the input parameters for each group. Then, the graph will display a dotplot for each of those groups.  Next to the graph, is an ANOVA table for the differences in the means along with the summary information for each of the three groups. 
 
 
 
-The correlation section of this tab allows the user to manipulate a slider with range from -1 to 1.  The slider corresponds to the correlation of points on a scatterplot below.  From this, the user can see the relationship between different levels of correlation and what the corresponding graphs will look like.  
 
-
-
-The last tab of the shiny application is the ANOVA tab.  This tab explores the relationship among the means of 3 different groups.  The user can input the means, standard deviations, and sample sizes for each of the three groups.  Then the middle graph will display a dotplot for each group.  Below the graph is an ANOVA table for the differences in the means along with the summary information for each of the three groups.  The corresponding worksheet gives the student a small introduction to the ANOVA F test followed by some questions asking them to explore the relationship between the mean, standard deviation, sample size and the resulting p-value and conclusion to the F-test. 
-\section{Experimental Design}
-\section{Implementation}
-\section{Testing}
-
-
-\section{Discussion}
-\section{Conclusion}
+\section{Conclusions and Future Work}
+% These are the things that I have that other things don't
+%based in R its free, independtent and runs on the web so everyone can use it, it has interactive features (could bullet point this)  
+% Then talk about where it goes next
+%different options in the tabs could be built into the app for hyp test or other similar topics 
+%Software testing over the next few month from students in intro stats and high school and community college math teachers on the software
 \section{References}
 
 
@@ -218,10 +224,27 @@ The last tab of the shiny application is the ANOVA tab.  This tab explores the r
 
   \end{thebibliography}
 
-\section{Appendix}
+
 
 \subsection{Worksheets}
 
+Another component of this project was creating worksheets that correspond to each of the sections of the Shiny app. Though the app can stand alone to help vizualize various topics, the worksheets walk the user through using each section and try to help illustrate ideas. The worksheets for each section work to help demonstrate the following ideas:
+\begin{itemize}
+
+\item One Proportion and One Mean: Leads user through drawing one sample and seeing how it is displayed in the Sample Distribution vs in the Sampling Distribution. Then, leads to drawing more samples and seeing that the Sampling Distribution ends up centered around population proportion.  
+
+\item   Confidence Interval: Walk the user through fixing the confidence level and seeing what happens to the width of the intervals as the sample size in increased from 25 to 500. In the second question the sample size is fixed at 250 and the confidence level is increased from 80 to 99$\%$.  Through manipulation of these two components the user is quickly able to see the relationship between confidence interval width, the sample size, and the confidence level.
+  
+\item   Two Proportions and Two Means: takes the user the student through taking multiple samples to build the sampling distribution which ends up being approximately normal, similar to the one proportion and one mean inference sections.
+  
+\item   Corrleation: takes the user through observing the structures of the data as the slider moves from a correlation of -1 to 1. They will take note of the direction and form of the data as the correlation changes. 
+
+\item Outliers: leads the user through the linear model selection process of fitting data both with and without an outlier and determining which model best fits the data.  Users will also look at multiple outliers and determine whether they have high leverage, high residual or both.
+
+\item Equation: guides the user through manipulating the slope and intercept on the plot and porviding interpretations of those values.
+  
+\item   ANOVA:  gives the user a small introduction to the ANOVA F test followed by some questions asking them to explore the relationship between the mean, standard deviation, sample size and the resulting p-value and conclusion to the F-test. 
+\end{itemize}
 \includepdf[pages=-]{Questions.pdf}
 
 
