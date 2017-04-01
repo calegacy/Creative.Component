@@ -129,37 +129,35 @@ Designing and programming the R Shiny app was a large part of this project. Ther
 \subsection{One Proportion: Sampling Distribution}
 As seen in Figure~\ref{OneProp} the Shiny app opens up to the sampling distribution for one sample proportion.  The design for this topic was based on several JMP scripts currently used in Statistics 101 at Iowa State University.  This section is designed to help enhance student comprehension of the difference between a sample distribution and sampling distribution for a sample proportion. At the top of the application a variety of variables such as sample size, number of samples, and population proportion can be manipulated.  Once these are set to the desired amounts the user can hit the "Draw" button and the application will perform the simulation. 
   The sample distribution graph is created using a binomial distribution with the proportion and sample size input by the user. If only one sample is created the Sampling Distribution graph will only display information from this one sample. If we choose to draw more than one sample, the Sample Distribution graph will display the last sample drawn. The Sampling Distribution will show a summary of all the proportions that were generated from the samples.  The tables in the middle of the page provide summary information about the Sample and Sampling Distributions. The Sample Summary Statistics correspond to the Sampling Distribution, while the  Summary Sampling Distribution Statistics correspond to the mean and standard deviation of the Sampling Distribution. 
-  
 
- 
 
 \subsection{One Proportion: Confidence Intervals}
 The next section under the inference for one proportion is designed to demonstrate the effects of confidence level and sample size on the construction of confidence intervals. Figure~\ref{OnePropCI} shows that for this section the number of samples, confidence level are available to manipulate as sliders.  The confidence level allows the user to slide values from 80 to 99 percent confidence. The sample size allows for values from 25 to 500.  The graph automatically displays 20 sample confidence intervals, created with sample proportions drawn from a binomial with $p= 0.5$, the input sample size, and $80\%$ confidence level. The lines represent the different confidence intervals and are colored according to whether or not they captured the true population parameter, 0.5.  Light blue lines represent the confidence intervals that contained 0.5, while the orange lines represent those that did not contain 0.5. 
 
-\begin{figure}[H]
+\begin{figure}
         \centering
 
         \begin{subfigure}[b]{0.75\textwidth}
                 \includegraphics[width=\textwidth]{OneProp.png}
                 \caption{Sampling Distribution Screen }
-                \label{fig:OneProp}
+                \label{fig: OneProp}
         \end{subfigure}%
 
         \begin{subfigure}[b]{0.75\textwidth}
                 \includegraphics[width=\textwidth]{OnePropCI.png}
                 \caption{Confidence Interval Screen} 
-                \label{fig:OnePropCI}
+                \label{fig: OnePropCI}
         \end{subfigure}
 
 \caption {Subsection of Inference for One Proportion.}
 \end{figure}
 
-
+\newpage
 \subsection{One Mean}
 The section One Mean focuses on the concept of sampling distribution for one mean. They layout is similar to that of the inference for one proportion.  The inputs allow the user to enter the mean, standard deviation, sample size, and number of samples.  Once the "Draw" button is clicked, the sampling distribution begins to appear with summary statistics in addition to the last drawn sample distribution and its summary statistics. The samples are drawn from a normal distribution with the mean and standard deviation input by the user.   We can see a screen shot of this section in Figure~\ref{OneMean}.
 
 
-\begin{figure}[H]
+\begin{figure}
 \centering
         \includegraphics[width=\textwidth]{OneMean.png}
         \label{fig: OneMean}
@@ -171,21 +169,17 @@ The sections for two proportions and two means are constructed similarly to the 
 
 The Two Means tab recreates the same process except with calculating the difference in means for two different groups. The user can input a specific mean and standard deviation for each of the two groups. The samples will then be generated form a normal distribution with those specifications. The setup of this section is similar to that of Two Proportions where we are given both the Sample Distribution and the Sampling Distribution, in addition to tables that provide the summary statistics for those graphs.
 
-\begin{figure}[H]
+\begin{figure}
 \centering
-        \includegraphics[width=\textwidth]{TwoProp.png}
+        \includegraphics[width=0.75\textwidth]{TwoProp.png}
         \label{fig:TwoProp}
 \end{figure}
 
 
+\newpage
+
 \subsection{Linear Regression: Correlation}
 Another section featured in the Shiny application is based on linear regression topics. The correlation page features a slider that allows the user to select correlation values for a random plot of points. Figure~\ref{Correlation}  gives a a screen shot of this section of the Shiny app. This allows the user to see what different correlations look like ranging from -1 to 1. In order to make this plot, a multivariate normal random data frame is created that has 100 sets of data points designed with a specific sigma matrix.  This sigma matrix changes based on the user input correlation value, but keeps 1 as the variance for both x and y.  Thus, the XY coordinates are generated with a set correlation. These points are then plotted on the graph and update as the slider is moved. 
-
-\begin{figure}[H]
-\centering
-        \includegraphics[width=\textwidth]{Correlation.png}
-        \label{fig:Correlation}
-\end{figure}
 
 
 
@@ -193,29 +187,42 @@ Another section featured in the Shiny application is based on linear regression 
  
  The outliers tab under Linear regression is designed to display multiple data sets with varying outliers.  The data sets are all identical except for the one outlier point, which will be set in a red color.  Once a data set is selected the user can select to fit a line of least squares to the data, both with and without the outlier.  Once the box is checked to fit a line to the data, the line is placed on the graph, blue for the line fit with the outlier and green slashes for a line fit to the data without the outlier. The output will also display the intercept, slope and coefficient of determination for the lines on the graph.  
  
- \begin{figure}[H]
-\centering
-        \includegraphics[width=\textwidth]{Outliers.png}
-        \label{fig:Outliers}
-        \caption{Outliers in Linear Regression}
-\end{figure}
 
 \subsection{Linear Regression: Equation}
 
 The Equation section of the Shiny app breaks down the components of an equation and provides interpretations for intercepts and slopes.  In addition, the user can manipulate the intercept and slope of the points on the graph in order to see how it changes the points and the the line fit to them.  The data for this plot is generated using the same multivariate random normal data generating function in R as in the correlation section. This time, the input slope value is set as the correlation in the sigma matrix. The data is then adjusted to meet the intercept requirements by shifting the points created with the specific slope to pass through the user input intercept value. The data on the plot will update as the intercept and slope sliders are moved.  When the  ``Fit Line'' box is selected the equation for that least squares line will be displayed. It will have the same intercept and slope as the sliders display. The user can then select the "Intercept" box to see a red dot appear at the y-intercept on the plot. They will also be shown an intercept interpretation that is specific the the intercept they see in the plot. Similarly, when the "Slope" box is checked there is an interpretation of the slope that is output for the user.  The graph will display the rise and run of the slope to help illustrate the interpretation for the slope. A horizontal green line represents the one unit increase in the explanatory variable, while a vertical blue line indicates the increase or decrease in the response variable as a result of the increase in the explanatory variable. The user can manipulate the sliders and the check boxes as they see fit, and the plot and output will continually update. Figure~\ref{LinEq} displays the screen for Equation when all boxes are checked. 
 
-\begin{figure}[H]
-\centering
-      \includegraphics[width=\textwidth]{LinEq.png}
-      \label{fig: LinEq}
-      \caption{Equation Tab}
+
+\begin{figure}
+        \centering
+         \begin{subfigure}[b]{0.6\textwidth}
+                \includegraphics[width=\textwidth]{Correlation.png}
+                \caption{Regression: Correlation} 
+                \label{fig: Correlation}
+        \end{subfigure}
+        
+        \begin{subfigure}[b]{0.6\textwidth}
+                \includegraphics[width=\textwidth]{Outliers.png}
+                \caption{Regression: Outliers }
+                \label{fig: Outliers}
+        \end{subfigure}%
+
+        \begin{subfigure}[b]{0.6\textwidth}
+                \includegraphics[width=\textwidth]{LinEq.png}
+                \caption{Regression: Equation} 
+                \label{fig: LinEq}
+        \end{subfigure}
+        
+
+\caption {Regression Subsections}
 \end{figure}
+
 
 \subsection{ANOVA}
 
 The last tab of the shiny application is the ANOVA tab.  This tab explores the relationship among the means of 3 different groups.  The user can input the means, standard deviations, and sample sizes for each of the three groups. This can be seen in Figure~\ref{ANOVAUP}. Then R will generate the samples for each group using a normal distribution with the input parameters for each group. Then, the graph will display a dotplot for each of those groups.  Next to the graph, is an ANOVA table for the differences in the means along with the summary information for each of the three groups. The output for this part of the Shiny app can be seen in Figure~\ref{ANOVALOW}.
 
-\begin{figure}[H]
+\begin{figure}
         \centering
 
         \begin{subfigure}[b]{0.75\textwidth}
@@ -235,11 +242,11 @@ The last tab of the shiny application is the ANOVA tab.  This tab explores the r
 
 
 \section{Conclusions and Future Work}
-% These are the things that I have that other things don't
-%based in R its free, independtent and runs on the web so everyone can use it, it has interactive features (could bullet point this)  
-% Then talk about where it goes next
-%different options in the tabs could be built into the app for hyp test or other similar topics 
-%Software testing over the next few month from students in intro stats and high school and community college math teachers on the software
+In conclusion, we can see that technology plays an important role in the design and structure of coursework for introductory statistics courses. The purpose of this project was to investigate the role that technology is playing and focus on a platform that has yet to be fully taken advanatage of.  R's Shiny app technology provides a free, easy to use, customizable platform for educators of introductory statistics courses. The Shiny app outlined in this paper can easily be launched to the web and used in courses along with the supplementary worksheets. In addition, the flexibility of programming the Shiny app created here lends itself to be easily altered, based of the requirments of the course or instructors needs. New tabs or subsections can easily be added as needed, to be more specific to the course being taught as long as the instructor is familiar was R programming. 
+
+Future work is forthcoming on testing the software in the next few months. The Shiny app and a selection of the corresponding worksheets will be used on a sample of undergrads that have taken at least an introductory couse in statistics and and math educators from both high school and community college settings.  Each group  will answer a few opening questions found in the worksheet section of this paper. They will then have the opportunity to use the Shiny app and work on the worksheets for 2 different sections. Then, there are another few questions for them to answer that correspond to the sections they worked on.  Feedback will be collected from these groups on the software and make improvements accordingly.  
+
+\newpage
 \section{References}
 
 
@@ -260,22 +267,22 @@ The last tab of the shiny application is the ANOVA tab.  This tab explores the r
 
 \subsection{Worksheets}
 
-Another component of this project was creating worksheets that correspond to each of the sections of the Shiny app. Though the app can stand alone to help vizualize various topics, the worksheets walk the user through using each section and try to help illustrate ideas. The worksheets for each section work to help demonstrate the following ideas:
+Another component of this project was creating worksheets that correspond to each of the sections of the Shiny app. Though the app can stand alone to help vizualize various topics, the worksheets walk the user through using each section and try to help illustrate the concepts. The worksheets for each section work to help demonstrate the following ideas:
 \begin{itemize}
 
-\item One Proportion and One Mean: Leads user through drawing one sample and seeing how it is displayed in the Sample Distribution vs in the Sampling Distribution. Then, leads to drawing more samples and seeing that the Sampling Distribution ends up centered around population proportion.  
+\item One Proportion and One Mean: Leads user through drawing one sample and seeing how it is displayed in the Sample Distribution vs in the Sampling Distribution. Then, directs them to drawing more samples and seeing that the Sampling Distribution ends up centered around the population parameter.  
 
-\item   Confidence Interval: Walk the user through fixing the confidence level and seeing what happens to the width of the intervals as the sample size in increased from 25 to 500. In the second question the sample size is fixed at 250 and the confidence level is increased from 80 to 99$\%$.  Through manipulation of these two components the user is quickly able to see the relationship between confidence interval width, the sample size, and the confidence level.
+\item   Confidence Interval: Walks the user through fixing the confidence level and seeing what happens to the width of the intervals as the sample size in increased from 25 to 500. In the second question the sample size is fixed at 250 and the confidence level is increased from 80 to 99$\%$.  Through manipulation of these two components the user is quickly able to see the relationship between confidence interval width, the sample size, and the confidence level.
   
-\item   Two Proportions and Two Means: takes the user the student through taking multiple samples to build the sampling distribution which ends up being approximately normal, similar to the one proportion and one mean inference sections.
+\item   Two Proportions and Two Means: Leads the user through taking multiple samples to build the sampling distribution which ends up being approximately normal, similar to the one proportion and one mean inference sections.
   
-\item   Corrleation: takes the user through observing the structures of the data as the slider moves from a correlation of -1 to 1. They will take note of the direction and form of the data as the correlation changes. 
+\item   Corrleation: Guides the user through observing the layout of the data on a scatterplot as the slider moves from a correlation of -1 to 1. They will take note of the direction and form of the data as the correlation changes. 
 
-\item Outliers: leads the user through the linear model selection process of fitting data both with and without an outlier and determining which model best fits the data.  Users will also look at multiple outliers and determine whether they have high leverage, high residual or both.
+\item Outliers: Leads the user through the linear model selection process of fitting data both with and without an outlier and determining which model best fits the data.  Users will also look at multiple outliers and determine whether they have high leverage, high residual or both.
 
-\item Equation: guides the user through manipulating the slope and intercept on the plot and porviding interpretations of those values.
+\item Equation: Guides the user through manipulating the slope and intercept on the plot and providing interpretations of those values.
   
-\item   ANOVA:  gives the user a small introduction to the ANOVA F test followed by some questions asking them to explore the relationship between the mean, standard deviation, sample size and the resulting p-value and conclusion to the F-test. 
+\item   ANOVA:  Gives the user a small introduction to the ANOVA F-test followed by some questions asking them to explore the relationship between the mean, standard deviation, sample size and the resulting p-value and conclusion of the F-test. 
 \end{itemize}
 \includepdf[pages=-]{Questions.pdf}
 

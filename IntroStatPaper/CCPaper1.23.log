@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  31 MAR 2017 20:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  1 APR 2017 15:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -539,39 +539,32 @@ LaTeX Warning: Reference `OneProp' on page 8 undefined on input line 130.
 
 [8]
 
-LaTeX Warning: Reference `OnePropCI' on page 9 undefined on input line 137.
+LaTeX Warning: Reference `OnePropCI' on page 9 undefined on input line 135.
 
 <OneProp.png, id=112, 959.585pt x 665.48625pt>
 File: OneProp.png Graphic file (type png)
  <use OneProp.png>
-Package pdftex.def Info: OneProp.png used on input line 143.
+Package pdftex.def Info: OneProp.png used on input line 141.
 (pdftex.def)             Requested size: 322.50346pt x 223.66278pt.
 
 <OnePropCI.png, id=114, 845.1575pt x 628.3475pt>
 File: OnePropCI.png Graphic file (type png)
  <use OnePropCI.png>
-Package pdftex.def Info: OnePropCI.png used on input line 149.
+Package pdftex.def Info: OnePropCI.png used on input line 147.
 (pdftex.def)             Requested size: 322.50346pt x 239.77165pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
  [9]
+[10 <./OneProp.png> <./OnePropCI.png>]
 
-LaTeX Warning: Reference `OneMean' on page 10 undefined on input line 159.
+LaTeX Warning: Reference `OneMean' on page 11 undefined on input line 157.
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [10 <./OneProp.png> <./OnePropCI.png>] <OneMean.png, id=128, 955.57pt x 649.42
-625pt>
+<OneMean.png, id=128, 955.57pt x 649.42625pt>
 File: OneMean.png Graphic file (type png)
-
-<use OneMean.png>
-Package pdftex.def Info: OneMean.png used on input line 164.
+ <use OneMean.png>
+Package pdftex.def Info: OneMean.png used on input line 162.
 (pdftex.def)             Requested size: 430.00462pt x 292.2391pt.
 
 
-LaTeX Warning: Reference `TwoProp' on page 11 undefined on input line 170.
+LaTeX Warning: Reference `TwoProp' on page 11 undefined on input line 168.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -579,163 +572,164 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [11 <./OneMean.png>] <TwoProp.png, id=135, 950.55125pt x 634.37pt>
 File: TwoProp.png Graphic file (type png)
  <use TwoProp.png>
-Package pdftex.def Info: TwoProp.png used on input line 176.
-(pdftex.def)             Requested size: 430.00462pt x 286.97389pt.
+Package pdftex.def Info: TwoProp.png used on input line 174.
+(pdftex.def)             Requested size: 322.50346pt x 215.228pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [12]
+[12]
 
 LaTeX Warning: Reference `Correlation' on page 13 undefined on input line 182.
 
-<Correlation.png, id=140, 949.5475pt x 641.39626pt>
+[13 <./TwoProp.png>]
+
+LaTeX Warning: Reference `LinEq' on page 14 undefined on input line 193.
+
+<Correlation.png, id=147, 949.5475pt x 641.39626pt>
 File: Correlation.png Graphic file (type png)
  <use Correlation.png>
-Package pdftex.def Info: Correlation.png used on input line 186.
-(pdftex.def)             Requested size: 430.00462pt x 290.4558pt.
+Package pdftex.def Info: Correlation.png used on input line 199.
+(pdftex.def)             Requested size: 258.00539pt x 174.27544pt.
 
-Underfull \vbox (badness 2221) has occurred while \output is active []
-
- [13 <./TwoProp.png>] <Outliers.png, id=148, 838.13126pt x 633.36626pt>
+<Outliers.png, id=148, 838.13126pt x 633.36626pt>
 File: Outliers.png Graphic file (type png)
  <use Outliers.png>
-Package pdftex.def Info: Outliers.png used on input line 198.
-(pdftex.def)             Requested size: 430.00462pt x 324.94539pt.
+Package pdftex.def Info: Outliers.png used on input line 205.
+(pdftex.def)             Requested size: 258.00539pt x 194.96916pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [14 <./Correlation.png>]
-
-LaTeX Warning: Reference `LinEq' on page 15 undefined on input line 205.
-
-[15 <./Outliers.png>] <LinEq.png, id=162, 944.52875pt x 666.49pt>
+<LinEq.png, id=149, 944.52875pt x 666.49pt>
 File: LinEq.png Graphic file (type png)
+ <use LinEq.png>
+Package pdftex.def Info: LinEq.png used on input line 211.
+(pdftex.def)             Requested size: 258.00539pt x 182.05984pt.
 
-<use LinEq.png>
-Package pdftex.def Info: LinEq.png used on input line 209.
-(pdftex.def)             Requested size: 430.00462pt x 303.42632pt.
+
+LaTeX Warning: Float too large for page by 99.22787pt on input line 218.
+
+
+LaTeX Warning: Reference `ANOVAUP' on page 14 undefined on input line 223.
+
+
+LaTeX Warning: Reference `ANOVALOW' on page 14 undefined on input line 223.
+
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [16]
-
-LaTeX Warning: Reference `ANOVAUP' on page 17 undefined on input line 216.
-
-
-LaTeX Warning: Reference `ANOVALOW' on page 17 undefined on input line 216.
-
-<ANOVAUP.png, id=167, 1263.72125pt x 451.6875pt>
+ [14]
+[15 <./Correlation.png> <./Outliers.png> <./LinEq.png>]
+<ANOVAUP.png, id=163, 1263.72125pt x 451.6875pt>
 File: ANOVAUP.png Graphic file (type png)
  <use ANOVAUP.png>
-Package pdftex.def Info: ANOVAUP.png used on input line 222.
+Package pdftex.def Info: ANOVAUP.png used on input line 229.
 (pdftex.def)             Requested size: 322.50346pt x 115.27182pt.
 
-<ANOVALOW.png, id=168, 1263.72125pt x 514.92375pt>
+<ANOVALOW.png, id=164, 1263.72125pt x 514.92375pt>
 File: ANOVALOW.png Graphic file (type png)
  <use ANOVALOW.png>
-Package pdftex.def Info: ANOVALOW.png used on input line 228.
+Package pdftex.def Info: ANOVALOW.png used on input line 235.
 (pdftex.def)             Requested size: 322.50346pt x 131.40988pt.
- [17 <./LinEq.png>] [18 <./ANOVAUP.png> <./ANOVALOW.png>]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 266.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [16 <./ANOVAUP.png> <./ANOVALOW.png>] [17] [18]
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 273.
 
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 266.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 273.
  [19
 
 ]
-<Questions.pdf, id=193, 614.295pt x 794.97pt>
+<Questions.pdf, id=191, 614.295pt x 794.97pt>
 File: Questions.pdf Graphic file (type pdf)
  <use Questions.pdf>
-Package pdftex.def Info: Questions.pdf used on input line 280.
+Package pdftex.def Info: Questions.pdf used on input line 287.
 (pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf>
-Package pdftex.def Info: Questions.pdf used on input line 280.
+Package pdftex.def Info: Questions.pdf used on input line 287.
 (pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
- <Questions.pdf, id=196, page=1, 614.295pt x 794.97pt>
+ <Questions.pdf, id=194, page=1, 614.295pt x 794.97pt>
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 1>
-Package pdftex.def Info: Questions.pdf, page1 used on input line 280.
+Package pdftex.def Info: Questions.pdf, page1 used on input line 287.
 (pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
 File: Questions.pdf Graphic file (type pdf)
  <use Questions.pdf, page 1>
-Package pdftex.def Info: Questions.pdf, page1 used on input line 280.
+Package pdftex.def Info: Questions.pdf, page1 used on input line 287.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [20]
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 1>
-Package pdftex.def Info: Questions.pdf, page1 used on input line 280.
+Package pdftex.def Info: Questions.pdf, page1 used on input line 287.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
  <use Questions.pdf, page 1>
-Package pdftex.def Info: Questions.pdf, page1 used on input line 280.
+Package pdftex.def Info: Questions.pdf, page1 used on input line 287.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 1>
-Package pdftex.def Info: Questions.pdf, page1 used on input line 280.
+Package pdftex.def Info: Questions.pdf, page1 used on input line 287.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [21 <./Questions.pdf>]
-<Questions.pdf, id=236, page=2, 614.295pt x 794.97pt>
+<Questions.pdf, id=234, page=2, 614.295pt x 794.97pt>
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 2>
-Package pdftex.def Info: Questions.pdf, page2 used on input line 280.
+Package pdftex.def Info: Questions.pdf, page2 used on input line 287.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
  <use Questions.pdf, page 2>
-Package pdftex.def Info: Questions.pdf, page2 used on input line 280.
+Package pdftex.def Info: Questions.pdf, page2 used on input line 287.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 2>
-Package pdftex.def Info: Questions.pdf, page2 used on input line 280.
+Package pdftex.def Info: Questions.pdf, page2 used on input line 287.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [22 <./Questions.pdf>]
-<Questions.pdf, id=241, page=3, 614.295pt x 794.97pt>
+<Questions.pdf, id=239, page=3, 614.295pt x 794.97pt>
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 3>
-Package pdftex.def Info: Questions.pdf, page3 used on input line 280.
+Package pdftex.def Info: Questions.pdf, page3 used on input line 287.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
  <use Questions.pdf, page 3>
-Package pdftex.def Info: Questions.pdf, page3 used on input line 280.
+Package pdftex.def Info: Questions.pdf, page3 used on input line 287.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 3>
-Package pdftex.def Info: Questions.pdf, page3 used on input line 280.
+Package pdftex.def Info: Questions.pdf, page3 used on input line 287.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [23 <./Questions.pdf>]
-<Questions.pdf, id=246, page=4, 614.295pt x 794.97pt>
+<Questions.pdf, id=244, page=4, 614.295pt x 794.97pt>
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 4>
-Package pdftex.def Info: Questions.pdf, page4 used on input line 280.
+Package pdftex.def Info: Questions.pdf, page4 used on input line 287.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
  <use Questions.pdf, page 4>
-Package pdftex.def Info: Questions.pdf, page4 used on input line 280.
+Package pdftex.def Info: Questions.pdf, page4 used on input line 287.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
 File: Questions.pdf Graphic file (type pdf)
 
 <use Questions.pdf, page 4>
-Package pdftex.def Info: Questions.pdf, page4 used on input line 280.
+Package pdftex.def Info: Questions.pdf, page4 used on input line 287.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [24 <./Questions.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 289.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 289.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 296.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 296.
  (./CCPaper1.23.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 289.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 289.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 296.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 296.
 Package rerunfilecheck Info: File `CCPaper1.23.out' has not changed.
 (rerunfilecheck)             Checksum: E8491C78ABA496198C0A9F0A276C9624;970.
 
@@ -745,16 +739,16 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 289.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 296.
  ) 
 Here is how much of TeX's memory you used:
  11292 strings out of 493014
- 181447 string characters out of 6133351
+ 181468 string characters out of 6133351
  294553 words of memory out of 5000000
- 14623 multiletter control sequences out of 15000+600000
+ 14625 multiletter control sequences out of 15000+600000
  26486 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,18n,46p,1823b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 42i,18n,46p,1823b,496s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/te
 xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/te
@@ -767,10 +761,10 @@ ve/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/
 t/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/ty
 pe1/urw/times/utmr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/ti
 mes/utmri8a.pfb>
-Output written on CCPaper1.23.pdf (24 pages, 1127445 bytes).
+Output written on CCPaper1.23.pdf (24 pages, 1129038 bytes).
 PDF statistics:
- 293 PDF objects out of 1000 (max. 8388607)
- 228 compressed objects within 3 object streams
- 51 named destinations out of 1000 (max. 500000)
+ 291 PDF objects out of 1000 (max. 8388607)
+ 226 compressed objects within 3 object streams
+ 49 named destinations out of 1000 (max. 500000)
  193 words of extra memory for PDF output out of 10000 (max. 10000000)
 
