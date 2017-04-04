@@ -1,5 +1,4 @@
 
-
 #Libraries
 library(shiny)
 library(ggplot2)
@@ -92,7 +91,7 @@ function(input, output, session) {
   output$sdist <- renderText({ "Sample Distribution" })
   output$singdist <- renderText({ "Sampling Distribution" })
   #--------------------------------------------- One proportion CIs ---------------------------------------------------- #
-
+  
   # Generate 20 sample p_hats to create confidence intervals around
   twSamps = eventReactive(input$cIDemoSampSize,{
     tsampCL = NULL
@@ -173,7 +172,7 @@ function(input, output, session) {
       theme(axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())+geom_vline(xintercept = 0.5, color = "slategray4")
   })
   
- 
+  
   
   # --------------------------------------------- Inference for One Mean ------------------------------------#
   
@@ -345,13 +344,13 @@ function(input, output, session) {
     qplot(samplesP2(), xlab = "Difference in Proportions", ylab = "Number of Samples", binwidth = 0.01)
   })
   
- 
+  
   # Population summary info and p-values to be displayed in a table
   popSumTP = reactive({data.frame(
     Mean = mean(samplesP2()),
     "Standard Deviation" = sd(samplesP2())
-   
-  
+    
+    
   )
   })
   
@@ -362,7 +361,7 @@ function(input, output, session) {
   
   # Output the text labels for the Distributions and test options
   output$twoPropSampleDist <- renderText({ "Sample Distributions" }) 
-
+  
   output$twoPropSampDist <- renderText({ "Sampling Distribution" }) 
   
   # --------------------------------------------- Two Means Code -----------------------------------------------------#
@@ -372,13 +371,13 @@ function(input, output, session) {
     pickfM1 = c(rnorm(input$sampleSizeTM1, input$popMeanM1, input$sigmaTM1))
     return(pickfM1)
   })
-
+  
   #Sample Distribution plot for group one
   output$sampleDistM1 = renderPlot({
     qplot(pickM1(), xlab = "Value", ylab = "Count")+ labs( title = "Group 1")
   })
   
- # Generate a sample for group two 
+  # Generate a sample for group two 
   pickM2 = eventReactive(input$go2Mean,{
     pickfM2 = c(rnorm(input$sampleSizeTM2, input$popMeanM2, input$sigmaTM2))
     return(pickfM2)
@@ -435,9 +434,9 @@ function(input, output, session) {
   })
   
   
- 
   
- # Sampling distribution and test statistics information to be displayed in a table 
+  
+  # Sampling distribution and test statistics information to be displayed in a table 
   popSumTM = reactive({data.frame(
     Mean = mean(samplesTM()),
     "Standard Deviation" = sd(samplesTM())
@@ -455,7 +454,7 @@ function(input, output, session) {
   output$twoMeansSampleDist <- renderText({ "Sampling Distribution" })
   # --------------------------------------------- Linear Regression Code ----------------------------------------------#
   #Correlation Tab
-
+  
   # Make the dataset with a set correlation for the scatterplot
   xycorr =reactive({
     datxy = as.data.frame(mvrnorm(100, mu = c(0,0), Sigma = matrix(c(1,input$correlation,input$correlation,1),, ncol = 2),empirical = TRUE))
@@ -466,7 +465,7 @@ function(input, output, session) {
   output$corrPlot = renderPlot({
     qplot(xycorr()$V1,xycorr()$V2, xlab = "x", ylab = "y")
   })
-
+  
   # Outliers tab
   # Select the proper dataset to analyze based on the user input
   getData = reactive({
@@ -563,106 +562,106 @@ function(input, output, session) {
   output$lineSum <- renderText({ "Line Summary" })
   output$lineSumNoPt <- renderText({ "Line Summary Without Point" })
   
-    
-  # Regression Line 
-    
   
-      # Create a data frame with the desired slope
-      xy = reactive({
-        datXY = as.data.frame(mvrnorm(100, mu = c(0,0), Sigma = matrix(c(1,input$slope,input$slope,1000),, ncol = 2),empirical = TRUE))
-      return(datXY)
-      })
-      # Change the intercept to match the one desired
-      linexy =reactive({
-       return(lm(xy()$V2~xy()$V1))
-        
-      })
-      # Adjust the interecept to match the desired intercept amount
-      intdelt = reactive({
-        rintdelt= linexy()$coefficients[1] - input$intercept
-        return(rintdelt)
-      })
-
-      # Plot the points on the graph
-      output$linreg = renderPlot({
-      print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Explanatory")+ylab("Response"))
-        
-        
-        # Add the line of best fit and display the equation in table form
-        if(input$fitPoints == TRUE){
-          pointsLine = lm(xy()$V2-intdelt()~xy()$V1)
-       
-           print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Explanatory")+ylab("Response")+
+  # Regression Line 
+  
+  
+  # Create a data frame with the desired slope
+  xy = reactive({
+    datXY = as.data.frame(mvrnorm(100, mu = c(0,0), Sigma = matrix(c(1,input$slope,input$slope,1000),, ncol = 2),empirical = TRUE))
+    return(datXY)
+  })
+  # Change the intercept to match the one desired
+  linexy =reactive({
+    return(lm(xy()$V2~xy()$V1))
+    
+  })
+  # Adjust the interecept to match the desired intercept amount
+  intdelt = reactive({
+    rintdelt= linexy()$coefficients[1] - input$intercept
+    return(rintdelt)
+  })
+  
+  # Plot the points on the graph
+  output$linreg = renderPlot({
+    print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Explanatory")+ylab("Response"))
+    
+    
+    # Add the line of best fit and display the equation in table form
+    if(input$fitPoints == TRUE){
+      pointsLine = lm(xy()$V2-intdelt()~xy()$V1)
+      
+      print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Explanatory")+ylab("Response")+
               geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2]))
-         
-          # Make a table with the equation information
-          eqPoints= reactive({data.frame(
-            intercept = pointsLine$coefficients[1],
-            slope = pointsLine$coefficients[2] )
-            
-          })
-          output$eqPointsTable = renderTable({
-            eqPoints()
-          })
-        }
+      
+      # Make a table with the equation information
+      eqPoints= reactive({data.frame(
+        intercept = pointsLine$coefficients[1],
+        slope = pointsLine$coefficients[2] )
         
-        
-        
-        
-        # Add an "X" for the intercept and display the intercept interpretation if the intercept box is selected
-        if(input$interceptPoints == TRUE){
-          pointsLine = lm(xy()$V2-intdelt()~xy()$V1)
-          
-            print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Explantatory")+ylab("Response")+
+      })
+      output$eqPointsTable = renderTable({
+        eqPoints()
+      })
+    }
+    
+    
+    
+    
+    # Add an "X" for the intercept and display the intercept interpretation if the intercept box is selected
+    if(input$interceptPoints == TRUE){
+      pointsLine = lm(xy()$V2-intdelt()~xy()$V1)
+      
+      print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Explantatory")+ylab("Response")+
               geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2])+
               geom_point(aes(x = 0, y = pointsLine$coefficients[1], color = "intercept"), shape = 8))
-          
-          
-          # Display the intercept interpretation
-          intText = reactive({
-            int = as.character(round(pointsLine$coefficients[1], 2))
-            text = paste("If the explantory variable is zero, the predicted response value is ", int, ".")
-            return(text)
-          })
-          output$intercept <- renderText({ intText() })
-        }
-        
-        
-        # If the slope box is selected add colored lines to the plot to help explain the slope
-        if(input$slopePoints == TRUE){
-          pointsLine = lm(xy()$V2-intdelt()~xy()$V1)
-          
-            print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Explanatory")+ylab("Response")+
+      
+      
+      # Display the intercept interpretation
+      intText = reactive({
+        int = as.character(round(pointsLine$coefficients[1], 2))
+        text = paste("If the explantory variable is zero, the predicted response value is ", int, ".")
+        return(text)
+      })
+      output$intercept <- renderText({ intText() })
+    }
+    
+    
+    # If the slope box is selected add colored lines to the plot to help explain the slope
+    if(input$slopePoints == TRUE){
+      pointsLine = lm(xy()$V2-intdelt()~xy()$V1)
+      
+      print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Explanatory")+ylab("Response")+
               geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2])+
               geom_point(aes(x = 0, y = pointsLine$coefficients[1], color = "intercept"), shape = 8)+
               geom_segment(aes(x = 1, xend = 2, y = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), yend = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), color = "one unit"))+
               geom_segment(aes(x = 2, xend = 2, y = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), yend =(pointsLine$coefficients[1]+ 2*pointsLine$coefficients[2]) , color = "slope amount")))
-          
-          # Display the text of the slope interpretation
-          slopeText = reactive({
-            # Find the sign of the slope in order to determine whether to use "increase" or "decrease"
-            if(sign(pointsLine$coefficients[2]) == -1){
-              signSlope = "decrease"
-            }
-            if(sign(pointsLine$coefficients[2]) == 1){
-              signSlope = "increase"
-            }
-            # Get the absolute value of the slope amount
-            sl = as.character(abs(round(pointsLine$coefficients[2], 2)))
-            
-            slText = paste("If the explantaory variable inceases by one unit, we expect the predicted response variable to", signSlope,"by",sl, "units")
-            return(slText)
-          })
-          output$slope <- renderText({slopeText()})
+      
+      # Display the text of the slope interpretation
+      slopeText = reactive({
+        # Find the sign of the slope in order to determine whether to use "increase" or "decrease"
+        if(sign(pointsLine$coefficients[2]) == -1){
+          signSlope = "decrease"
         }
+        if(sign(pointsLine$coefficients[2]) == 1){
+          signSlope = "increase"
+        }
+        # Get the absolute value of the slope amount
+        sl = as.character(abs(round(pointsLine$coefficients[2], 2)))
+        
+        slText = paste("If the explantaory variable inceases by one unit, we expect the predicted response variable to", signSlope,"by",sl, "units")
+        return(slText)
       })
-
-   
-
+      output$slope <- renderText({slopeText()})
+    }
+  })
   
-
-
-
+  
+  
+  
+  
+  
+  
   # ----------------------------------------- ANOVA -------------------- #
   
   # Generate data for 3 different groups based on the input means, standard deviations, and sample sizes
@@ -736,8 +735,6 @@ function(input, output, session) {
     anovaSum()
   })
   
-
+  
   # Must be within this bracket
 }
-
-
