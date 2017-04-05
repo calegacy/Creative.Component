@@ -701,7 +701,7 @@ function(input, output, session) {
   
   # Dotplot of the threee groups of data colored and faceted by group
   output$anovaPlot = renderPlot( {
-    qplot(data = dframe(), x =g123Data(), geom = "dotplot", fill = groupList(), xlab = "x")+facet_grid(facets = groupList()~.)+
+    qplot(data = dframe(), x =g123Data(), geom = "dotplot", fill = groupList(), xlab = "x")+facet_grid(facets = groupList()~., scales = "free")+
       guides(fill=guide_legend(title="Group"))
   })
   
