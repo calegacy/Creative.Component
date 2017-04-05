@@ -1,0 +1,329 @@
+---
+title: "A Shiny App for Introductory Statistics Concepts"
+author: "Chelsey Legacy"
+date: "April 7, 2017"
+output: ioslides_presentation
+runtime: shiny
+---
+
+
+## Outline
+
+  - Technology in Statistics Education
+  - Availible Options
+  - Shiny App
+  - Worksheets
+  - Conclusions & Future Work
+
+## Cognitive technologies
+  
+  - Pea explains cognitive technology as: "any medium that helps transcend the limitations of the mind.." 
+  - Technology helps make complex concepts accessible to more people
+  - Help students go beyond following formulas and returning answers
+  
+
+## Impact of Technology on Pededagogy
+
+  - Focus more on selcting the right tools, than on formulas and calculations
+  - Try to select straightforward software
+
+## Availible Options & Drawbacks
+
+  - Software: JMP, Fathom, Minitab, SPSS
+    - Expensive
+    - Learning curve
+  - Web-based Java platforms: StatKey, Rossman Chance applets
+    - Not suitable for all courses
+    - Java loading issues
+ 
+
+## Shiny by RStudio
+
+  - Avaliable for free
+  - User only needs to know programming in R
+  - Easily custimizable 
+  - Interactive
+  
+
+## Shiny App for Intro Stat Concepts
+##
+```{r, echo = FALSE}
+shinyAppFile("combined.R",
+  options=list(
+    width=600, height=600
+  )
+)
+
+```
+
+##
+```{r, echo = FALSE, message=FALSE, warning = FALSE}
+#Shiny for inference for ONE PROPORTION
+#Load Libraries
+library(markdown)
+library(ggplot2)
+library(shinydashboard)
+library(datasets)
+library(shinythemes)
+shinyApp(
+  
+  ui =     
+    navbarPage(h6("Stats"),theme = shinytheme("flatly"),
+               tabPanel("Sampling Distribution for One Proportion",
+                                     column(width = 2,
+                                            
+                                            numericInput("popProp", "Population Proportion",
+                                                         value = 0.3,min = 0, max = 1, step = 0.01),
+                                            numericInput("sampleSize", "Sample Size", value = 100, min = 1),
+                                            numericInput( "numSamp", "Number of Samples", value = 100, min = 1),
+                                            actionButton("goProp", "Draw",class="btn btn-success btn")
+                                            
+                                     ),
+                                     
+                                     column(width = 5,
+                                            
+                                            tableOutput("sampSumDat"),
+                                            tableOutput("popSumDat")
+                                            
+                                     ),
+                                     
+                                     column(width = 5, 
+                                            verbatimTextOutput("sdist"),
+                                            plotOutput("sampleDist", width = "auto", height = 200),
+                                            verbatimTextOutput("singdist"),
+                                            plotOutput("samplingDist", width = "auto", height = 200)
+                                     )
+                            )),
+  server =  function(input, output, session) {
+    # Create a single sample distribution 
+  # Get a sample from a binomial distribution
+  pickVect = eventReactive(input$goProp,{
+    pickf = rbinom(input$sampleSize,1, input$popProp)
+    return(pickf)
+  })
+  
+  # Count the number of "successes" and put it over the sample size to make p_hat
+  pickProp = eventReactive(input$goProp,{
+    pickprop = length(which(pickVect() == 1))/input$sampleSize
+    return(pickprop)
+  })
+  
+  
+  #Sample Distribution bar graph
+  output$sampleDist = renderPlot({
+    qplot(as.character(pickVect()), xlab = "Category", ylab = "Count")
+  })
+  
+  #Sample summary information to be put into a table
+  samplesum = eventReactive(input$goProp,{data.frame(
+    Category = c( "Yes = 1", "No = 0"),
+    Count =c( length(which(pickVect() == 1)), length(which(pickVect() == 0))),
+    Prop = c(format(round(length(which(pickVect() == 1))/input$sampleSize,digits = 4),4), format(round(length(which(pickVect() == 0))/input$sampleSize,4),4))
+  )
+  })
+  
+  #Sample summary table output
+  output$sampSumDat  = renderTable(caption = "Sample Summary Statistics",caption.placement = getOption("xtable.caption.placement", "top"),{
+    samplesum()
+  })
+  
+  #Calculations to make a sampling distribution
+  samples = eventReactive(input$goProp,{
+    # If one sample is needed use only the one p_hat from above
+    if(input$numSamp == 1){
+      return(pickProp())
+    }
+    # If many samples are needed, generate a vector of p_hats by the above method
+    if(input$numSamp > 1){
+      v = c(pickProp())
+      for(i in 2:input$numSamp){
+        # Generate a sample
+        npick = reactive({
+          newpick = rbinom(input$sampleSize, 1,input$popProp)
+          newprop = length(which(newpick == 1))/input$sampleSize
+          return(newprop)
+          
+        })
+        # Store the generated sample in a vector
+        v = c(v,npick())
+        
+      }}
+    # Return to 
+    return(v)
+  })
+  
+  # Histogram of the sampling distribution
+  output$samplingDist =renderPlot({
+    ggplot(data = data.frame(samples()),aes(samples()))+ geom_histogram(binwidth = 0.01) +xlab("Sample Proportion") +ylab("Number of Samples")
+  })
+  
+  # Population summary info to be displayed in a table
+  popSum = eventReactive(input$goProp,{data.frame(
+    Mean = mean(samples()),
+    "Standard Deviation" = sd(samples())
+  )
+  })
+  
+  #Population summary table output
+  output$popSumDat  = renderTable(caption = "Sampling Distribution Summary Statistics",caption.placement = getOption("xtable.caption.placement", "top"),{
+    popSum()
+  })
+  
+  # Add the text for "Sample/Sampling Distribution" to the Shiny display
+  output$sdist <- renderText({ "Sample Distribution" })
+  output$singdist <- renderText({ "Sampling Distribution" })
+  
+  }
+  
+)
+
+```
+
+
+##
+```{r, echo = FALSE, warning=FALSE, message = FALSE}
+# Shiny for confidence intervals
+library(shinythemes)
+
+shinyApp(
+  
+  ui = 
+    navbarPage(h6("Stats"),theme = shinytheme("flatly"),
+    tabPanel("Confidence Interval",
+             fluidRow(
+               box(width = 4, title = NULL, status = "primary",
+                   sliderInput("cIDemoCL", "Confidence Level %", value = 80, min = 80, max = 99, step = 5)
+               ),
+               box(width = 4, title = NULL, status = "primary",
+                   sliderInput("cIDemoSampSize", "Sample Size", value = 25, min = 25, max = 500, step = 5)
+               )
+               
+             ),
+             fluidRow(
+               box(width = 10, title = NULL, status = "primary",
+                   plotOutput("sampCLPlot")
+               )
+             )
+    )),
+  
+  server = function(input, output, session){
+      
+  # Generate 20 sample p_hats to create confidence intervals around
+  twSamps = eventReactive(input$cIDemoSampSize,{
+    tsampCL = NULL
+    for(i in 1:20){
+      tsCL = rbinom(input$cIDemoSampSize, 1, 0.5)
+      # Get the proportion of "successes" for the generated sample
+      countPropCL = length(which(tsCL == 1 ))/ input$cIDemoSampSize
+      tsampCL = c(tsampCL,countPropCL)
+    }
+    return(tsampCL)
+  })
+  
+  # Create a sample vector of y values so that the confidence intervals can be stacked in the plot
+  ysCLDemo = reactive({
+    yy = seq(from = 1, by = 0.5, length.out = length(twSamps()))
+    return(yy)
+  })
+  
+  # Set the z-value to be the value input by the user
+  zlev = reactive({
+    if(input$cIDemoCL  == 80){
+      zlev = 1.282
+    }
+    if(input$cIDemoCL == 85){
+      zlev = 1.44
+    }
+    if(input$cIDemoCL == 90){
+      zlev = 1.645
+    }
+    if(input$cIDemoCL == 95){
+      zlev = 1.96
+    }
+    if(input$cIDemoCL == 99){
+      zlev = 2.576
+    }
+    return(zlev)
+  })
+  
+  # Calculate the upper bounds for the confidence intervals
+  upCLDemo = reactive({
+    usd = twSamps() + zlev()*(sqrt(twSamps()*(1-twSamps())/input$cIDemoSampSize))
+    return(usd)
+  })
+  
+  # Calculate the lower bounds for the confidence intervals
+  lowCLDemo = reactive({
+    lsd =  twSamps() - zlev()*(sqrt(twSamps()*(1-twSamps())/input$cIDemoSampSize))
+    return(lsd)
+  })
+  
+  # Color the interval based on whether or not they capture the true population proportion
+  colorCLDemo = reactive({
+    coldemo = NULL
+    for(i in 1:20){
+      # Color the intervals blue if they contain 0.4 (the set value for the population parameter)
+      if(lowCLDemo()[i] <= 0.5 && 0.5  <= upCLDemo()[i]   ){
+        
+        colne = "steelblue1"
+        coldemo = c(coldemo,colne)
+        
+      }
+      # Color the intervals orange if they do not contain 0.4 (the set value for the population parameter)
+      else{
+        
+        colne = "tan1"
+        coldemo = c(coldemo,colne)
+        
+      }
+    }
+    # Return the vector of colors to be added to the plot
+    return(coldemo)
+  })
+  
+  # Graph the confidence intervals stacked on one plot to display how many captured the population proportion 
+  output$sampCLPlot = renderPlot({
+    qplot(x = twSamps(), y = ysCLDemo(), xlab = "Confidence Intervals")+xlim(0,1)+
+      geom_segment(aes(x = lowCLDemo(), xend = upCLDemo(), y = ysCLDemo(), yend = ysCLDemo()), colour = colorCLDemo())+
+      theme(axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())+geom_vline(xintercept = 0.5, color = "slategray4")
+  })
+  
+    
+  }
+)
+
+```
+
+
+##
+```{r,echo=FALSE,warning=FALSE, message = FALSE}
+#Shiny for difference in Proportions
+
+```
+## Worksheets
+
+  - Pre/Post Questions
+    - Undegrads:
+        - Confidence level
+        - ANOVA
+    - Math educators:
+        - Sample/Sampling Distribution for proportions
+        - Regression
+  - Worksheets for every section
+    
+
+
+## Conclusions and Future Work
+
+  - Shiny app easily customizable, easy to use, free
+  - Tests on the Shiny app forthcoming
+    - Undergraduates
+    - High school and college math teachers
+    
+  
+
+
+
+
+
+
