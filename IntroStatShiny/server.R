@@ -178,15 +178,11 @@ function(input, output, session) {
   
   # Calculations to get a sample distribution
   
-  # Calculate the sample standard deviation
-  sdOM = reactive({
-    stdevOM = input$sigma/sqrt(input$sampleSizeOM)
-    return(stdevOM)
-  })
+
   
   # Generate a sample of means from a population with the input mean and the sample standard deveation
   pickOM = eventReactive(input$goMean,{
-    pickfOM = c(rnorm(input$sampleSizeOM, input$popMeanOM, sdOM()))
+    pickfOM = c(rnorm(input$sampleSizeOM, input$popMeanOM, input$sigma))
     return(pickfOM)
   })
   
@@ -222,7 +218,7 @@ function(input, output, session) {
       for(i in 2:input$numSampOM){
         
         nnpick = reactive({
-          newpick = c(rnorm(input$sampleSizeOM, input$popMeanOM, sdOM()))
+          newpick = c(rnorm(input$sampleSizeOM, input$popMeanOM, input$sigma))
           # Calculate the mean for your new sample
           meanSample = mean(newpick)
           return(meanSample)
