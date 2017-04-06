@@ -1,0 +1,73 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}        
+\geometry{letterpaper}    
+
+
+\begin{document}
+
+\section{Intro}
+\begin{itemize}
+\item We will start off with some background information on the role of technology in statistics education
+\item Then we will talk about all the availible options for different software and technology in courses
+\item The real focus of this project is RStudios Shiny app, so I will give you some background of the features of that.
+\item I have the Shiny App I created embedded in these slides so we will be able to talk about each section of it individually and I can show you the interactivity of it.
+\item Then I can discuss some of the conclusions and future work for this project. 
+\end{itemize}
+
+
+\section{Background}
+\begin{itemize}
+\item Technology is commonly used in most introductory statistics courses. From calculators to web applets and downloadable software, students entering an introductory course will certianly encounter some or all of these forms of technology.  
+\item Technology most obvioulsy allows for simplifiying calculations. Calculoators simplify calculating a mean, and excep files can make calculating a standard devation easier. But in addition to simplifiing calculations, technology and the vizualizations it allows us to create can help solidify conceptual concepts for students.
+\item Because students need not focus as much on calcualtions as they once had to, we can focus less on then being able to solve equations and plug into formulas.
+\item The structure of classes has more become teaching different tools and having the students choose the correct tools to answer certain inferential questions about their data. These tools are still equations, but also sometime different software options.
+\item The problem that then arises is what software and technology to choose for the students and the course material. 
+\item We want software that is easy to use. Keeping in mind we want to teach concepts more than we want to teach how to blindly use complex software. Students enter the course with various levels of computer skills. 
+\item Though statisticians and researchers might favor R, SAS, or SPSS, these requre knowledge of programming languages most students will not have and that are beyond the scope of that we would like them to learn in most introductory statistics courses. 
+\item We favor software that is vizual and easy to use (point and click)
+\end{itemize}
+
+\section{Availible Options}
+\begin{itemize}
+\item Most options availible fall into the categories of software that is avilaible to download or web based platforms that can be loaded in a browser. 
+\item For software we can think of JPM, MiniTab, etc. These are availible for purchase. They cost the institution of the individual money and though there isn't programming there are a lot of things to click and students often get overwhelmed with these programs. 
+\item There are also free web based software options that are availible. Courses here make use of the rossman chance applets and statkey both of which are really great vizual tools. However with thejava based aplets there is occasionally an issue with getting the software to work in certain browsers or with certian versions of java the students may have downloaded.
+\item Though Statkey comes with an entire book of problems to work through with their data, the rossman chance applets don't come with much guidance on how to lecture with the materials provided. 
+\item Thus, we come to the fact that eventually you will run into material you want to teach but there are no vizual aids to help you teach the material. Or you want a program that can be updates as you decide to update your course materials.
+\end{itemize}
+
+\section{Shiny}
+\begin{itemize}
+\item Shiny an application framwork provided by RStudio.
+\item It is free to make and launch Shiny Apps from your own computer.
+\item More rules com into play if you want to launch them to a website for students to use during lecture.
+\item The creator of the Shiny must know how to program in R to make the application, but using the code they can create a user interface that allows the students to just point and click to get information.
+\item In order to creat the app there are two files that work together. The server and the userinterface file. The server file does all of the programming and statistics heavy lifting. While the user interface file sets up the layout of the shiny app and collected the user input parameters from the application itself. This is where you arrange your inputs, tables, and figures. 
+\item Because you set the layout and the calculations, this is an easily customizable platform for the course. 
+\item Interactivity is an important component of shiny. Students can focus on movind sliders, and entering values, and seeing how graphs react to the inputs. 
+\end{itemize}
+
+\section{My Shiny Topics and Entire shiny Slide}
+\begin{itemize}
+\item For the Shiny I made for introductory statistics concepts I focued on these topics. 
+\item We can see that most sections have their own tabs.
+\item There are some tabs that have a dropdown menu for subsections.
+\item The main page updates with the as we click on the various tabs. We will talk about and take a look at each tab individually.
+\end{itemize}
+
+
+
+
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
