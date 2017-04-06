@@ -4,48 +4,68 @@ author: "Chelsey Legacy"
 date: "April 7, 2017"
 output: ioslides_presentation
 runtime: shiny
+
 ---
 
 
 ## Outline
 
   - Technology in Statistics Education
-  - Availible Options
+  - Available Options
   - Shiny App
-  - Worksheets
   - Conclusions & Future Work
 
-## Cognitive technologies
-  
-  - Pea explains cognitive technology as: "any medium that helps transcend the limitations of the mind.." 
-  - Technology helps make complex concepts accessible to more people
-  - Help students go beyond following formulas and returning answers
-  
-
 ## Impact of Technology on Pededagogy
-
-  - Focus more on selcting the right tools, than on formulas and calculations
+  
+  
+  - Technology helps make complex concepts accessible to more people
+  
+  - Helps students go beyond following formulas and returning answers
+  
+  - Focus more on selecting the right tools, than on formulas and calculations
+  
   - Try to select straightforward software
 
 ## Availible Options & Drawbacks
 
   - Software: JMP, Fathom, Minitab, SPSS
+  
     - Expensive
     - Learning curve
+    
   - Web-based Java platforms: StatKey, Rossman Chance applets
+  
     - Not suitable for all courses
     - Java loading issues
  
 
 ## Shiny by RStudio
 
-  - Avaliable for free
-  - User only needs to know programming in R
-  - Easily custimizable 
+  - Available for free
+  
+  - Provides a point and click user interface
+    - Only the programmer must know R programming code
+    - Students need not see the code
+  
+  - Easily customizable for any course 
+  
   - Interactive
   
 
 ## Shiny App for Intro Stat Concepts
+
+  - Sample Distribution and Sampling Distribution
+    - One Proportion
+    - One Mean
+    - Difference in proportions
+    - Difference in means
+  - Confidence Intervals for Proportions
+  - Linear Regression
+    - Correlation
+    - Outliers
+    - Linear Equations
+  - ANOVA
+
 ##
 ```{r, echo = FALSE}
 shinyAppFile("combined.R",
@@ -55,6 +75,20 @@ shinyAppFile("combined.R",
 )
 
 ```
+
+
+
+## Sampling Distribution for One Proportion {.smaller}
+
+  - Enter parameters:
+    - Proportion
+    - Sample size
+    - Number of samples
+  - Click "Draw" and your samples appear
+  - Sample Distribution & Summary Statistics appear
+  - Sampling Distribution for a sample proportion and summary information appear
+  - Parameters can be updated and will generate out upon hitting "Draw"
+
 
 ##
 ```{r, echo = FALSE, message=FALSE, warning = FALSE}
@@ -179,6 +213,20 @@ shinyApp(
 
 ```
 
+## Sampling Distribution for One Proportion Objectives {.smaller}
+
+  - Emphasize difference between Sample Distribution and Sampling Distribution
+  - Show how the sampling distribution becomes unimodal, symmetric, few outliers
+     - Take one sample of size 100 with a population proportion of 0.3. Draw a graph of the sample distribution, and          write the proportion of those chosen belonging to the "yes" category. Note that the sampling distribution has         one single bar at the value for the "yes" proportion.
+     - Now take 100 samples of size 100 with a population proportion 0.3.  How would you describe this sampling               distribution (shape, center and variability)? 
+     - Now take 1000 samples of size 100 with a population proportion of 0.3.  How would you describe this sampling         distribution (shape, center and variability)?  
+     - How do your answers for 2 and 3 above compare?
+
+## Confidence Intervals for One Sample Proportion {.smaller}
+  - Confidence intervals are calculated  for 20 samples proportions
+  - All intervals are displayed on a single graph and colored to indicate whether or not they captured the true population proportion.
+  - Sliders are availible to change the sample size or the confidence level of the intervals
+  - Intervals and samples are updated as the sliders are moved
 
 ##
 ```{r, echo = FALSE, warning=FALSE, message = FALSE}
@@ -293,6 +341,27 @@ shinyApp(
 )
 
 ```
+
+
+## Confidence Interval Worksheet {.smaller}
+
+  - The relationships between sample size, confidence level and interval width are made visually apparent here
+  - Worksheet questions point to these relationships:
+    - Draw samples at confidence level 95%, increasing the sample size from 25 to 500 slowly. What do you notice about the length of the intervals as the sample size increased? Why?
+    - Now increase the confidence level from 80% to 99% slowly, keeping the sample size at 250. What do you notice about the length of the intervals as the confidence level increased? Why?
+
+
+## Sampling Distribution for One Mean
+- Enter parameters:
+    - Mean
+    - Standard Deviation
+    - Sample Size
+    - Number of samples
+  - Click "Draw" and your samples appear
+  - Sample Distribution & Summary Statistics appear
+  - Sampling Distribution for a sample proportion and summary information appear
+  - Parameters can be updated and will generate out upon hitting "Draw"
+
 
 
 ##
@@ -416,6 +485,27 @@ shinyApp(
 )
 
 ```
+
+## Sampling Distribution for One Mean {.smaller}
+
+  - Similar to objectives as for the section on one sample proportion
+  
+  - Worksheet leads the user to take note of the sampling distribution as more samples are drawn
+  
+     -Take 1 sample of size 25 with a population mean of 20 and a standard deviation of 3. Draw a graph of the sample distribution, and write the mean of your sample.
+Note that the sampling distribution has one single bar at the value of the mean for your sample.
+     - Take 100 samples of size 25 with a population mean of 20 and a standard deviation of 3.  What do you notice about the sampling distribution now?
+     - Take 1000 samples of size 25 with a population mean of 20 and a standard deviation of 3.  How would you describe this sampling distribution? What is the mean for this sampling distribution?
+
+    
+## Sampling Distributions for Differences in Means and Differences in Proportions {.smaller}
+
+  - Enter parameters for each group
+  - Click "Draw" and your samples appear
+  - Sample Distribution & Summary Statistics appear for each group
+  - Sampling Distribution for a sample proportion and summary information appear
+  - Parameters can be updated and will generate out upon hitting "Draw"
+
 
 ##
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
@@ -596,6 +686,29 @@ shinyApp(
 
 ```
 
+
+## Sampling Distributions for Differences in Means and Differences in Proportions {.smaller}
+
+  - For these sections we focus on finding the sample statistics of interest, and the properties of the sampling distribution
+
+  - Inference for difference in means
+    - Set the proportion for group 1 to 0.3 and the proportion for group 2 to 0.4. Also, set the number of samples to 1, and draw a sample. What is the sample proportion for each group? 
+  
+    - What is your sample statistic for the difference in proportions from question 1?
+   
+     Note: The sampling distribution has one sample at your sample difference in proportions value.
+  
+    - Set number of samples to 100 and redraw. Describe the shape, center, and symmetry of your sampling distribution. 
+
+
+## Correlation
+
+  - This tab provides a quick vizual representation of correlation
+  - The scatterplot contains data simulated from a multivariate random normal distribution with the user input correlation value
+  - The scatterplot displays different correlations input by the user through a slider bar ranging from -1 to 1
+
+
+
 ##
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 # Correlation
@@ -636,6 +749,49 @@ shinyApp(
 
 ```
 
+
+
+## Correlation Code
+```{r}
+xycorr =reactive({
+  datxy = as.data.frame(mvrnorm(100, mu = c(0,0), 
+            Sigma =matrix(c(1,input$correlation,input$correlation,1),
+             , ncol = 2),empirical = TRUE))
+  return(datxy)
+})
+  
+  #Output the scatterplot of the data created above
+  output$corrPlot = renderPlot({
+    qplot(xycorr()$V1,xycorr()$V2, xlab = "x", ylab = "y")
+  })
+```
+
+
+## Correlation {.smaller}
+
+  - Focus here is on the basic properties of correlation
+  - Students gradually move the slider up from -1 to 1 and describe the output along the way
+  
+      -Set the correlation to -0.9. Describe the form, strength, and direction of the points.
+      
+      -Set the correlation to -0.5. Describe the form, strength, and direction of the points.
+      
+      -Set the correlation to 0.5. Describe the form, strength, and direction of the points.
+      
+      -Set the correlation to 0.9. Describe the form, strength, and direction of the points.
+      
+      -What do you notice about the form and strength as you increased the correlation from -0.9 to 0.9?
+    
+## Outlier Effects on Least Squares Lines 
+
+  - Allows the user to look at mulitple data sets with various outliers
+  
+  - The user can fit a least squares line to the data both with and without the outlier
+  
+  - The plot will update to show the least squares lines for each scenario
+  
+  - The output allows the user to see the formula and R^2 for each line 
+  
 
 ##
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
@@ -863,6 +1019,33 @@ shinyApp(
 )
 ```
 
+## Outlier Effects on Least Squares Lines {.smaller}
+
+  - Allows exploration the what to do with outliers
+  
+  - Provides example data with high leverage and high residual outliers 
+  
+  - Example quesitons include: 
+  
+    - Choose "Dataset 3" from the dropdown. Fit the least squares regression line both with and without the red outlier. Do you think the point has high leverage? Do you think the point has a large residual? Explain.
+    
+    - Select "Dataset 1", and observe the point in red. Click "Fit Line" to get a least squares line to the data. Write the equation of the line below.
+
+  - Next, remove the red point and refit the least squares line by checking the "Fit Line Without Point" box.  Write the equation for that line below. 
+
+  - Do you think that fitting the data without the red point improved the fit of the line to the data? Why?
+
+
+## Linear Regression Equation Exploration
+  - Tab allows exploration of different intercept and slope values
+  
+  - Scatterplot updates as sliders for intercept and slope change values
+  
+  - Equation for the line can be added to the scatterplot and the formula displayed
+  
+  - User has the option to highlight the intercept with a red point and interpretation
+  
+  - User also can add a slope interpretation and a vizulaization of the interpretation on the plot
 
 ##
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
@@ -986,8 +1169,26 @@ shinyApp(
   })
 }
 )
-
 ```
+
+
+## Linear Regression Equation Exploration
+ - Focus on properties of line equations and thier interpretations
+ 
+      -Set the intercept to -10 and the slope to 5. Click "Fit Line" and write the equation for the least squares regression line.
+      
+      -Write the y-intercept interpretation. Then, check the "Intercept" box and see if your interpretation is correct.   Note, the red dot on the plot inidcation the location of the y-intercept.
+      
+       -Write the slope interpretation. Then, check the "Slope" box and see if your interpretation is correct.
+
+## ANOVA 
+
+- The ANOVA tab provides some vizual representation of differences of 3 groups of data
+
+  - Simulated from a normal with user specified parameters
+  
+- An ANOVA table and summary data is output to the user
+
 
 
 ##                   
@@ -1061,9 +1262,10 @@ shinyApp(
   })
   
   # Dotplot of the threee groups of data colored and faceted by group
-  output$anovaPlot = renderPlot( {
-    qplot(data = dframe(), x =g123Data(), geom = "dotplot", fill = groupList(), xlab = "x")+facet_grid(facets = groupList()~.)+
-      guides(fill=guide_legend(title="Group"))
+    output$anovaPlot = renderPlot( {
+    qplot(data = dframe(), x =g123Data(), geom = "dotplot", fill = groupList(), xlab = "x")+facet_grid(facets = groupList()~., scales = "free")+
+      guides(fill=guide_legend(title="Group"))+scale_y_continuous(NULL, breaks = NULL)
+
   })
   
   # Make a linear model based on the data in order to do an ANOVA analysis
@@ -1099,26 +1301,39 @@ shinyApp(
 )
                   
 ```                  
-                  
-## Worksheets
-
-  - Pre/Post Questions
-    - Undegrads:
-        - Confidence level
-        - ANOVA
-    - Math educators:
-        - Sample/Sampling Distribution for proportions
-        - Regression
-  - Worksheets for every section
+                
+                
+##  ANOVA    {.smaller}           
+                
+  - Focus on introducing the idea behind ANOVA tests
+  
+  - Examine how different means, standard deviations, and sample sizes among the groups 
+  
+    -Set all means to 30 and all standard deviations to 1.  State the p-value and conclusion for a test of difference in means.
     
+    -Set the means to 20, 30, and 30 respectively.  Set all standard deviations to 5.  Draw a sample and state the p-value and conclusion.  
+    
+    -Set the mean for groups 1 and 2 to 30, and mean of group 3 to 32.  Set all standard deviations to 5.  Take a sample with sample size 100 and note what the p-value is for the ANOVA test.  Write a conclusion based on your p-value.
+    
+    -Next, keep the settings the same as above, but draw a sample of size 10.  Note the p-value, and write a conclusion based on this p-value.  
+    
+    -What generalization can be made regarding sample size and test outcome  after observing what happened in the previous questions?
+                  
 
 
-## Conclusions and Future Work
+## Conclusions 
 
-  - Shiny app easily customizable, easy to use, free
-  - Tests on the Shiny app forthcoming
-    - Undergraduates
-    - High school and college math teachers
+  - Shiny app easily customizable based on course material
+  - Additions for other topics easily added:
+      - Basic graphs for one and two categorical and quantitative variables
+      - Formal testing for means/hypotheses 
+      - Randomization test
+      - Bootstrap confidence intervals
+
+  
+## Futurework
+
+  - Further testing and feedback from samples of undergraduates and math/stats educators
     
   
 

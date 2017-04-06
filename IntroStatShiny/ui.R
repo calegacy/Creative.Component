@@ -13,7 +13,7 @@ library(shinydashboard)
 library(datasets)
 library(shinythemes)
 
-ui <- navbarPage(h6("Stats"),theme = shinytheme("flatly"),
+ui <- navbarPage(h6("Statistics"),theme = shinytheme("flatly"),
                  #Inference for Proportions tab code
                  
                  navbarMenu(h6("One Proportion"),

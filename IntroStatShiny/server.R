@@ -702,7 +702,8 @@ function(input, output, session) {
   # Dotplot of the threee groups of data colored and faceted by group
   output$anovaPlot = renderPlot( {
     qplot(data = dframe(), x =g123Data(), geom = "dotplot", fill = groupList(), xlab = "x")+facet_grid(facets = groupList()~., scales = "free")+
-      guides(fill=guide_legend(title="Group"))
+      guides(fill=guide_legend(title="Group"))+scale_y_continuous(NULL, breaks = NULL)
+
   })
   
   # Make a linear model based on the data in order to do an ANOVA analysis
