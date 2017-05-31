@@ -1040,7 +1040,7 @@ shinyApp(
       anovaSumMean()
     })
     
-# ------------------------------------ ANOVA SD -------------------------------------#    
+  # ------------------------------------ ANOVA SD -------------------------------------#    
     
     
     # Generate data for 3 different groups based on the input means, standard deviations, and sample sizes
