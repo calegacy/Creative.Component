@@ -59,7 +59,10 @@ shinyApp(
                         numericInput("popProp", "Population Proportion",
                                      value = 0.3,min = 0, max = 1, step = 0.01),
                         numericInput("sampleSize", "Sample Size", value = 100, min = 1),
-                        numericInput( "numSamp", "Number of Samples", value = 100, min = 1),
+                        radioButtons("numSamp", label = "Number of Samples",
+                                     choices = list("1 " = 1, "100" = 100, "Many" = 1000), 
+                                     selected = 1),
+                
                         actionButton("goProp", "Draw",class="btn btn-success btn")
                         
                  ),
@@ -106,7 +109,10 @@ shinyApp(
                                       value = 10,min = 0, max = 1000, step = 1),
                          numericInput( "sigma", "Standard Deviation", value = 1, min = 0.01),
                          numericInput("sampleSizeOM", "Sample Size", value = 10, min = 1),
-                         numericInput( "numSampOM", "Number of Samples", value = 100, min = 1),
+                    
+                         radioButtons("numSampOM", label = "Number of Samples",
+                                      choices = list("1 " = 1, "100" = 100, "Many" = 1000), 
+                                      selected = 1),
                          actionButton("goMean", "Draw",class="btn btn-success btn")
                          
                   ),
@@ -136,6 +142,9 @@ shinyApp(
                          numericInput("sampleSizeGP1", h6("Sample Size Group 1"), value = 100, min = 1),
                          numericInput("sampleSizeGP2", h6("Sample Size Group 2"), value = 100, min = 1),
                          numericInput( "numSampGP",h6("Number of Samples"), value = 100, min = 1),
+                         radioButtons("numSampGP", label = "Number of Samples",
+                                      choices = list("1 " = 1, "100" = 100, "Many" = 1000), 
+                                      selected = 1),
                          actionButton("go2Prop", "Draw",class="btn btn-success btn")
                   ),
                   
@@ -168,7 +177,10 @@ shinyApp(
                          numericInput( "sigmaTM2", h6("Group 2 St Dev"), value = 1, min = 0.01),
                          numericInput("sampleSizeTM1", h6("Group 1 Size"), value = 10, min = 1),
                          numericInput("sampleSizeTM2", h6("Group 2 Size"), value = 10, min = 1),
-                         numericInput( "numSampTM",h6( "Number of Samples"), value = 100, min = 1),
+                         radioButtons("numSampTM", label = "Number of Samples",
+                                      choices = list("1 " = 1, "100" = 100, "Many" = 1000), 
+                                      selected = 1),
+                      
                          actionButton("go2Mean", "Draw",class="btn btn-success btn")
                          
                   ),
@@ -210,15 +222,18 @@ shinyApp(
                  
                  column(
                    width = 4, status= "primary",
-                   numericInput("outX", "Outlier X",
-                                value = 0.3,min = 0, max = 1, step = 0.01),
-                   numericInput("outY", "Outlier Y",
-                                value = 0.3,min = 0, max = 1, step = 0.01),
                    actionButton("outData", "Plot Data"),
                    checkboxInput("fitLine", label = "Fit Line", value = FALSE),
-                   checkboxInput("fitLineNoPt", label = "Fit Line Without Point", value = FALSE),
+                   
                    verbatimTextOutput("lineSum"),
                    tableOutput("lineEq"),
+                   sliderInput("outX", "Outlier X",
+                                value = 0.3,min = 0, max = 1, step = 0.01),
+                   sliderInput("outY", "Outlier Y",
+                                value = 0.3,min = 0, max = 1, step = 0.01),
+                   actionButton("outPoint", "Plot Point"),
+                  
+                   checkboxInput("fitLineNoPt", label = "Fit Line Without Point", value = FALSE),
                    verbatimTextOutput("lineSumNoPt"),
                    tableOutput("lineEqNoPt")
                    
@@ -240,11 +255,11 @@ shinyApp(
                  column(width = 5,
                         actionButton("plotPoints", "Plot",class="btn btn-success btn"),
                         checkboxInput("fitPoints", "Fit Line",value = FALSE),
-                        sliderInput("ssx", "St dev X", value = 1, min = 0, max =100),
-                        sliderInput("ssy", "St dev y", value = 1, max =100, min = 0),
+                        sliderInput("ssx", "St dev X", value = 1, min = 0, max =40),
+                        sliderInput("ssy", "St dev y", value = 1, max =40, min = 0),
                         sliderInput("correlationLM", "Correlation", value = 0, min = -1, max =1, step = 0.01),
-                        sliderInput("meanx", "Mean x", value = 1, max =25, min = -25),
-                        sliderInput("meany", "Mean y", value = 1, min = -25, max =25)
+                        sliderInput("meanx", "Mean x", value = 1, max =20, min = -20),
+                        sliderInput("meany", "Mean y", value = 1, min = -20, max =20)
     
                  ),
                  column(
@@ -410,7 +425,9 @@ shinyApp(
     })
     
     bins = reactive({
-      bin = (3.5*sd(samples()) )/(input$sampleSize^(1/3))
+      if(input$numSamp>1){
+      bin = (3.5*sd(samples()) )/(input$sampleSize^(1/3))}
+      else{ bin = 0.1}
       return(bin)
     })
 
@@ -559,7 +576,9 @@ shinyApp(
     })
     
     binsOM = reactive({
-      bin = (3.5*sd(samplesOM()) )/(input$sampleSizeOM^(1/3))
+      if(input$numSampOM > 1){
+      bin = (3.5*sd(samplesOM()) )/(input$sampleSizeOM^(1/3))}
+      else{ bin = 0.5}
       return(bin)
     })
     # Output a histogram of the sampling distribution of the sample means
@@ -655,7 +674,9 @@ shinyApp(
     })
     
     binsTwoProp = reactive({
-      bin = (3.5*sd(samplesP2()) )/(input$sampleSizeGP1^(1/3))
+      if(input$numSampGP > 1){
+      bin = (3.5*sd(samplesP2()) )/(input$sampleSizeGP1^(1/3))}
+      else{ bin  = 0.1}
       return(bin)
     })
     # Output the plot for the sampling distribution for the difference in proportions
@@ -749,7 +770,9 @@ shinyApp(
     })
     
     binsTM = reactive({
-      bin = (3.5*sd(samplesTM()) )/(input$sampleSizeTM1^(1/3))
+      if(input$numSampTM > 1){
+      bin = (3.5*sd(samplesTM()) )/(input$sampleSizeTM1^(1/3))}
+      else{ bin = 0.5}
       return(bin)
     })
     # Plot the sampling distribution for the differences in means
@@ -793,76 +816,104 @@ shinyApp(
     
     #----------------------------------------------- Outliers tab ----------------------------------------------------#
 
-    getData = eventReactive(input$outData,{
+    getData = reactive({
       datxy = as.data.frame(mvrnorm(20, mu = c(0,0),
                                     Sigma = matrix(c(1,0.99,0.99,1),, ncol = 2),
                                     empirical = TRUE))
-      datnew = data.frame(dataX = c(datxy$V1, input$outX), dataY = c(datxy$V2, input$outY))
+      datnew = data.frame(dataX = c(datxy$V1), dataY = c(datxy$V2))
       return(datnew)
     })
-    # Print the plot for the high leverage data
+    
     output$outlierPlot = renderPlot({
-      # Print the plot with all the data
-      print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
-              geom_point(aes(x = dataX[21], y = dataY[21]), color= "firebrick2", size = 2))
-      # Print the plot with the line fit to the data
+      # Print the plot with just the data
+         print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point()) 
+      
+      # Fit the line to the plot 
       if(input$fitLine == TRUE){
-        # Make a linear model if the dataset
-        hL1 = lm(getData()$dataY~getData()$dataX)
-        # Print the plot with the fitted line
-        
-        print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
-                geom_point(aes(x = dataX[21], y = dataY[21]), colour= "firebrick2", size = 2) +
-                geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", size = 0.75))
-        
-        # Collect the information about the line to be displayed in a table
-        hL1Line = reactive({data.frame(
-          intercept = hL1$coefficients[1],
-          slope = hL1$coefficients[2],
-          Rsquared = summary(hL1)$r.squared
-        )
-        })
-        # Output the table of information about the line
-        output$lineEq  = renderTable({
-          hL1Line()
-        })
-      }
-      # If the Fit with no red point box is selected
-      if(input$fitLineNoPt == TRUE ){
-        # Calculate the line of best fit without the point of interest
-        hL1NoPt = lm(getData()$dataY[-21]~getData()$dataX[-21])
-        # Print the plot with the line of fit for the data without the point of interest
-        
-        print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
-                geom_point(aes(x = dataX[21], y = dataY[21]), colour= "firebrick2", size = 2) +
-                geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1))
-        
-        # Create a table of information about the line fit to the data without the point of interest
-        hL1LineNoPt = reactive({data.frame(
-          intercept = hL1NoPt$coefficients[1],
-          slope = hL1NoPt$coefficients[2],
-          Rsquared = summary(hL1NoPt)$r.squared
-        )
-        })
-        # Output this table to the user
-        output$lineEqNoPt  = renderTable({
-          hL1LineNoPt()
-        })
-        # If the "Fit Line" is also selected, then the plot will display both lines of best fit
-        if(input$fitLine == TRUE){
-          
-          print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
-                  geom_point(aes(x = dataX[21], y = dataY[21]), colour= "firebrick2", size = 2) +
-                  geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", linetype ="F1", size = 0.75) +
-                  geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1)+
-                  scale_colour_manual(name="Legend",values=c("fitted" = "navyblue", "noPoint" = "springgreen2"))+
-                  scale_linetype_manual(name = "Legend", values = c("fitted" = "F1", "noPoint"= "dashed"))+
-                  theme(legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"))+
-                  guides(fill=guide_legend(title="Legend")))
-          
-        }
-      }
+            # Make a linear model if the dataset
+            hL1 = lm(getData()$dataY~getData()$dataX)
+            # Print the plot with the fitted line
+
+            print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
+                    geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", size = 0.75))
+
+            # Collect the information about the line to be displayed in a table
+            hL1Line = reactive({data.frame(
+              intercept = hL1$coefficients[1],
+              slope = hL1$coefficients[2],
+              Rsquared = summary(hL1)$r.squared
+            )
+            })
+            # Output the table of information about the line
+            output$lineEq  = renderTable({
+              hL1Line()
+            })
+          }
+     
     })
+    
+    # # Print the plot for the high leverage data
+    # output$outlierPlot = renderPlot({
+    #   # Print the plot with all the data
+    #   print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
+    #           geom_point(aes(x = dataX[21], y = dataY[21]), color= "firebrick2", size = 2))
+    #   # Print the plot with the line fit to the data
+    #   if(input$fitLine == TRUE){
+    #     # Make a linear model if the dataset
+    #     hL1 = lm(getData()$dataY~getData()$dataX)
+    #     # Print the plot with the fitted line
+    #     
+    #     print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
+    #             geom_point(aes(x = dataX[21], y = dataY[21]), colour= "firebrick2", size = 2) +
+    #             geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", size = 0.75))
+    #     
+    #     # Collect the information about the line to be displayed in a table
+    #     hL1Line = reactive({data.frame(
+    #       intercept = hL1$coefficients[1],
+    #       slope = hL1$coefficients[2],
+    #       Rsquared = summary(hL1)$r.squared
+    #     )
+    #     })
+    #     # Output the table of information about the line
+    #     output$lineEq  = renderTable({
+    #       hL1Line()
+    #     })
+    #   }
+    #   # If the Fit with no red point box is selected
+    #   if(input$fitLineNoPt == TRUE ){
+    #     # Calculate the line of best fit without the point of interest
+    #     hL1NoPt = lm(getData()$dataY[-21]~getData()$dataX[-21])
+    #     # Print the plot with the line of fit for the data without the point of interest
+    #     
+    #     print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
+    #             geom_point(aes(x = dataX[21], y = dataY[21]), colour= "firebrick2", size = 2) +
+    #             geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1))
+    #     
+    #     # Create a table of information about the line fit to the data without the point of interest
+    #     hL1LineNoPt = reactive({data.frame(
+    #       intercept = hL1NoPt$coefficients[1],
+    #       slope = hL1NoPt$coefficients[2],
+    #       Rsquared = summary(hL1NoPt)$r.squared
+    #     )
+    #     })
+    #     # Output this table to the user
+    #     output$lineEqNoPt  = renderTable({
+    #       hL1LineNoPt()
+    #     })
+    #     # If the "Fit Line" is also selected, then the plot will display both lines of best fit
+    #     if(input$fitLine == TRUE){
+    #       
+    #       print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
+    #               geom_point(aes(x = dataX[21], y = dataY[21]), colour= "firebrick2", size = 2) +
+    #               geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", linetype ="F1", size = 0.75) +
+    #               geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1)+
+    #               scale_colour_manual(name="Legend",values=c("fitted" = "navyblue", "noPoint" = "springgreen2"))+
+    #               scale_linetype_manual(name = "Legend", values = c("fitted" = "F1", "noPoint"= "dashed"))+
+    #               theme(legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"))+
+    #               guides(fill=guide_legend(title="Legend")))
+    #     }
+    #   }
+    # })
     
     # Add text to label the tables for the line with the point of interest and without it
     output$lineSum <- renderText({ "Line Summary" })
@@ -872,7 +923,7 @@ shinyApp(
     
     # Create a data frame with the desired slope
     xy = reactive({
-      datXY = as.data.frame(mvrnorm(100, mu = c(0,0), Sigma = matrix(c((input$ssx)^2,input$correlationLM*input$ssx*input$ssy,input$correlationLM*input$ssx*input$ssy,(input$ssy)^2),, ncol = 2),empirical = TRUE))
+      datXY = as.data.frame(mvrnorm(10, mu = c(0,0), Sigma = matrix(c((input$ssx)^2,input$correlationLM*input$ssx*input$ssy,input$correlationLM*input$ssx*input$ssy,(input$ssy)^2),, ncol = 2),empirical = TRUE))
       normY = (datXY$V2 - mean(datXY$V2) / sd(datXY$V2)) + input$meany
       normX = (datXY$V1 - mean(datXY$V1) / sd(datXY$V1)) + input$meanx
       normdat = data.frame( xn = normX, yn = normY)
@@ -909,58 +960,10 @@ shinyApp(
         })
       }
     })
-# Code for the slope and intercept indicators (don't know if we still want this?)
-      # Add an "X" for the intercept and display the intercept interpretation if the intercept box is selected
-      # if(input$interceptPoints == TRUE){
-      #   pointsLine = lm(xy()$V2-intdelt()~xy()$V1)
-      # 
-      #   print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Explantatory")+ylab("Response")+
-      #           geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2])+
-      #           geom_point(aes(x = 0, y = pointsLine$coefficients[1], color = "intercept"), shape = 8))
 
-
-      #   # Display the intercept interpretation
-      #   intText = reactive({
-      #     int = as.character(round(pointsLine$coefficients[1], 2))
-      #     text = paste("If the explantory variable is zero, the predicted response value is ", int, ".")
-      #     return(text)
-      #   })
-      #   output$intercept <- renderText({ intText() })
-      # }
-      # 
-      # 
-      # # If the slope box is selected add colored lines to the plot to help explain the slope
-      # if(input$slopePoints == TRUE){
-      #   pointsLine = lm(xy()$V2-intdelt()~xy()$V1)
-      # 
-      #   print(ggplot(data = xy(),aes(x = V1, y = V2-intdelt()))+ geom_point()+xlab("Explanatory")+ylab("Response")+
-      #           geom_abline(intercept =pointsLine$coefficients[1], slope = pointsLine$coefficients[2])+
-      #           geom_point(aes(x = 0, y = pointsLine$coefficients[1], color = "intercept"), shape = 8)+
-      #           geom_segment(aes(x = 1, xend = 2, y = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), yend = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), color = "one unit"))+
-      #           geom_segment(aes(x = 2, xend = 2, y = (pointsLine$coefficients[1]+ pointsLine$coefficients[2]), yend =(pointsLine$coefficients[1]+ 2*pointsLine$coefficients[2]) , color = "slope amount")))
-
-     #    # Display the text of the slope interpretation
-     #    slopeText = reactive({
-     #      # Find the sign of the slope in order to determine whether to use "increase" or "decrease"
-     #      if(sign(pointsLine$coefficients[2]) == -1){
-     #        signSlope = "decrease"
-     #      }
-     #      if(sign(pointsLine$coefficients[2]) == 1){
-     #        signSlope = "increase"
-     #      }
-     #      # Get the absolute value of the slope amount
-     #      sl = as.character(abs(round(pointsLine$coefficients[2], 2)))
-     # 
-     #      slText = paste("If the explantaory variable inceases by one unit, we expect the predicted response variable to", signSlope,"by",sl, "units")
-     #      return(slText)
-     #    })
-     #    output$slope <- renderText({slopeText()})
-     #  }
-     # })
-     # 
     
     
-    # ----------------------------------------- ANOVA Mean -------------------- #
+    # ----------------------------------------- ANOVA Mean ------------------------------------------------- #
     
     # Generate data for 3 different groups based on the input means, standard deviations, and sample sizes
     
@@ -1037,7 +1040,7 @@ shinyApp(
       anovaSumMean()
     })
     
-# ------- ANOVA SD --------#    
+# ------------------------------------ ANOVA SD -------------------------------------#    
     
     
     # Generate data for 3 different groups based on the input means, standard deviations, and sample sizes
@@ -1115,7 +1118,7 @@ shinyApp(
       anovaSumSD()
     })   
     
-    #------- ANOVA SS ------- #
+    #------------------------------------ ANOVA SS ------------------------------------ #
     
     
     # Generate data for 3 different groups based on the input means, standard deviations, and sample sizes
