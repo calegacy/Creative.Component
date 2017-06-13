@@ -54,6 +54,7 @@ shinyApp(
       newTabPanels <- list(
         # One Proportion Sampling Distribution
         tabPanel(h6("One Proportion"),
+                 fixedPage(responsive = NULL, 
                  column(width = 2,
                         
                         numericInput("popProp", "Population Proportion",
@@ -67,42 +68,46 @@ shinyApp(
                         
                  ),
                  
-                 column(width = 5,
-                        
-                        tableOutput("sampSumDat"),
-                        tableOutput("popSumDat")
-                        
-                 ),
-                 column(width = 5,
+                 column(width = 9,
                         verbatimTextOutput("sdist"),
+                        tableOutput("sampSumDat"),
                         plotOutput("sampleDist", width = "auto", height = 200),
                         verbatimTextOutput("singdist"),
+                        tableOutput("popSumDat"),
                         plotOutput("samplingDist", width = "auto", height = 200)
+                        
                  )
-        ),
+              
+        )),
         #Confidence interval
         tabPanel(h6("Confidence Interval"),
                  fluidRow(
-                   box(width = 4, title = NULL, status = "primary",
+                   box(width = 3, title = NULL, status = "primary", 
                        sliderInput("cIDemoCL", "Confidence Level %", value = 80, min = 80, max = 99, step = 5)
                    ),
-                   box(width = 4, title = NULL, status = "primary",
+                   box(width = 3, title = NULL, status = "primary",
                        sliderInput("cIDemoSampSize", "Sample Size", value = 25, min = 25, max = 500, step = 5)
                    ),
-                   box(width = 4, title = NULL, status = "primary",
+                   box(width = 3, title = NULL, status = "primary",
                        sliderInput("cIDemoNumSamp", "Number of Samples", value = 25, min = 1, max = 100, step = 24)
+                       
+                       
+                   ),
+                   box(width = 3, status = "primary",
+                   actionButton("redrawCI", h5("Draw"), width = '100%',class="btn btn-success btn")
                    )
                  ),
                  fluidRow(
-                   box(width = 10, title = NULL, status = "primary",
-                       plotOutput("sampCLPlot")),
-                       actionButton("redrawCI", "Draw")
+                   box(width = 12, title = NULL, status = "primary",
+                       plotOutput("sampCLPlot"))
                    
                    
                  )
         ),
         # Inference for one Mean
         tabPanel( h6("One Mean"),
+                  fixedPage(responsive = NULL,
+                            
                   column(width = 2,
                          
                          numericInput("popMeanOM", "Population Mean",
@@ -117,88 +122,93 @@ shinyApp(
                          
                   ),
                   
-                  column(width=4,
-                         
-                         tableOutput("sampSumDatOM"),
-                         tableOutput("popSumDatOM")
-                  ),
-                  column(width = 6,
+                  column(width=8,
                          verbatimTextOutput("OneMeanDist"),
-                         plotOutput("sampleDistOM", width = "auto", height = 200),
+                         tableOutput("sampSumDatOM"),
                          verbatimTextOutput("ManyMeansDist"),
-                         plotOutput("samplingDistOM", width = "auto", height = 200)
-                         
+                         plotOutput("samplingDistOM", width = "auto", height = 200),
+                         tableOutput("popSumDatOM"),
+                         plotOutput("sampleDistOM", width = "auto", height = 200)
+                        
                   )
+                 
                   
-        ),
+        )),
         
         # Inference for two Proportions
         tabPanel( h6("Two Proportions"),
-                  column(width = 2,
-                         numericInput("popPropG1P", h6("Proportion Group 1"),
+                  fixedPage( responsive = NULL,
+                  column(width = 3, 
+                         box( width ='100%',  status = "primary", title = "Group 1",
+                         numericInput("popPropG1P", h6("Population Proportion "),
                                       value = 0.3, min = 0, max = 1, step = 0.01),
-                         numericInput("popPropG2P", h6("Proportion Group 2"),
+                         numericInput("sampleSizeGP1", h6("Sample Size"), value = 100, min = 1)
+                         
+                         ),
+                         box(width = "100%", status = "primary", title = "Group 2",
+                         numericInput("popPropG2P",h6("Population Proportion "),
                                       value = 0.3, min = 0, max = 1, step = 0.01),
-                         numericInput("sampleSizeGP1", h6("Sample Size Group 1"), value = 100, min = 1),
-                         numericInput("sampleSizeGP2", h6("Sample Size Group 2"), value = 100, min = 1),
-                         numericInput( "numSampGP",h6("Number of Samples"), value = 100, min = 1),
+                         
+                         numericInput("sampleSizeGP2", h6("Sample Size "), value = 100, min = 1)
+                         ),
                          radioButtons("numSampGP", label = "Number of Samples",
                                       choices = list("1 " = 1, "100" = 100, "Many" = 1000), 
                                       selected = 1),
                          actionButton("go2Prop", "Draw",class="btn btn-success btn")
                   ),
                   
-                  column(width = 4,
+                  column(width = 9,
                          
                          tableOutput("sampSumDatP2"),
-                         tableOutput("popSumDat2P")
-                  ),
-                  
-                  
-                  column( width = 6,
-                          verbatimTextOutput("twoPropSampleDist"),
-                          fluidRow(
-                            plotOutput("sampleDistG1", width = 'auto', height = 200)
-                          ),
-                          verbatimTextOutput("twoPropSampDist"),
-                          plotOutput("samplingDistTP", width = 'auto', height = 200)
-                          
+                         verbatimTextOutput("twoPropSampleDist"),
+                         plotOutput("sampleDistG1", width = 'auto', height = 200),
+                         tableOutput("popSumDat2P"),
+                         verbatimTextOutput("twoPropSampDist"),
+                         plotOutput("samplingDistTP", width = 'auto', height = 200)
+                         
+                         
                   )
-        ),
+                  
+                  
+               
+        )),
         
         # Inference for two Means
         tabPanel( h6("Two Means"),
+                  fixedPage( responsive = NULL,
                   column(width = 2,
+                         box(width = 2, title = "Group 1",
                          numericInput("popMeanM1", h6("Group 1"),
                                       value = 5,min = 0, max = 1, step = 0.1),
-                         numericInput("popMeanM2", h6("Group 2"),
-                                      value = 5,min = 0, max = 1, step = 0.1),
-                         numericInput( "sigmaTM1", h6("Group 1 St Dev"), value = 1, min = 0.01),
-                         numericInput( "sigmaTM2", h6("Group 2 St Dev"), value = 1, min = 0.01),
                          numericInput("sampleSizeTM1", h6("Group 1 Size"), value = 10, min = 1),
-                         numericInput("sampleSizeTM2", h6("Group 2 Size"), value = 10, min = 1),
+                         numericInput( "sigmaTM1", h6("Group 1 St Dev"), value = 1, min = 0.01)
+                         ),
+                         
+                         
+                         box(width = 2, title = "Group 2",
+                        numericInput("popMeanM2", h6("Group 2"), value = 5,min = 0, max = 1, step = 0.1),
+                         numericInput( "sigmaTM2", h6("Group 2 St Dev"), value = 1, min = 0.01),
+                         numericInput("sampleSizeTM2", h6("Group 2 Size"), value = 10, min = 1)
+                         ),
                          radioButtons("numSampTM", label = "Number of Samples",
                                       choices = list("1 " = 1, "100" = 100, "Many" = 1000), 
                                       selected = 1),
                       
                          actionButton("go2Mean", "Draw",class="btn btn-success btn")
-                         
+                  
                   ),
-                  column(width = 4,
-                         tableOutput("sampSumDatTM"),
-                         tableOutput("popSumDatTM")
-                         
-                  ),
-                  column(width = 6,
+                  column(width = 8,
                          verbatimTextOutput("twoMeansSampDist"),
+                         tableOutput("sampSumDatTM"),
                          plotOutput("sampleDistM1", width = 'auto', height = 300),
                          
                          verbatimTextOutput("twoMeansSamplingDist"),
+                         tableOutput("popSumDatTM"),
                          plotOutput("samplingDistTM", width = '100%', height = 200)
                          
                   )
                   
-                  
+                  )    
         ),
         
         # Correlation
@@ -209,12 +219,10 @@ shinyApp(
                              sliderInput("correlation", "Correlation", value = 0.1, min = -1, max =1, step = 0.01)
                              
                          ),
-                       
+                         box( width = 10, status = "primary", align = "center",
+                           plotOutput("corrPlot", width = '350', height = '350')
                            
-                           plotOutput("corrPlot", width = '400', height = '400')
-                           
-                         )
-                  
+                         ))
         ),
         
         # Outliers
@@ -252,17 +260,22 @@ shinyApp(
         
        #Regression tab
         tabPanel(h6("Equation"), value = "eqBd",
-                 column(width = 5,
-                        actionButton("plotPoints", "Plot",class="btn btn-success btn"),
-                        checkboxInput("fitPoints", "Fit Line",value = FALSE),
-                        sliderInput("ssx", "St dev X", value = 1, min = 0, max =40),
-                        sliderInput("ssy", "St dev y", value = 1, max =40, min = 0),
-                        sliderInput("correlationLM", "Correlation", value = 0, min = -1, max =1, step = 0.01),
-                        sliderInput("meanx", "Mean x", value = 1, max =20, min = -20),
-                        sliderInput("meany", "Mean y", value = 1, min = -20, max =20)
+                 fixedPage(responsive= NULL,
+                 column(width = 4, status = "primary",
+                       
+                       
+                        sliderInput("ssx", "St dev X", value = 15, min = 0, max =40),
+                        sliderInput("ssy", "St dev y", value = 15, max =40, min = 0),
+                       
+                        sliderInput("meanx", "Mean x", value = 10, max =20, min = -20),
+                        sliderInput("meany", "Mean y", value = 10, min = -20, max =20),
+                        sliderInput("correlationLM", "Correlation", value = 0.5, min = -1, max =1, step = 0.01)
+                       # checkboxInput("fitPoints", "Fit Line",value = FALSE)
     
                  ),
+                 
                  column(
+                   checkboxInput("fitPoints", "Fit Line",value = FALSE),
                    width = 7, status = "primary",
                    box(
                      width = "100%", height = "100%",
@@ -273,90 +286,82 @@ shinyApp(
                    
                  )
                  
-        ),
+        )),
         
         
         #ANOVA Mean
         tabPanel(h6("ANOVA Means"),
-                 
-                 
                  fluidRow(
-                   
-                   
                    column(width = 4,
                           
                           sliderInput("anovaMean1", h6("Mean 1"), value = 30, min = 10, max =50, step = 1)
                    ),
                    column(width = 4,
-                          sliderInput("anovaMean2", h6("Mean 2"), value = 30, min = 10, max =50, step = 1),
-                          actionButton("goAnovaMean", "Draw",class="btn btn-success btn")
+                          sliderInput("anovaMean2", h6("Mean 2"), value = 30, min = 10, max =50, step = 1)
+                         
                    ),
                    column(width = 4,
                           sliderInput("anovaMean3", h6("Mean 3"), value = 30, min = 10, max =50, step = 1)
                    )
                  ),
+                 actionButton("goAnovaMean", "Draw",class="btn btn-success btn"),
                  fluidRow(
-                   column(width = 8,
+                   column(width = 7,
                           plotOutput("anovaPlotMean", width = "auto", height = 500)
                    ),
-                   column( width = 3,
+                   column( width = 5,
                            tableOutput("anovaDatSumMean"),
                            tableOutput("anovaTableMean")
                    )
                  )
         ),
+       
+       #ANOVA Standard deviation
         tabPanel(h6("ANOVA St Dev"),
                  
                  
                  fluidRow(
-                   
-                   
                    column(width = 4,
                           
-                          sliderInput("anovaSD1", h6("St Dev 1"), value = 1, min = 1, max =50, step = 1)
+                          sliderInput("anovaSD1", h6("St Dev 1"), value = 10, min = 1, max =50, step = 1)
                           
                    ),
                    column(width = 4,
                         
-                          sliderInput("anovaSD2", h6("St Dev 2"), value = 1, min = 1, max =50, step = 1),
-                          actionButton("goAnovaSD", "Draw",class="btn btn-success btn")
+                          sliderInput("anovaSD2", h6("St Dev 2"), value = 10, min = 1, max =50, step = 1)
+                         
                    ),
                    column(width = 4,
-                          sliderInput("anovaSD3", h6("St Dev 3"), value = 1, min = 1, max =50, step = 1)
+                          sliderInput("anovaSD3", h6("St Dev 3"), value = 10, min = 1, max =50, step = 1)
                    )
                  ),
+                 actionButton("goAnovaSD", "Draw",class="btn btn-success btn"),
                  fluidRow(
-                   column(width = 8,
+                   column(width = 7,
                           plotOutput("anovaPlotSD", width = "auto", height = 500)
                    ),
-                   column( width = 3,
+                   column( width = 5,
                            tableOutput("anovaDatSumSD"),
                            tableOutput("anovaTableSD")
                    )
                  )
         ) ,
+       #ANOVA Sample Size
         tabPanel(h6("ANOVA Sample Size"),
                  
                  
                  fluidRow(
-                   
-                   
-                   column(width = 4,
-                          
-                        
+                   column(width = 8,
                           sliderInput("sampSizeANOVA", h6("Sample Size"), value = 50, min = 10, max =100, step = 5)
                    ),
                    column(width = 4,
-                     
-                          actionButton("goAnovaSS", "Draw",class="btn btn-success btn")
-                   
-                  
+                          actionButton("goAnovaSS", "Draw",class="btn btn-success btn", width = '100%')
                  ),
                  fluidRow(
-                   column(width = 8,
+                   column(width = 7,
                           plotOutput("anovaPlotSS", width = "auto", height = 500)
                    ),
-                   column( width = 3,
+                   column( width = 5,
                            tableOutput("anovaDatSumSS"),
                            tableOutput("anovaTableSS")
                    )
@@ -454,7 +459,7 @@ shinyApp(
     #--------------------------------------------- One proportion CIs ---------------------------------------------------- #
     
     # Generate 20 sample p_hats to create confidence intervals around
-    twSamps = reactive({
+    twSamps = eventReactive(input$redrawCI,{
       tsampCL = NULL
       for(i in 1:input$cIDemoNumSamp){
         
@@ -634,9 +639,9 @@ shinyApp(
     
     #Sample summary information for two proportions to be displyed in a table
     samplesumP2 = eventReactive(input$go2Prop,{data.frame(
-      Prop1 = pickP1Prop(),
-      Prop2 = pickP2Prop(),
-      Diff =pickP1Prop()-pickP2Prop()
+      "Proportion 1" = pickP1Prop(),
+      "Proporiton 2" = pickP2Prop(),
+      Difference =pickP1Prop()-pickP2Prop()
     )
     })
     
@@ -923,7 +928,7 @@ shinyApp(
     
     # Create a data frame with the desired slope
     xy = reactive({
-      datXY = as.data.frame(mvrnorm(10, mu = c(0,0), Sigma = matrix(c((input$ssx)^2,input$correlationLM*input$ssx*input$ssy,input$correlationLM*input$ssx*input$ssy,(input$ssy)^2),, ncol = 2),empirical = TRUE))
+      datXY = as.data.frame(mvrnorm(100, mu = c(0,0), Sigma = matrix(c((input$ssx)^2,input$correlationLM*input$ssx*input$ssy,input$correlationLM*input$ssx*input$ssy,(input$ssy)^2),, ncol = 2),empirical = TRUE))
       normY = (datXY$V2 - mean(datXY$V2) / sd(datXY$V2)) + input$meany
       normX = (datXY$V1 - mean(datXY$V1) / sd(datXY$V1)) + input$meanx
       normdat = data.frame( xn = normX, yn = normY)
@@ -990,7 +995,7 @@ shinyApp(
     
     # Make a vector of the categories that each data point is in
     groupList = eventReactive(input$goAnovaMean, {
-      grpList = c(rep("group1", 50), rep("group2", 50), rep("group3", 50))
+      grpList = c(rep("Group 1", 50), rep("Group 2", 50), rep("Group 3", 50))
       return(grpList)
     })
     
@@ -1107,7 +1112,7 @@ shinyApp(
     
     # Give the actual means & standard deviations of each group generated from the input from the user
     anovaSumSD = reactive({data.frame(
-      Group = c("Group1", "Group2", "Group3"),
+      Group = c("Group 1", "Group 2", "Group 3"),
       Means = c(mean(group1DataSD()), mean(group2DataSD()), mean(group3DataSD())),
       StDev = c(sd(group1DataSD()),sd(group2DataSD()), sd(group3DataSD()))
     )
@@ -1160,7 +1165,7 @@ shinyApp(
     output$anovaPlotSS = renderPlot( {
       ggplot(dframeSS(), aes(x=groupListSS(), y=g123DataSS(), fill = groupListSS())) + 
         geom_dotplot(binaxis='y', stackdir='center', dotsize = 0.5, binwidth = 1)+
-        stat_summary(fun.y=mean, geom="point", shape=5,size=0.5, color="black")+
+        stat_summary(fun.y=mean, geom="point", shape=5,size=6, color="black")+
         labs(x = "Group", y = "Value")+
         guides(fill=guide_legend(title="Group"))+scale_y_continuous(NULL, breaks = NULL)
       
