@@ -125,10 +125,11 @@ shinyApp(
                   column(width=8,
                          verbatimTextOutput("OneMeanDist"),
                          tableOutput("sampSumDatOM"),
+                         plotOutput("sampleDistOM", width = "auto", height = 200),
                          verbatimTextOutput("ManyMeansDist"),
                          plotOutput("samplingDistOM", width = "auto", height = 200),
-                         tableOutput("popSumDatOM"),
-                         plotOutput("sampleDistOM", width = "auto", height = 200)
+                         tableOutput("popSumDatOM")
+                         
                         
                   )
                  
@@ -223,9 +224,9 @@ shinyApp(
         
         # Outliers
         tabPanel(h6("Outliers"),
-                 
+                 fixedPage(
                  column(
-                   width = 4, status= "primary",
+                   width = 5, status= "primary",
                    actionButton("outData", "Plot Data"),
                    checkboxInput("fitLine", label = "Fit Line", value = FALSE),
                    
@@ -233,23 +234,23 @@ shinyApp(
                    tableOutput("lineEq"),
                    
                    sliderInput("outX", "Outlier X",
-                                value = 0.3,min = 0, max = 2.5, step = 0.01),
+                                value = 0.3,min = -2.5, max = 2.5, step = 0.01),
                    sliderInput("outY", "Outlier Y",
-                                value = 0.3,min = 0, max = 2.5, step = 0.01),
+                                value = 0.3,min = -2.5, max = 2.5, step = 0.01),
                    checkboxInput("fitLineNoPt", label = "Fit Line Without Point", value = FALSE),
                    verbatimTextOutput("lineSumNoPt"),
                    tableOutput("lineEqNoPt")
                    
                  ),
                  column(
-                   width = 5, status = "primary",
+                   width = 6, status = "primary",
                    box(
                      width = "100%", height = "100%",
                      title = "Linear Regression",  status = "primary",
                      plotOutput("outlierPlot" )
                    )
                    
-                 )
+                 ))
         ),
        #Regression tab
         tabPanel(h6("Equation"), value = "eqBd",
@@ -367,7 +368,18 @@ shinyApp(
     })
     
     # ------------ This section will contain all the server code that goes with each tab. ------------- #
+    #functions
+    binomProb = function(n, p){
+      out = rbinom(n,1,p)
+      propSuccess = round(length(which(out == 1))/n, 4)
+      return(propSuccess)
+    }
     
+    
+    binfun = function(data,n){
+      bin = (3.5*sd(data) )/(n^(1/3))
+      return(bin)
+    }
     
     # -------------------------------------------- Inference for One Proportion Sampling Dist. ----------------------------#
     # Create a single sample distribution
@@ -822,48 +834,6 @@ shinyApp(
       return(datnew)
     })
     
-    # output$outlierPlot = renderPlot({
-    #   # Print the plot with just the data
-    #   print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point()) 
-    #                
-    #   
-    #   # Fit the line to the plot 
-    #   if(input$fitLine == TRUE){
-    #         # Make a linear model if the dataset
-    #         hL1 = lm(getData()$dataY~getData()$dataX)
-    #         # Print the plot with the fitted line
-    # 
-    #         print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
-    #                 geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", size = 0.75))
-    # 
-    #         # Collect the information about the line to be displayed in a table
-    #         hL1Line = reactive({data.frame(
-    #           intercept = hL1$coefficients[1],
-    #           slope = hL1$coefficients[2],
-    #           Rsquared = summary(hL1)$r.squared
-    #         )
-    #         })
-    #         # Output the table of information about the line
-    #         output$lineEq  = renderTable({
-    #           hL1Line()
-    #         })
-    #   }
-    #   
-    #   observeEvent(input$plotOutlier,{
-    #   outlierData = eventReactive({
-    #     datxy = as.data.frame(mvrnorm(50, mu = c(0,0),
-    #                                   Sigma = matrix(c(1,0.99,0.99,1),, ncol = 2),
-    #                                   empirical = TRUE))
-    #     datnew = data.frame(dataX = c(datxy$V1, input$outX), dataY = c(datxy$V2, input$outY))
-    #     return(datnew)
-    #   })
-    #   
-    #   print(ggplot(data = getData(), aes(x = dataX, dataY)) + geom_point() +
-    #                      geom_point(aes(x = dataX[21], y = dataY[21]), color= "firebrick2", size = 2))
-    #   })
-    #   
-    # })
-    
     # Print the plot for the high leverage data
     output$outlierPlot = renderPlot({
       # Print the plot with all the data
@@ -887,20 +857,20 @@ shinyApp(
           hL1Line()
         })
         print(ggplot(data = addOutlier(), aes(x = dataX, dataY)) + geom_point() +
-                geom_point(aes(x = dataX[21], y = dataY[21]), colour= "firebrick2", size = 2) +
-                geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1))
+                geom_point(aes(x = dataX[51], y = dataY[51]), colour= "firebrick4", size = 2) +
+                geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], linetype = "longdash", colour="navyblue", size = 1))
         
         
       }
       # If the Fit with no red point box is selected
       if(input$fitLineNoPt == TRUE ){
         # Calculate the line of best fit without the point of interest
-        hL1NoPt = lm(addOutlier()$dataY[-21]~addOutlier()$dataX[-21])
+        hL1NoPt = lm(addOutlier()$dataY[-51]~addOutlier()$dataX[-51])
         # Print the plot with the line of fit for the data without the point of interest
 
         print(ggplot(data = addOutlier(), aes(x = dataX, dataY)) + geom_point() +
-                geom_point(aes(x = dataX[21], y = dataY[21]), colour= "firebrick2", size = 2) +
-                geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1))
+                geom_point(aes(x = dataX[51], y = dataY[51]), colour= "firebrick4", size = 2) +
+                geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="tan1", size = 1))
 
         # Create a table of information about the line fit to the data without the point of interest
         hL1LineNoPt = reactive({data.frame(
@@ -917,9 +887,9 @@ shinyApp(
         if(input$fitLine == TRUE){
 
           print(ggplot(data = addOutlier(), aes(x = dataX, dataY)) + geom_point() +
-                  geom_point(aes(x = dataX[21], y = dataY[21]), colour= "firebrick2", size = 2) +
+                  geom_point(aes(x = dataX[51], y = dataY[51]), colour= "firebrick4", size = 2) +
                   geom_abline(slope = hL1$coefficients[2],intercept = hL1$coefficients[1], colour = "navyblue", linetype ="F1", size = 0.75) +
-                  geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="springgreen2", size = 1)+
+                  geom_abline(slope = hL1NoPt$coefficients[2],intercept = hL1NoPt$coefficients[1], linetype = "dashed", colour="tan1", size = 1)+
                   scale_colour_manual(name="Legend",values=c("fitted" = "navyblue", "noPoint" = "springgreen2"))+
                   scale_linetype_manual(name = "Legend", values = c("fitted" = "F1", "noPoint"= "dashed"))+
                   theme(legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"))+
